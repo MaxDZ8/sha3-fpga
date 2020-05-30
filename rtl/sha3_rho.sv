@@ -18,14 +18,14 @@ module sha3_rho (
 
 // STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB    
 // TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-longint unsigned inbuff[4][4];
+longint unsigned inbuff[5][5];
 
 always_ff @(posedge clk) if(rst) begin
-    inbuff[0] <= '{ 4{ 64'b0 } };
-    inbuff[1] <= '{ 4{ 64'b0 } };
-    inbuff[2] <= '{ 4{ 64'b0 } };
-    inbuff[3] <= '{ 4{ 64'b0 } };
-    inbuff[4] <= '{ 4{ 64'b0 } };
+    inbuff[0] <= '{ 5{ 64'b0 } };
+    inbuff[1] <= '{ 5{ 64'b0 } };
+    inbuff[2] <= '{ 5{ 64'b0 } };
+    inbuff[3] <= '{ 5{ 64'b0 } };
+    inbuff[4] <= '{ 5{ 64'b0 } };
 end
 else if (sample) begin
     inbuff[0] <= '{ isa[0], isa[1], isa[2], isa[3], isa[4] };
