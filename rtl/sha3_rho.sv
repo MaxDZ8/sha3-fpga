@@ -2,17 +2,17 @@
 
 module sha3_rho (
     input clk, rst,
-    input[63:0] isa[0:4],
-    input[63:0] isb[0:4],
-    input[63:0] isc[0:4],
-    input[63:0] isd[0:4],
-    input[63:0] ise[0:4],
+    input[63:0] isa[5],
+    input[63:0] isb[5],
+    input[63:0] isc[5],
+    input[63:0] isd[5],
+    input[63:0] ise[5],
     input sample,
-    output[63:0] osa[0:4],
-    output[63:0] osb[0:4],
-    output[63:0] osc[0:4],
-    output[63:0] osd[0:4],
-    output[63:0] ose[0:4],
+    output[63:0] osa[5],
+    output[63:0] osb[5],
+    output[63:0] osc[5],
+    output[63:0] osd[5],
+    output[63:0] ose[5],
     output good
 );
 
