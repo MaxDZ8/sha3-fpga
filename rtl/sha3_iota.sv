@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module sha3_iota #(
-    STYLE = "basic",
+    MODIFY_STYLE = "basic",
     VALUE = 64'h0 // wrong value, you give me the magic number!
 )(
     input clk, rst,

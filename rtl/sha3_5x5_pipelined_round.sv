@@ -16,6 +16,7 @@ The result is more or less the same, it is given to you when .good is high.
 module sha3_5x5_pipelined_round #(
     THETA_BINARY_LOGIC_STYLE = "basic",
     CHI_MODIFY_STYLE = "basic",
+    IOTA_MODIFY_STYLE = "basic",
     ROUND_INDEX = 0
 )(
     input clk, rst,
@@ -40,7 +41,7 @@ sha3_theta #(
     .BINARY_LOGIC_STYLE(THETA_BINARY_LOGIC_STYLE)
 ) theta (
     .clk(clk), .rst(rst),
-    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .sample(good),
+    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .sample(sample),
     .osa(rina), .osb(rinb), .osc(rinc), .osd(rind), .ose(rine), .good(rho_fetch)
 );
 
@@ -64,13 +65,33 @@ sha3_chi #(
     .osa(ioina), .osb(ioinb), .osc(ioinc), .osd(ioind), .ose(ioine), .good(io_fetch)
 );
 
+
+localparam longint unsigned ROUND_CONSTANTS[24] = '{
+    64'h0000000000000001, 64'h0000000000008082,
+    64'h800000000000808a, 64'h8000000080008000,
+    64'h000000000000808b, 64'h0000000080000001,
+    64'h8000000080008081, 64'h8000000000008009,
+    64'h000000000000008a, 64'h0000000000000088,
+    64'h0000000080008009, 64'h000000008000000a,
+    64'h000000008000808b, 64'h800000000000008b,
+    64'h8000000000008089, 64'h8000000000008003,
+    64'h8000000000008002, 64'h8000000000000080,
+    64'h000000000000800a, 64'h800000008000000a,
+    64'h8000000080008081, 64'h8000000000008080,
+    64'h0000000080000001, 64'h8000000080008008
+};
+
+if (ROUND_INDEX < 0 | ROUND_INDEX > 23) begin
+    $error("Sha3 round must be 0..23 extremes included, integer.");
+end
+
 sha3_iota #(
-   .STYLE(IOTA_STYLE),
-   .VALUE(IOTA_VALUE)
+   .MODIFY_STYLE(IOTA_MODIFY_STYLE),
+   .VALUE(ROUND_CONSTANTS[ROUND_INDEX])
 ) iota (
    .clk(clk), .rst(rst),
-   .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
-   .osa(ioina), .osb(ioinb), .osc(ioinc), .osd(ioind), .ose(ioine), .good(io_fetch)
+   .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(io_fetch),
+   .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .good(good)
 );
 
 endmodule
