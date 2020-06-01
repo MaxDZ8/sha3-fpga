@@ -1,8 +1,10 @@
 `timescale 1ns / 1ps
 
-
+// Computing theta function can be divided in two main parts
+// A- xor the various slices together and produce an elt each
+// B- update each slice xor'ing in the elt.
 module sha3_theta #(
-  BINARY_LOGIC_STYLE = "basic"
+  UPDATE_LOGIC_STYLE = "basic"
 )(
     input clk, rst,
     input[63:0] isa[5],
@@ -19,34 +21,36 @@ module sha3_theta #(
     output good
 );
 
-// STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB STUB    
-// TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-longint unsigned inbuff[5][5];
+// This is the first proper computation so I let the elts buffer once to separate me from the previous round.
+// This module itself does not buffer... kinda.
+wire[63:0] elt[5];
+sha3_theta_elts eltificator (
+    .clk(clk), .rst(rst), .sample(sample),
+    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .oelt(elt)
+);
 
-always_ff @(posedge clk) if(rst) begin
-    inbuff[0] <= '{ 5{ 64'b0 } };
-    inbuff[1] <= '{ 5{ 64'b0 } };
-    inbuff[2] <= '{ 5{ 64'b0 } };
-    inbuff[3] <= '{ 5{ 64'b0 } };
-    inbuff[4] <= '{ 5{ 64'b0 } };
-end
-else if (sample) begin
-    inbuff[0] <= '{ isa[0], isa[1], isa[2], isa[3], isa[4] };
-    inbuff[1] <= '{ isb[0], isb[1], isb[2], isb[3], isb[4] };
-    inbuff[2] <= '{ isc[0], isc[1], isc[2], isc[3], isc[4] };
-    inbuff[3] <= '{ isd[0], isd[1], isd[2], isd[3], isd[4] };
-    inbuff[4] <= '{ ise[0], ise[1], ise[2], ise[3], ise[4] };
-end
+// While I don't really buffer the input signals themselves I still need to delay them to match elt output!
+// There's no good signal output, just make sure to instantiate elts correctly and match them!
+wire[63:0] od[5][5];
+wire sample_delayed;
+sha3_state_delayer#( .DELAY(3) ) delay (
+    .clk(clk), .rst(rst), .sample(sample),
+    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .oda(od[0]), .odb(od[1]), .odc(od[2]), .odd(od[3]), .ode(od[4]),
+    .good(sample_delayed)
+);
 
-bit inflow = 1'b0;
-always_ff @(posedge clk) if (rst) inflow <= 1'b0;
-else inflow <= sample;
+// Let's just put the things together. Again, I don't buffer the outputs here, everything is delegated.
+sha3_theta_updater#( .LOGIC_STYLE(UPDATE_LOGIC_STYLE) ) slice_xorrer (
+    .clk(clk), .rst(rst), .sample(sample_delayed),
+    .isa(od[0]), .isb(od[1]), .isc(od[2]), .isd(od[3]), .ise(od[4]),
+    .elt(elt),
+    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+);
 
-assign osa = '{ inbuff[0][0], inbuff[0][1], inbuff[0][2], inbuff[0][3], inbuff[0][4] };
-assign osb = '{ inbuff[1][0], inbuff[1][1], inbuff[1][2], inbuff[1][3], inbuff[1][4] };
-assign osc = '{ inbuff[2][0], inbuff[2][1], inbuff[2][2], inbuff[2][3], inbuff[2][4] };
-assign osd = '{ inbuff[3][0], inbuff[3][1], inbuff[3][2], inbuff[3][3], inbuff[3][4] };
-assign ose = '{ inbuff[4][0], inbuff[4][1], inbuff[4][2], inbuff[4][3], inbuff[4][4] };
-assign good = inflow;
+bit[3:0] result_ready = 4'b0;
+always_ff @(posedge clk) result_ready <= { result_ready[2:0], sample };
+assign good = result_ready[3];
 
 endmodule
