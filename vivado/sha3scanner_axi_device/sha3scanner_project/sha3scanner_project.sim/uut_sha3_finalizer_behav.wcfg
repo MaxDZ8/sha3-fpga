@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_finalizer_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3_finalizer" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="151500fs"></ZoomStartTime>
+      <ZoomEndTime time="251701fs"></ZoomEndTime>
+      <Cursor1Time time="235000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="193"></NameColumnWidth>
+      <ValueColumnWidth column_width="78"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="15" />
+   <wvobject fp_name="/uut_sha3_finalizer/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/dispatching" type="logic">
+      <obj_property name="ElementShortName">dispatching</obj_property>
+      <obj_property name="ObjectShortName">dispatching</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/dispatch_index" type="array">
+      <obj_property name="ElementShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/feeda" type="array">
+      <obj_property name="ElementShortName">feeda[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">feeda[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/feedb" type="array">
+      <obj_property name="ElementShortName">feedb[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">feedb[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/feedc" type="array">
+      <obj_property name="ElementShortName">feedc[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">feedc[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/feedd" type="array">
+      <obj_property name="ElementShortName">feedd[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">feedd[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/feede" type="array">
+      <obj_property name="ElementShortName">feede[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">feede[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/good" type="logic">
+      <obj_property name="ElementShortName">good</obj_property>
+      <obj_property name="ObjectShortName">good</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/result" type="array">
+      <obj_property name="ElementShortName">result[0:4][0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">result[0:4][0:4][63:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/result_index" type="array">
+      <obj_property name="ElementShortName">result_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/give" type="array">
+      <obj_property name="ElementShortName">give[0:0][0:4][0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">give[0:0][0:4][0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_finalizer/expected_result" type="array">
+      <obj_property name="ElementShortName">expected_result[0:0][0:1][63:0]</obj_property>
+      <obj_property name="ObjectShortName">expected_result[0:0][0:1][63:0]</obj_property>
+   </wvobject>
+</wave_config>
