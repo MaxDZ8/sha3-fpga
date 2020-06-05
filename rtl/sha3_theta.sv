@@ -6,7 +6,7 @@
 module sha3_theta #(
   UPDATE_LOGIC_STYLE = "basic"
 )(
-    input clk, rst,
+    input clk,
     input[63:0] isa[5],
     input[63:0] isb[5],
     input[63:0] isc[5],
@@ -25,8 +25,8 @@ module sha3_theta #(
 // This module itself does not buffer... kinda.
 wire[63:0] elt[5];
 sha3_theta_elts eltificator (
-    .clk(clk), .rst(rst), .sample(sample),
-    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .clk(clk),
+    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     .oelt(elt)
 );
 
@@ -35,16 +35,16 @@ sha3_theta_elts eltificator (
 wire[63:0] od[5][5];
 wire sample_delayed;
 sha3_state_delayer#( .DELAY(3) ) delay (
-    .clk(clk), .rst(rst), .sample(sample),
-    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .clk(clk),
+    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     .oda(od[0]), .odb(od[1]), .odc(od[2]), .odd(od[3]), .ode(od[4]),
     .good(sample_delayed)
 );
 
 // Let's just put the things together. Again, I don't buffer the outputs here, everything is delegated.
 sha3_theta_updater#( .LOGIC_STYLE(UPDATE_LOGIC_STYLE) ) slice_xorrer (
-    .clk(clk), .rst(rst), .sample(sample_delayed),
-    .isa(od[0]), .isb(od[1]), .isc(od[2]), .isd(od[3]), .ise(od[4]),
+    .clk(clk),
+    .sample(sample_delayed), .isa(od[0]), .isb(od[1]), .isc(od[2]), .isd(od[3]), .ise(od[4]),
     .elt(elt),
     .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
 );

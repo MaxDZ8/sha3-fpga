@@ -44,7 +44,7 @@ wire[63:0] result[5][5];
 wire good;
 
 sha3_rho_pi #(.BUFFERIZATION(1)) testing(
-    .clk(clk), .rst(reset),
+    .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
     .osa(result[0]), .osb(result[1]), .osc(result[2]), .osd(result[3]), .ose(result[4]),

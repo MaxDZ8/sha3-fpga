@@ -7,7 +7,7 @@ module sha3_rho_pi #(
     // OTHER = error
     BUFFERIZATION = 1
 )(
-    input clk, rst,
+    input clk,
     input[63:0] isa[5],
     input[63:0] isb[5],
     input[63:0] isc[5],

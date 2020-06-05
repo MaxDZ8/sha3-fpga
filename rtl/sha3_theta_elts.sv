@@ -3,7 +3,7 @@
 // Evaluating theta-elts is better done for all the slices toghether: produce 5 temporary terms, each used twice.
 // We start doing some logic here so this buffers its inputs before everything.
 module sha3_theta_elts(
-    input clk, rst,
+    input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input sample,
     output[63:0] oelt[5]
@@ -30,8 +30,7 @@ for (geni = 0; geni < 5; geni++) begin
 end
 
 sha3_theta_elt_evaluator rotxor(
-    .clk(clk), .rst(rst),
-    .term(term), .elt(oelt)
+    .clk(clk), .term(term), .elt(oelt)
 );
 
 endmodule

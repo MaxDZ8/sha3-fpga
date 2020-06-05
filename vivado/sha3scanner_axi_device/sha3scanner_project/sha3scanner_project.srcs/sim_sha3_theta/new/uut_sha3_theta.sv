@@ -1,8 +1,6 @@
 `timescale 1ns / 1ps
 
-// In this testbench I focus on correctness of the SHA3 core.
-// In this first test I only go for the generic non-last round.
-// Also useful to observe latency.
+
 module uut_sha3_theta();
 
 localparam CLOCK_RATE = 100_000_000;
@@ -44,7 +42,7 @@ wire[63:0] result[5][5];
 wire good;
 
 sha3_theta #(.UPDATE_LOGIC_STYLE("basic")) testing(
-    .clk(clk), .rst(reset),
+    .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
     .osa(result[0]), .osb(result[1]), .osc(result[2]), .osd(result[3]), .ose(result[4]),

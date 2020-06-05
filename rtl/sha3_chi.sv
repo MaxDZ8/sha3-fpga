@@ -5,7 +5,7 @@ module sha3_chi #(
     OUTPUT_BUFFER = 1,
     STYLE = "basic"
 )(
-    input clk, rst,
+    input clk,
     input[63:0] isa[5],
     input[63:0] isb[5],
     input[63:0] isc[5],
@@ -25,8 +25,8 @@ wire green;
 sha3_state_capture#(
     .BUFFERIZE(INPUT_BUFFER)
 ) inbuff(
-    .clk(clk), .rst(rst), .sample(sample),
-    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .clk(clk),
+    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     .ogood(green),
     .osa(args[0]), .osb(args[1]), .osc(args[2]), .osd(args[3]), .ose(args[4])
 );
@@ -52,8 +52,8 @@ end
 sha3_state_capture#(
     .BUFFERIZE(OUTPUT_BUFFER)
 ) outbuff(
-    .clk(clk), .rst(rst), .sample(ready),
-    .isa(updated[0]), .isb(updated[1]), .isc(updated[2]), .isd(updated[3]), .ise(updated[4]),
+    .clk(clk),
+    .sample(ready), .isa(updated[0]), .isb(updated[1]), .isc(updated[2]), .isd(updated[3]), .ise(updated[4]),
     .ogood(ogood),
     .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
 );

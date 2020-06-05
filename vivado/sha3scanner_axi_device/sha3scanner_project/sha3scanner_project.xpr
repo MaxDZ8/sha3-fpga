@@ -33,7 +33,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="arty-z7-20"/>
-    <Option Name="WTXSimLaunchSim" Val="35"/>
+    <Option Name="WTXSimLaunchSim" Val="41"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -291,6 +291,7 @@
       </Config>
     </FileSet>
     <FileSet Name="sim_sha_finalizer" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/sim_sha_finalizer">
+      <Filter Type="Srcs"/>
       <File Path="$PSRCDIR/sim_sha_finalizer/new/uut_sha3_finalizer.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>

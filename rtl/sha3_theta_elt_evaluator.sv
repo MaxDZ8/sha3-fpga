@@ -6,7 +6,7 @@ module sha3_theta_elt_evaluator
 #(
     STYLE = "basic"
 )(
-    input clk, rst,
+    input clk,
     input wire[63:0] term[5],
     output wire[63:0] elt[5]
 );

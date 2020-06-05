@@ -8,7 +8,7 @@ module sha3_iota #(
     OUTPUT_BUFFER = 1,
     longint unsigned VALUE = 64'h0 // wrong value, you give me the magic number!
 )(
-    input clk, rst,
+    input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input sample,
     output[63:0] osa[5], osb[5], osc[5], osd[5], ose[5],
@@ -22,8 +22,8 @@ for (genvar comp = 1; comp < 5; comp++) assign updated[comp] = isa[comp];
 sha3_state_capture#(
     .BUFFERIZE(OUTPUT_BUFFER)
 ) outbuff(
-    .clk(clk), .rst(rst), .sample(sample),
-    .isa(updated), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .clk(clk),
+    .sample(sample), .isa(updated), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     .ogood(ogood),
     .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
 );

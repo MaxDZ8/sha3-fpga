@@ -6,7 +6,7 @@
 module sha3_theta_updater #(
     LOGIC_STYLE = "basic"
 )(
-    input clk, rst,
+    input clk,
     input sample,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5], elt[5],
     output[63:0] osa[5], osb[5], osc[5], osd[5], ose[5]

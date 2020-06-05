@@ -43,7 +43,7 @@ wire good;
 sha3_finalizer #(
     .OUTPUT_BUFFER(1), .VALUE(64'h8000000080008008)
 ) testing(
-    .clk(clk), .rst(reset),
+    .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
     .osa(result[0]), .osb(result[1]), .osc(result[2]), .osd(result[3]), .ose(result[4]),

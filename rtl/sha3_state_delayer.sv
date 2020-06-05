@@ -5,7 +5,6 @@ module sha3_state_delayer #(
     DELAY = 4
 )(
     input clk,
-    input rst,
     // input slices
     input sample, // unused if DELAY = 0
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
