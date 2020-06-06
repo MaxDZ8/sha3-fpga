@@ -1,11 +1,8 @@
 `timescale 1ns / 1ps
 
 module sha3_rho_pi #(
-    // 0 = just rename the wires. No latency but not reccomended.
-    // 1 = bufferize the outputs
-    // 2 = bufferize both inputs and outputs
-    // OTHER = error
-    BUFFERIZATION = 1
+    INPUT_BUFFER = 0,
+    OUTPUT_BUFFER = 1
 )(
     input clk,
     input[63:0] isa[5],
@@ -19,38 +16,19 @@ module sha3_rho_pi #(
     output[63:0] osc[5],
     output[63:0] osd[5],
     output[63:0] ose[5],
-    output good
+    output ogood
 );
-
-if (BUFFERIZATION < 0 || BUFFERIZATION > 2) $error("Unsupported buffer level");
 
 wire[63:0] valuein[5][5];
 wire captured;
-if (BUFFERIZATION < 2) begin : no_in_buff
-    assign valuein[0] = isa;
-    assign valuein[1] = isb;
-    assign valuein[2] = isc;
-    assign valuein[3] = isd;
-    assign valuein[4] = ise;
-    assign captured = sample;
-end
-else begin : inbuff
-    bit buffcaptured = 1'b0;
-    always_ff @(posedge clk) buffcaptured <= sample;
-    
-    longint unsigned ib[5][5];
-    always_ff @(posedge clk) if(sample) begin
-        ib[0] <= '{ isa[0][0], isa[0][1], isa[0][2], isa[0][3], isa[0][4] };
-        ib[1] <= '{ isb[1][0], isb[1][1], isb[1][2], isb[1][3], isb[1][4] };
-        ib[2] <= '{ isc[2][0], isc[2][1], isc[2][2], isc[2][3], isc[2][4] };
-        ib[3] <= '{ isd[3][0], isd[3][1], isd[3][2], isd[3][3], isd[3][4] };
-        ib[4] <= '{ ise[4][0], ise[4][1], ise[4][2], ise[4][3], ise[4][4] };
-    end
-    assign captured = buffcaptured;
-    for (genvar slice = 0; slice < 5; slice++) begin
-        for (genvar comp = 0; comp < 5; comp++) assign valuein[slice][comp] = ib[slice][comp];
-    end
-end
+sha3_state_capture#(
+    .BUFFERIZE(INPUT_BUFFER)
+) inbuff(
+    .clk(clk),
+    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .ogood(captured),
+    .osa(valuein[0]), .osb(valuein[1]), .osc(valuein[2]), .osd(valuein[3]), .ose(valuein[4])
+);
 
 
 function longint unsigned rotl_36(input longint unsigned value);    return { value[27:0], value[63:28] };    endfunction
@@ -78,7 +56,7 @@ function longint unsigned rotl_39(input longint unsigned value);    return { val
 function longint unsigned rotl__8(input longint unsigned value);    return { value[55:0], value[63:56] };    endfunction
 function longint unsigned rotl_14(input longint unsigned value);    return { value[49:0], value[63:50] };    endfunction
 
-wire[63:0] rotating[5][5], rotated[5][5];
+wire[63:0] rotating[5][5];
 wire postrot;
 
 assign rotating[0] = '{         valuein[0][0] , rotl_44(valuein[1][1]), rotl_43(valuein[2][2]), rotl_21(valuein[3][3]), rotl_14(valuein[4][4]) }; // diagonal
@@ -86,37 +64,15 @@ assign rotating[1] = '{ rotl_28(valuein[0][3]), rotl_20(valuein[1][4]), rotl__3(
 assign rotating[2] = '{ rotl__1(valuein[0][1]), rotl__6(valuein[1][2]), rotl_25(valuein[2][3]), rotl__8(valuein[3][4]), rotl_18(valuein[4][0]) }; // +2
 assign rotating[3] = '{ rotl_27(valuein[0][4]), rotl_36(valuein[1][0]), rotl_10(valuein[2][1]), rotl_15(valuein[3][2]), rotl_56(valuein[4][3]) }; // +3
 assign rotating[4] = '{ rotl_62(valuein[0][2]), rotl_55(valuein[1][3]), rotl_39(valuein[2][4]), rotl_41(valuein[3][0]), rotl__2(valuein[4][1]) }; // diag+4
-    
-if (BUFFERIZATION == 0) begin : no_out_buff
-    assign postrot = captured;
-    assign rotated[0] = rotating[0];
-    assign rotated[1] = rotating[1];
-    assign rotated[2] = rotating[2];
-    assign rotated[3] = rotating[3];
-    assign rotated[4] = rotating[4];
-end
-else begin : outbuff
-    longint unsigned ob[5][5];
-    always_ff @(posedge clk) if(captured) begin
-        ob[0] <= '{ rotating[0][0], rotating[0][1], rotating[0][2], rotating[0][3], rotating[0][4] };
-        ob[1] <= '{ rotating[1][0], rotating[1][1], rotating[1][2], rotating[1][3], rotating[1][4] };
-        ob[2] <= '{ rotating[2][0], rotating[2][1], rotating[2][2], rotating[2][3], rotating[2][4] };
-        ob[3] <= '{ rotating[3][0], rotating[3][1], rotating[3][2], rotating[3][3], rotating[3][4] };
-        ob[4] <= '{ rotating[4][0], rotating[4][1], rotating[4][2], rotating[4][3], rotating[4][4] };
-    end
-    bit buffgood = 1'b0;
-    always_ff @(posedge clk) buffgood <= captured;
-    assign postrot = buffgood;
-    for (genvar slice = 0; slice < 5; slice++) begin
-        for (genvar comp = 0; comp < 5; comp++) assign rotated[slice][comp] = ob[slice][comp];
-    end
-end
 
-assign osa = '{ rotated[0][0], rotated[0][1], rotated[0][2], rotated[0][3], rotated[0][4] };
-assign osb = '{ rotated[1][0], rotated[1][1], rotated[1][2], rotated[1][3], rotated[1][4] };
-assign osc = '{ rotated[2][0], rotated[2][1], rotated[2][2], rotated[2][3], rotated[2][4] };
-assign osd = '{ rotated[3][0], rotated[3][1], rotated[3][2], rotated[3][3], rotated[3][4] };
-assign ose = '{ rotated[4][0], rotated[4][1], rotated[4][2], rotated[4][3], rotated[4][4] };
-assign good = postrot;
+sha3_state_capture#(
+    .BUFFERIZE(OUTPUT_BUFFER)
+) outbuff(
+    .clk(clk),
+    .sample(captured), .isa(rotating[0]), .isb(rotating[1]), .isc(rotating[2]), .isd(rotating[3]), .ise(rotating[4]),
+    .ogood(ogood),
+    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+);
+
 
 endmodule
