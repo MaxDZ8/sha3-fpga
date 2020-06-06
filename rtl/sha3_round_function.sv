@@ -1,0 +1,99 @@
+`timescale 1ns / 1ps
+
+/*
+A sha-3 round. You give it a 5x5 input matrix and it mangles it.
+There's no permutation here, it is processed as given.
+
+There is a thing called 'interface' which could group stuff but for simple grouping
+I have not found them to be so convenient and they don't quite interact well with the debugger/analyzer.
+
+So there are two groups of signals: consider your input matrix as a vector containing 5 elements,
+each one being a row counting 5 cells. .isa is the top row, .ise is the bottom. Those signals
+are captured when .sample is high.
+
+The result is more or less the same, it is given to you when .good is high.
+*/
+module sha3_round_function #(
+    string THETA_UPDATE_LOGIC_STYLE = "basic",
+    string CHI_MODIFY_STYLE = "basic",
+    string IOTA_STYLE = "basic",
+    byte unsigned ROUND_INDEX = 0 // 0..23 integer
+)(
+    input clk,
+    input[63:0] isa[0:4],
+    input[63:0] isb[0:4],
+    input[63:0] isc[0:4],
+    input[63:0] isd[0:4],
+    input[63:0] ise[0:4],
+    input sample,
+    output[63:0] osa[0:4],
+    output[63:0] osb[0:4],
+    output[63:0] osc[0:4],
+    output[63:0] osd[0:4],
+    output[63:0] ose[0:4],
+    output ogood
+);
+
+wire[63:0] rina[0:4], rinb[0:4], rinc[0:4], rind[0:4], rine[0:4];
+wire rho_fetch;
+
+sha3_theta #(
+    .UPDATE_LOGIC_STYLE(THETA_UPDATE_LOGIC_STYLE)
+) theta (
+    .clk(clk),
+    .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .sample(sample),
+    .osa(rina), .osb(rinb), .osc(rinc), .osd(rind), .ose(rine), .good(rho_fetch)
+);
+
+wire[63:0] china[0:4], chinb[0:4], chinc[0:4], chind[0:4], chine[0:4];
+wire chi_fetch;
+
+sha3_rho_pi rhopi(
+    .clk(clk),
+    .isa(rina), .isb(rinb), .isc(rinc), .isd(rind), .ise(rine), .sample(rho_fetch),
+    .osa(china), .osb(chinb), .osc(chinc), .osd(chind), .ose(chine), .ogood(chi_fetch)
+);
+
+localparam longint unsigned rc[24] = {
+    64'h0000000000000001, 64'h0000000000008082, 64'h800000000000808a, 64'h8000000080008000,
+    64'h000000000000808b, 64'h0000000080000001, 64'h8000000080008081, 64'h8000000000008009,
+    64'h000000000000008a, 64'h0000000000000088, 64'h0000000080008009, 64'h000000008000000a,
+    64'h000000008000808b, 64'h800000000000008b, 64'h8000000000008089, 64'h8000000000008003,
+    64'h8000000000008002, 64'h8000000000000080, 64'h000000000000800a, 64'h800000008000000a,
+    64'h8000000080008081, 64'h8000000000008080, 64'h0000000080000001, 64'h8000000080008008
+};
+if (ROUND_INDEX < 0 || ROUND_INDEX > 23) $error("SHA3 round index is integer 0..23 extremes included");
+localparam longint unsigned IOTA_VALUE = rc[ROUND_INDEX];
+
+
+if (ROUND_INDEX < 23) begin : std_round
+    wire[63:0] ioina[0:4], ioinb[0:4], ioinc[0:4], ioind[0:4], ioine[0:4];
+    wire io_fetch;
+    sha3_chi #(
+        .STYLE(CHI_MODIFY_STYLE)
+    ) chi (
+        .clk(clk),
+        .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
+        .osa(ioina), .osb(ioinb), .osc(ioinc), .osd(ioind), .ose(ioine), .ogood(io_fetch)
+    );
+    
+    sha3_iota #(
+       .VALUE(IOTA_VALUE)
+    ) iota (
+       .clk(clk),
+       .isa(ioina), .isb(ioinb), .isc(ioinc), .isd(ioind), .ise(ioine), .sample(io_fetch),
+       .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)
+  );
+end
+else begin : last_round
+    sha3_finalizer #( .VALUE(IOTA_VALUE) ) finalizer (
+        .clk(clk),
+        .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
+        .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)
+    );
+end
+
+
+
+
+endmodule
