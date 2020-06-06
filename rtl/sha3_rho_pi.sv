@@ -35,15 +35,16 @@ if (BUFFERIZATION < 2) begin : no_in_buff
     assign captured = sample;
 end
 else begin : inbuff
-    longint unsigned ib[5][5];
     bit buffcaptured = 1'b0;
-    always_ff @(posedge clk) if(captured) begin
+    always_ff @(posedge clk) buffcaptured <= sample;
+    
+    longint unsigned ib[5][5];
+    always_ff @(posedge clk) if(sample) begin
         ib[0] <= '{ isa[0][0], isa[0][1], isa[0][2], isa[0][3], isa[0][4] };
         ib[1] <= '{ isb[1][0], isb[1][1], isb[1][2], isb[1][3], isb[1][4] };
         ib[2] <= '{ isc[2][0], isc[2][1], isc[2][2], isc[2][3], isc[2][4] };
         ib[3] <= '{ isd[3][0], isd[3][1], isd[3][2], isd[3][3], isd[3][4] };
         ib[4] <= '{ ise[4][0], ise[4][1], ise[4][2], ise[4][3], ise[4][4] };
-        buffcaptured <= sample;
     end
     assign captured = buffcaptured;
     for (genvar slice = 0; slice < 5; slice++) begin
@@ -96,15 +97,15 @@ if (BUFFERIZATION == 0) begin : no_out_buff
 end
 else begin : outbuff
     longint unsigned ob[5][5];
-    bit buffgood = 1'b0;
     always_ff @(posedge clk) if(captured) begin
         ob[0] <= '{ rotating[0][0], rotating[0][1], rotating[0][2], rotating[0][3], rotating[0][4] };
         ob[1] <= '{ rotating[1][0], rotating[1][1], rotating[1][2], rotating[1][3], rotating[1][4] };
         ob[2] <= '{ rotating[2][0], rotating[2][1], rotating[2][2], rotating[2][3], rotating[2][4] };
         ob[3] <= '{ rotating[3][0], rotating[3][1], rotating[3][2], rotating[3][3], rotating[3][4] };
         ob[4] <= '{ rotating[4][0], rotating[4][1], rotating[4][2], rotating[4][3], rotating[4][4] };
-        buffgood <= captured;
     end
+    bit buffgood = 1'b0;
+    always_ff @(posedge clk) buffgood <= captured;
     assign postrot = buffgood;
     for (genvar slice = 0; slice < 5; slice++) begin
         for (genvar comp = 0; comp < 5; comp++) assign rotated[slice][comp] = ob[slice][comp];

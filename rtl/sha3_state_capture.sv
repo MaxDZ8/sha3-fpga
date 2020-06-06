@@ -23,16 +23,17 @@ else if (BUFFERIZE == 0) begin : rename
 end
 else begin : buffin
     longint unsigned ib[5][5];
-    bit captured = 1'b0;
     always_ff @(posedge clk) if(sample) begin
         ib[0] <= '{ isa[0], isa[1], isa[2], isa[3], isa[4] };
         ib[1] <= '{ isb[0], isb[1], isb[2], isb[3], isb[4] };
         ib[2] <= '{ isc[0], isc[1], isc[2], isc[3], isc[4] };
         ib[3] <= '{ isd[0], isd[1], isd[2], isd[3], isd[4] };
         ib[4] <= '{ ise[0], ise[1], ise[2], ise[3], ise[4] };
-        captured <= sample;
     end
+    bit captured = 1'b0;
+    always_ff @(posedge clk) captured <= sample;
     assign ogood = captured;
+    
     for (genvar comp = 0; comp < 5; comp++) begin
         assign osa[comp] = ib[0][comp];
         assign osb[comp] = ib[1][comp];
