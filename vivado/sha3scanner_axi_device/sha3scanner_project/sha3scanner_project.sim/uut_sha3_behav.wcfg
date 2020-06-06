@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="251850fs"></ZoomStartTime>
+      <ZoomEndTime time="390751fs"></ZoomEndTime>
+      <Cursor1Time time="275000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="189"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="9" />
+   <wvobject fp_name="/uut_sha3/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/dispatching" type="logic">
+      <obj_property name="ElementShortName">dispatching</obj_property>
+      <obj_property name="ObjectShortName">dispatching</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/dispatch_index" type="array">
+      <obj_property name="ElementShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="group183" type="group">
+      <obj_property name="label">first_round</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/sample" type="logic">
+         <obj_property name="ElementShortName">sample</obj_property>
+         <obj_property name="ObjectShortName">sample</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/isa" type="array">
+         <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/isb" type="array">
+         <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/isc" type="array">
+         <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/isd" type="array">
+         <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/ise" type="array">
+         <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/ogood" type="logic">
+         <obj_property name="ElementShortName">ogood</obj_property>
+         <obj_property name="ObjectShortName">ogood</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/osa" type="array">
+         <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/osb" type="array">
+         <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/osc" type="array">
+         <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/osd" type="array">
+         <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/first_round/ose" type="array">
+         <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group21" type="group">
+      <obj_property name="label">last_round</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/sample" type="logic">
+         <obj_property name="ElementShortName">sample</obj_property>
+         <obj_property name="ObjectShortName">sample</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/isa" type="array">
+         <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/isb" type="array">
+         <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/isc" type="array">
+         <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/isd" type="array">
+         <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/ise" type="array">
+         <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/ogood" type="logic">
+         <obj_property name="ElementShortName">ogood</obj_property>
+         <obj_property name="ObjectShortName">ogood</obj_property>
+         <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+         <obj_property name="UseCustomSignalColor">true</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/osa" type="array">
+         <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/osb" type="array">
+         <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/osc" type="array">
+         <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/osd" type="array">
+         <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3/hasher/last_round/ose" type="array">
+         <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/ogood" type="logic">
+      <obj_property name="ElementShortName">ogood</obj_property>
+      <obj_property name="ObjectShortName">ogood</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3/result_index" type="array">
+      <obj_property name="ElementShortName">result_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+</wave_config>
