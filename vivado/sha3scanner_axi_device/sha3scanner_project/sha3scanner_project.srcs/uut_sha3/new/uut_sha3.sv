@@ -8,6 +8,12 @@ module uut_sha3();
 localparam CLOCK_RATE = 100_000_000;
 localparam PERIOD = 1_000_000_000.0 / CLOCK_RATE;
 
+// If this is nonzeroa new hash will be dispatched only after a result comes out.
+// It is useful to observe latencies and signal propagation.
+// It is usually better to run everything in pipeline mode as the SHA3 core can take
+// one input each clock so leave this at zero! 
+localparam bit STOP_AND_WAIT = 0;
+
 bit clk = 1'b0, reset = 1, dispatching = 1'b0;
 
 initial begin
@@ -148,7 +154,7 @@ endgenerate
 wire[63:0] result[5][5];
 wire ogood;
 
-sha3 #(.ROUND_INDEX( 0)) hasher(
+sha3 hasher(
     .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
@@ -171,11 +177,11 @@ end
 always @(posedge clk) if(dispatching) begin
     if(dispatch_index != $size(give, 1)) begin
         if (start) begin // 1 clock sample pulse
-            start = 1'b0;
-            dispatch_index++;
+            dispatch_index <= dispatch_index + 1;
+            start <= STOP_AND_WAIT ? 1'b0 : (dispatch_index != $size(give, 1));
         end
         else begin // when starting just pulse the first, then pulse after a result is received
-            start = dispatch_index == 0 | ogood;
+            start <= dispatch_index == 0 | (STOP_AND_WAIT ? ogood : 1'b1);
         end
     end
 end
