@@ -29,7 +29,7 @@ else if(DELAY == 0) begin
     assign good = sample;
 end
 else if(DELAY == 1) begin : just_buffin // Buffer the inputs.
-    sha3_state_delayer delayin(
+    sha3_state_capture delayin(
         .clk(clk),
         .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
         .ogood(good),
