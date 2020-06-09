@@ -27,12 +27,12 @@ always_ff @(posedge clk) if(capture) begin
     rowa[0] <= { blobby[ 1], blobby[ 0] };
     rowa[1] <= { blobby[ 3], blobby[ 2] };
     rowa[2] <= { blobby[ 5], blobby[ 4] };
-    rowa[3] <= { blobby[ 7], blobby[ 5] };
+    rowa[3] <= { blobby[ 7], blobby[ 6] };
     rowa[4] <= { blobby[ 9], blobby[ 8] };
     rowb[0] <= { blobby[11], blobby[10] };
     rowb[1] <= { blobby[13], blobby[12] };
     rowb[2] <= { blobby[15], blobby[14] };
-    rowb[3] <= { blobby[17], blobby[15] };
+    rowb[3] <= { blobby[17], blobby[16] };
     rowb[4] <= { blobby[19], blobby[18] };
     rowc[0] <= { blobby[21], blobby[20] };
     rowc[1] <= { blobby[23], blobby[22] };
@@ -60,7 +60,7 @@ wire[63:0] rowc2 = {
 };
 
 localparam longint unsigned rowc_final[2] = '{ 64'h0, 64'h0 };
-localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h0, 64'h80000000_00000000, 64'h0, 64'h0 };
+localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
 localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
 
 wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
@@ -75,8 +75,8 @@ sha3 hasher(
     .ogood(evaluating)
 );
 
-wire[63:0] hash_diff = { resa[0][7:0], resa[0][15:8], resa[0][23:16], resa[0][31:24], resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:54] };
-wire good_enough = evaluating & hash_diff < threshold;
+wire[63:0] hash_diff = { resa[0][7:0], resa[0][15:8], resa[0][23:16], resa[0][31:24], resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:56] };
+wire good_enough = evaluating & $unsigned(hash_diff) < $unsigned(threshold);
 
 int unsigned result_iterator = 32'b0;
 bit buff_found = 1'b0;
@@ -88,7 +88,7 @@ always_ff @(posedge clk) begin
         end
     end
     else buff_found <= buff_found | good_enough;
-    result_iterator <= evaluating;
+    if(evaluating) result_iterator <= result_iterator + 1'b1;
 end
 assign found = buff_found;
 

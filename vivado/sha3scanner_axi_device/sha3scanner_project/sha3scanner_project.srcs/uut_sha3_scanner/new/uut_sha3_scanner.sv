@@ -80,6 +80,7 @@ localparam longint unsigned short_hash[25] = '{
     64'h325b8d98168382a5, 64'h96a8aed4a23e081a, 64'h30934e6194879742, 64'hee9538aa987e326c, 64'h2ae78d38d38203dc,
     64'h7e4710a4891383f6, 64'h72c6aa131bd18fd6, 64'h67cb52177f28e29a, 64'h90971806cef30b2a, 64'hf94ed2f472ea6f59
 };
+localparam longint unsigned short_nonce = 55; // NOTE: scan_hash in legacy miners would return 56
 
 
 localparam longint unsigned long_hash[25] = '{
@@ -89,19 +90,30 @@ localparam longint unsigned long_hash[25] = '{
     64'habb45c48e248076, 64'hfe5664f4d03a4b0, 64'h3d5a56330548eef, 64'h7a258259bb0d2cd, 64'h1ae69eeed21744d,
     64'h0fd711ebcc5d45f, 64'h9fcebe5166ab01e, 64'ha574eed4d6df9ae, 64'hb6efcd50e6d2e80, 64'hc9818df1d4f8128
 };
+localparam longint unsigned long_nonce = 132091; // remember scan_hash in legacy returns count of hashes done so +1
 
-function expected_result(input int index);
+function longint unsigned expected_hash(input int index);
     if(test_mode == "short") return short_hash[index];
     return long_hash[index];
 endfunction
 
+function longint unsigned expected_nonce();
+    if(test_mode == "short") return short_nonce;
+    return long_nonce;
+endfunction
+
 always @(posedge clk) if(found) begin
   for (int loop = 0; loop < 25; loop++) begin
-      if (result[loop] != expected_result(loop)) begin
-        $display("Result[%d] !! FAILED !! (expected %h, found %h)", loop, expected_result(loop), result[loop]);
+      if (result[loop] != expected_hash(loop)) begin
+        $display("Result[%d] !! FAILED !! (expected %h, found %h)", loop, expected_hash(loop), result[loop]);
         $fatal;
         $finish;
       end
+  end
+  if (good_enough != expected_nonce()) begin
+        $display("Nonce differs !! FAILED !! (expected %h, found %h)", expected_nonce(), good_enough);
+        $fatal;
+        $finish;
   end
   $display("Result @ %t nonce = %d %h", $realtime, good_enough, good_enough);
   $display("SHA3-1600 hasher GOOD");
