@@ -14,10 +14,10 @@ are captured when .sample is high.
 The result is more or less the same, it is given to you when .good is high.
 */
 module sha3_round_function #(
-    string THETA_UPDATE_LOGIC_STYLE = "basic",
-    string CHI_MODIFY_STYLE = "basic",
-    string IOTA_STYLE = "basic",
-    byte unsigned ROUND_INDEX = 0 // 0..23 integer
+    THETA_UPDATE_LOGIC_STYLE = "basic",
+    CHI_MODIFY_STYLE = "basic",
+    IOTA_STYLE = "basic",
+    ROUND_INDEX = 0 // 0..23 integer
 )(
     input clk,
     input[63:0] isa[5],

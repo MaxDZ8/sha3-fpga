@@ -17,7 +17,7 @@ module sha3_5x5_pipelined #(
     THETA_BINARY_LOGIC_STYLE = "basic",
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
-    longint unsigned IOTA_VALUE = 64'h0 // wrong value, you give me the magic number!
+    IOTA_VALUE = 64'h0 // wrong value, you give me the magic number!
 )(
     input clk,
     input rst, // note reset is positive, will clear when high

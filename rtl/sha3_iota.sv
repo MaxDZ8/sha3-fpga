@@ -6,7 +6,7 @@
 // by parameter, I'd expect inference to optimize away irrelevant bits by itself.
 module sha3_iota #(
     OUTPUT_BUFFER = 1,
-    longint unsigned VALUE = 64'h0 // wrong value, you give me the magic number!
+    VALUE = 64'h0 // wrong value, you give me the magic number!
 )(
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],

@@ -2,7 +2,7 @@
 
 // A bunch of buffers to delay 25 ulongs a few clocks!
 module sha3_state_delayer #(
-    unsigned DELAY = 4
+    DELAY = 4
 )(
     input clk,
     // input slices

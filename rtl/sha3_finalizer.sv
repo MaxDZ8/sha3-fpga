@@ -7,8 +7,8 @@
 // So one is a 3-way operation and the other a four-way operation.
 // Albeit used only once, I might want to consider this more closely in the future. 
 module sha3_finalizer #(
-    byte unsigned OUTPUT_BUFFER = 1,
-    longint unsigned VALUE = 64'h0 // wrong value, you give me the magic number!
+    OUTPUT_BUFFER = 1,
+    VALUE = 64'h0 // wrong value, you give me the magic number!
 )(
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
