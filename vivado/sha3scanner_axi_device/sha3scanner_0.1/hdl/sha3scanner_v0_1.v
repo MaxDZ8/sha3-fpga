@@ -15,6 +15,13 @@
 	)
 	(
 		// Users to add ports here
+		
+		// True if we are actively scanning. 
+    output wire dispatching,
+    // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
+    output wire evaluating,
+    // True if at least one resulting hash is good enough.
+    output wire found,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -68,7 +75,11 @@
 		.S_AXI_RDATA(s00_axi_rdata),
 		.S_AXI_RRESP(s00_axi_rresp),
 		.S_AXI_RVALID(s00_axi_rvalid),
-		.S_AXI_RREADY(s00_axi_rready)
+		.S_AXI_RREADY(s00_axi_rready),
+		
+		.dispatching(dispatching),
+		.evaluating(evaluating),
+		.found(found)
 	);
 
 	// Add user logic here

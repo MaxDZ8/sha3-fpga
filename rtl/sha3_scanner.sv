@@ -5,7 +5,7 @@ module sha3_scanner #(
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic"
 )(
-    input clk,
+    input clk, rst,
     input start,
     
     // "Difficulty"
@@ -17,7 +17,7 @@ module sha3_scanner #(
 	  
 	  output dispatching, evaluating, found, ready,
 	  output[31:0] nonce,
-	  output[63:0] hash[25]
+	  output[31:0] hash[50]
 );
 
 wire capture = start & ready;
@@ -41,15 +41,22 @@ end
 wire[31:0] scan_start = rowc[0][63:32];
 int unsigned dispatch_iterator = 32'b0, next_nonce = 32'b0;
 bit buff_dispatching = 1'b0;
-always_ff @(posedge clk) if (buff_dispatching) begin
-    buff_dispatching <= dispatch_iterator < 32'hFFFFFFFF & ~found;
-    dispatch_iterator <= dispatch_iterator + 1'b1;
-    next_nonce <= next_nonce + 1;
+always_ff @(posedge clk) if(rst) begin
+    buff_dispatching <= 1'b0;
+    dispatch_iterator <= 32'b0;
+    next_nonce <= 32'b0;
 end
 else begin
-    buff_dispatching <= capture;
-    dispatch_iterator <= 32'b0;
-    next_nonce <= scan_start;
+    if (buff_dispatching) begin
+        buff_dispatching <= dispatch_iterator < 32'hFFFFFFFF & ~found;
+        dispatch_iterator <= dispatch_iterator + 1'b1;
+        next_nonce <= next_nonce + 1;
+    end
+    else begin
+        buff_dispatching <= capture;
+        dispatch_iterator <= 32'b0;
+        next_nonce <= scan_start;
+    end
 end
 assign dispatching = buff_dispatching;
 
@@ -80,7 +87,11 @@ wire good_enough = evaluating & $unsigned(hash_diff) < $unsigned(threshold);
 
 int unsigned result_iterator = 32'b0;
 bit buff_found = 1'b0;
-always_ff @(posedge clk) begin
+always_ff @(posedge clk) if(rst) begin
+    buff_found <= 1'b0;
+    result_iterator <= 32'b0;
+end
+else begin
     if (ready) begin
         if (capture) begin
             buff_found <= 1'b0;
@@ -94,18 +105,27 @@ assign found = buff_found;
 
 int unsigned good_nonce = 32'b0;
 longint unsigned good_hash[25];
-always_ff @(posedge clk) if(good_enough) begin
-    good_nonce <= result_iterator;
-    good_hash <= '{
-        resa[0], resa[1], resa[2], resa[3], resa[4],
-        resb[0], resb[1], resb[2], resb[3], resb[4],
-        resc[0], resc[1], resc[2], resc[3], resc[4],
-        resd[0], resd[1], resd[2], resd[3], resd[4],
-        rese[0], rese[1], rese[2], rese[3], rese[4]
-    };
+always_ff @(posedge clk) if(rst) begin
+    good_nonce <= 1'b0;
+    good_hash <= '{ 25{ 64'b0 } };
+end
+else begin
+    if(good_enough) begin
+        good_nonce <= result_iterator;
+        good_hash <= '{
+            resa[0], resa[1], resa[2], resa[3], resa[4],
+            resb[0], resb[1], resb[2], resb[3], resb[4],
+            resc[0], resc[1], resc[2], resc[3], resc[4],
+            resd[0], resd[1], resd[2], resd[3], resd[4],
+            rese[0], rese[1], rese[2], rese[3], rese[4]
+        };
+    end
 end
 assign nonce = good_nonce;
-for (genvar loop = 0; loop < 25; loop++) assign hash[loop] = good_hash[loop];
+for (genvar loop = 0; loop < 25; loop++) begin
+    assign hash[loop * 2    ] = good_hash[loop][63:32];
+    assign hash[loop * 2 + 1] = good_hash[loop][31: 0];
+end
 
 
 bit was_evaluating = 1'b0;

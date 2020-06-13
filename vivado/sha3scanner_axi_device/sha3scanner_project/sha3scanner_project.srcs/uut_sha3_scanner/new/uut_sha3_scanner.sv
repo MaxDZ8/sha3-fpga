@@ -43,7 +43,7 @@ bit start = 1'b0, pulsed = 1'b0;
 
 wire scanning, evaluating, found, scanner_ready;
 wire[31:0] good_enough;
-wire[63:0] result[25];
+wire[31:0] dwords[50];
 
 sha3_scanner scanner(
     .clk(clk), .start(start),
@@ -52,8 +52,18 @@ sha3_scanner scanner(
 	  
 	  .dispatching(scanning), .evaluating(evaluating), .found(found), .ready(scanner_ready),
 	  .nonce(good_enough),
-	  .hash(result)
+	  .hash(dwords)
 );
+
+wire[63:0] result[25] = '{
+    { dwords[ 0], dwords[ 1] }, { dwords[ 2], dwords[ 3] }, { dwords[ 4], dwords[ 5] }, { dwords[ 6], dwords[ 7] },
+    { dwords[ 8], dwords[ 9] }, { dwords[10], dwords[11] }, { dwords[12], dwords[13] }, { dwords[14], dwords[15] },
+    { dwords[16], dwords[17] }, { dwords[18], dwords[19] }, { dwords[20], dwords[21] }, { dwords[22], dwords[23] },
+    { dwords[24], dwords[25] }, { dwords[26], dwords[27] }, { dwords[28], dwords[29] }, { dwords[30], dwords[31] },
+    { dwords[32], dwords[33] }, { dwords[34], dwords[35] }, { dwords[36], dwords[37] }, { dwords[38], dwords[39] },
+    { dwords[40], dwords[41] }, { dwords[42], dwords[43] }, { dwords[44], dwords[45] }, { dwords[46], dwords[47] },
+    { dwords[48], dwords[49] }
+};
 
 
 initial begin
