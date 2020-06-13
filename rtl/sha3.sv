@@ -2,6 +2,8 @@
 
 module sha3 #(
     THETA_UPDATE_LOGIC_STYLE = "basic",
+    /* See also sha3_round_function RHOPI_BUFFERS */
+    RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic"
 )(

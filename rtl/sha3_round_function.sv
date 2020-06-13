@@ -15,6 +15,14 @@ The result is more or less the same, it is given to you when .good is high.
 */
 module sha3_round_function #(
     THETA_UPDATE_LOGIC_STYLE = "basic",
+    /* Rho-pi rotates each state element and permutates the various elements.
+    For high-clock rate, it seems a good 'do nothing' step to inject a self-contained pipeline buffer
+    which can help P&R relocate to somewhere less congested. Valid values:
+    <=0 - Rho_pi will be a pure wire rename
+    >=1 - buffers outputs
+    >=2 - buffers both outputs and inputs
+    */
+    RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
     ROUND_INDEX = 0 // 0..23 integer
@@ -48,7 +56,10 @@ sha3_theta #(
 wire[63:0] china[0:4], chinb[0:4], chinc[0:4], chind[0:4], chine[0:4];
 wire chi_fetch;
 
-sha3_rho_pi rhopi(
+sha3_rho_pi #(
+    .OUTPUT_BUFFER(RHOPI_BUFFERS >= 1 ? 1 : 0),
+    .INPUT_BUFFER(RHOPI_BUFFERS >= 2 ? 1 : 0)
+) rhopi(
     .clk(clk),
     .isa(rina), .isb(rinb), .isc(rinc), .isd(rind), .ise(rine), .sample(rho_fetch),
     .osa(china), .osb(chinb), .osc(chinc), .osd(chind), .ose(chine), .ogood(chi_fetch)
