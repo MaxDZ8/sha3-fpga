@@ -21,12 +21,22 @@ module sha3_theta #(
     output good
 );
 
+// Dear PaR, feel free to relocate me.
+wire fetched;
+wire[63:0] buffa[5], buffb[5], buffc[5], buffd[5], buffe[5];
+sha3_state_capture bufferize(
+    .clk(clk),
+    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .ogood(fetched),
+    .osa(buffa), .osb(buffb), .osc(buffc), .osd(buffd), .ose(buffe)
+);
+
 // This is the first proper computation so I let the elts buffer once to separate me from the previous round.
 // This module itself does not buffer... kinda.
 wire[63:0] elt[5];
 sha3_theta_elts eltificator (
     .clk(clk),
-    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .sample(fetched), .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
     .oelt(elt)
 );
 
@@ -34,9 +44,9 @@ sha3_theta_elts eltificator (
 // There's no good signal output, just make sure to instantiate elts correctly and match them!
 wire[63:0] od[5][5];
 wire sample_delayed;
-sha3_state_delayer#( .DELAY(3) ) delay (
+sha3_state_delayer#( .DELAY(2) ) delay (
     .clk(clk),
-    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .sample(fetched), .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
     .oda(od[0]), .odb(od[1]), .odc(od[2]), .odd(od[3]), .ode(od[4]),
     .good(sample_delayed)
 );
