@@ -3,23 +3,53 @@
 // Evaluating theta-elts is better done for all the slices toghether: produce 5 temporary terms, each used twice.
 // We start doing some logic here so this buffers its inputs before everything.
 // This assumes you buffered the various inputs yourself real close.
-module sha3_theta_elts(
+module sha3_theta_elts #(
+    STYLE = "basic",
+    OUTPUT_BUFFER = 1
+)(
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input sample,
     output[63:0] oelt[5]
 );
 
-// The term computation. The various elements in a slice are just to be xor'ed together.
-// The result goes in its flip-flop for better timing. 
-longint unsigned term[5];
-genvar geni;
-for (geni = 0; geni < 5; geni++) begin
-    always_ff @(posedge clk) term[geni] <= isa[geni] ^ isb[geni] ^ isc[geni] ^ isd[geni] ^ ise[geni];
+wire[63:0] term[5];
+for (genvar comp = 0; comp < 5; comp++) begin : xor5
+    assign term[comp] = isa[comp] ^ isb[comp] ^ isc[comp] ^ isd[comp] ^ ise[comp];
 end
 
-sha3_theta_elt_evaluator rotxor(
-    .clk(clk), .term(term), .elt(oelt)
-);
+// Elt = termA ^ rotate(termB, amount=1, direction=left).
+// Again, this is best done in a large chunk so in the future I can pack bits with ease.
+function longint unsigned roltl_1(input longint unsigned value);
+    return { value[62:0], value[63] };
+endfunction
+
+wire[63:0] rotated[5], result[5];
+for (genvar comp = 0; comp < 5; comp++) begin : lane
+    assign rotated[comp] = roltl_1(term[comp]);
+    assign result[comp] = term[(comp + 4) % 5] ^ rotated[(comp + 1) % 5];
+end
+
+if (STYLE == "basic") begin
+    // The simplest form, I just let inference do its job.
+    if (OUTPUT_BUFFER) begin : flipflops
+        longint unsigned eltbuff[5];
+        always_ff @(posedge clk) begin
+            eltbuff[0] <= result[0];
+            eltbuff[1] <= result[1];
+            eltbuff[2] <= result[2];
+            eltbuff[3] <= result[3];
+            eltbuff[4] <= result[4];
+        end
+        for (genvar comp = 0; comp < 5; comp++) assign oelt[comp] = eltbuff[comp];
+    end
+    else begin : direct
+        for (genvar comp = 0; comp < 5; comp++) assign oelt[comp] = result[comp];
+    end
+end
+else begin
+    // Another candidate is: DSP48
+    $error("Logic style unsupported.");
+end
 
 endmodule

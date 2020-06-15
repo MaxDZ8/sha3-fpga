@@ -44,7 +44,7 @@ sha3_theta_elts eltificator (
 // There's no good signal output, just make sure to instantiate elts correctly and match them!
 wire[63:0] od[5][5];
 wire sample_delayed;
-sha3_state_delayer#( .DELAY(2) ) delay (
+sha3_state_delayer#( .DELAY(1) ) delay (
     .clk(clk),
     .sample(fetched), .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
     .oda(od[0]), .odb(od[1]), .odc(od[2]), .odd(od[3]), .ode(od[4]),
