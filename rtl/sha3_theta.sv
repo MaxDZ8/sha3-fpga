@@ -56,11 +56,9 @@ sha3_theta_updater#( .LOGIC_STYLE(UPDATE_LOGIC_STYLE) ) slice_xorrer (
     .clk(clk),
     .sample(sample_delayed), .isa(od[0]), .isb(od[1]), .isc(od[2]), .isd(od[3]), .ise(od[4]),
     .elt(elt),
-    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose),
+    .ogood(good)
 );
 
-bit[3:0] result_ready = 4'b0;
-always_ff @(posedge clk) result_ready <= { result_ready[2:0], sample };
-assign good = result_ready[3];
 
 endmodule

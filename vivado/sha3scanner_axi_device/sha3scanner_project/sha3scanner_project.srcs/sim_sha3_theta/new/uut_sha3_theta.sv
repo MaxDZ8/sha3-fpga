@@ -41,7 +41,7 @@ endgenerate
 wire[63:0] result[5][5];
 wire good;
 
-sha3_theta #(.UPDATE_LOGIC_STYLE("basic")) testing(
+sha3_theta #(.UPDATE_LOGIC_STYLE("inferred-dsp")) testing(
     .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
