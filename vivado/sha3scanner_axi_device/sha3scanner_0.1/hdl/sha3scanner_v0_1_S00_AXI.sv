@@ -717,7 +717,7 @@
 	wire[63:0] max_diff = { threshold[1], threshold[0] };
 	
 	sha3_scanner #(
-    .THETA_UPDATE_LOGIC_STYLE("basic"),
+    .THETA_UPDATE_BY_DSP(24'b0010_0010_0010_0010_0010_0010),
     .CHI_MODIFY_STYLE("basic"),
     .IOTA_STYLE("basic")
   ) scanner(

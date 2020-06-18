@@ -6,7 +6,7 @@
 module sha3_state_slice_to_48(
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input[15:0] ispare,
-    input[47:0] ovector[34]
+    output[47:0] ovector[34]
 );
 
 assign ovector[ 0] = isa[0][63:16];

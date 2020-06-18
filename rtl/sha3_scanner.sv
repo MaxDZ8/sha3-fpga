@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module sha3_scanner #(
-    THETA_UPDATE_LOGIC_STYLE = "basic",
+    THETA_UPDATE_BY_DSP = 24'b0010_0010_0010_0010_0010_0010,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic"
 )(
@@ -71,7 +71,9 @@ localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'
 localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
 
 wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
-sha3 hasher(
+sha3 #(
+    .THETA_UPDATE_BY_DSP(THETA_UPDATE_BY_DSP)
+) hasher(
     .clk(clk),
     .isa(rowa), .isb(rowb),
     .isc('{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] }),

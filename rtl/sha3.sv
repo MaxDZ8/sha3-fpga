@@ -1,7 +1,7 @@
 `timescale 1ns / 1ps
 
 module sha3 #(
-    THETA_UPDATE_LOGIC_STYLE = "basic",
+    THETA_UPDATE_BY_DSP = 24'b0010_0010_0010_0010_0010_0010,
     /* See also sha3_round_function RHOPI_BUFFERS */
     RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
@@ -22,10 +22,11 @@ module sha3 #(
     output ogood
 );
 
+localparam first_theta_style = THETA_UPDATE_BY_DSP[0] ? "inferred-dsp" : "basic";
 wire feed_next[23];
 wire[63:0] chain[23][5][5];
 sha3_round_function #(
-    .THETA_UPDATE_LOGIC_STYLE(THETA_UPDATE_LOGIC_STYLE),
+    .THETA_UPDATE_LOGIC_STYLE(first_theta_style),
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
     .IOTA_STYLE(IOTA_STYLE),
     .ROUND_INDEX(0)
@@ -36,6 +37,7 @@ sha3_round_function #(
 );
 
 for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similarly
+    localparam theta_style = THETA_UPDATE_BY_DSP[intermediate] ? "inferred-dsp" : "basic";
     localparam previously = intermediate - 1; 
     wire fetch = feed_next[previously];
     wire[63:0] ina[5] = chain[previously][0];
@@ -44,7 +46,7 @@ for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similar
     wire[63:0] ind[5] = chain[previously][3];
     wire[63:0] ine[5] = chain[previously][4];
     sha3_round_function #(
-        .THETA_UPDATE_LOGIC_STYLE(THETA_UPDATE_LOGIC_STYLE),
+        .THETA_UPDATE_LOGIC_STYLE(theta_style),
         .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
         .IOTA_STYLE(IOTA_STYLE),
         .ROUND_INDEX(intermediate)
@@ -56,8 +58,9 @@ for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similar
     );
 end
 
+localparam last_theta_style = THETA_UPDATE_BY_DSP[23] ? "inferred-dsp" : "basic";
 sha3_round_function #(
-    .THETA_UPDATE_LOGIC_STYLE(THETA_UPDATE_LOGIC_STYLE),
+    .THETA_UPDATE_LOGIC_STYLE(last_theta_style),
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
     .IOTA_STYLE(IOTA_STYLE),
     .ROUND_INDEX(23)
