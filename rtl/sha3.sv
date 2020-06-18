@@ -22,7 +22,7 @@ module sha3 #(
     output ogood
 );
 
-localparam first_theta_style = THETA_UPDATE_BY_DSP[0] ? "inferred-dsp" : "basic";
+localparam first_theta_style = THETA_UPDATE_BY_DSP[0] ? "instantiated-dsp" : "basic";
 wire feed_next[23];
 wire[63:0] chain[23][5][5];
 sha3_round_function #(
@@ -37,7 +37,7 @@ sha3_round_function #(
 );
 
 for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similarly
-    localparam theta_style = THETA_UPDATE_BY_DSP[intermediate] ? "inferred-dsp" : "basic";
+    localparam theta_style = THETA_UPDATE_BY_DSP[intermediate] ? "instantiated-dsp" : "basic";
     localparam previously = intermediate - 1; 
     wire fetch = feed_next[previously];
     wire[63:0] ina[5] = chain[previously][0];
@@ -58,7 +58,7 @@ for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similar
     );
 end
 
-localparam last_theta_style = THETA_UPDATE_BY_DSP[23] ? "inferred-dsp" : "basic";
+localparam last_theta_style = THETA_UPDATE_BY_DSP[23] ? "instantiated-dsp" : "basic";
 sha3_round_function #(
     .THETA_UPDATE_LOGIC_STYLE(last_theta_style),
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),

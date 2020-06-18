@@ -10,6 +10,10 @@ module sha3_theta_updater #(
     // "inferred-dsp": DSP48 in a portable way. Saves logic LUTs and consolidates result buffer into P.
     //                 This has a quirk: sample must go high when .isX are provided. Elts must come
     //                 one clock later. This extra latency helps balancing the pipeline latencies.
+    //                 It turns out it doesn't quite work as expected; the pipeline balance register AB is only
+    //                 absorbed once, therefore no savings appear. Maybe it'll change its mind in implementation
+    //                 but I'd rather have the synth results be coherent.
+    // "instantiated-dsp": instantiate DSP48E1 explicitly and be what I want!
     LOGIC_STYLE = "basic"
 )(
     input clk,
@@ -42,7 +46,7 @@ if (LOGIC_STYLE == "basic") begin
     always_ff @(posedge clk) buffgood <= sample;
     assign ogood = buffgood;
 end
-else if(LOGIC_STYLE == "inferred-dsp") begin
+else if(LOGIC_STYLE == "inferred-dsp" || LOGIC_STYLE == "instantiated-dsp") begin
     wire[47:0] slices[34], elt48[34], updated[34];
     sha3_state_slice_to_48 splitter (
         .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .ispare({ sample, 15'b0 }),
@@ -50,10 +54,19 @@ else if(LOGIC_STYLE == "inferred-dsp") begin
     );
     sha3_elts_slice_to_48 split_n_dup (.ielt(elt), .spare(16'b0), .oelt(elt48));
     
-    for (genvar loop = 0; loop < 34; loop++) begin : lane
-        inferred_dsp48_xor xorring(
-            .clk(clk), .one(slices[loop]), .two(elt48[loop]), .res(updated[loop])
-        );
+    if (LOGIC_STYLE == "inferred-dsp") begin : inferred
+        for (genvar loop = 0; loop < 34; loop++) begin : lane
+            inferred_dsp48_xor xorring(
+                .clk(clk), .one(slices[loop]), .two(elt48[loop]), .res(updated[loop])
+            );
+        end
+    end
+    else begin : instantiated
+        for (genvar loop = 0; loop < 34; loop++) begin : lane
+            instantiated_dsp48_xor xorring(
+                .clk(clk), .one(slices[loop]), .two(elt48[loop]), .res(updated[loop])
+            );
+        end
     end
     
     wire[15:0] flowed;
