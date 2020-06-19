@@ -21,7 +21,15 @@ module sha3_theta #(
     output good
 );
 
-// Dear PaR, feel free to relocate me.
+// Ok, it is said a good practice is to buffer inputs and outputs... and maybe add some pipeline registers as well.
+// The reality is I need to cut on flip-flops. A lot. It also happens the inputs to Theta are always buffered somehow,
+// either by the hasher or the previous round so instead of buffering compute elt terms right away.
+longint unsigned term[5];
+for (genvar comp = 0; comp < 5; comp++) begin : xor5
+    always_ff @(posedge clk) term[comp] <= isa[comp] ^ isb[comp] ^ isc[comp] ^ isd[comp] ^ ise[comp];
+end
+
+
 wire fetched;
 wire[63:0] buffa[5], buffb[5], buffc[5], buffd[5], buffe[5];
 sha3_state_capture bufferize(
@@ -34,17 +42,16 @@ sha3_state_capture bufferize(
 // This is the first proper computation so I let the elts buffer once to separate me from the previous round.
 // This module itself does not buffer... kinda.
 wire[63:0] elt[5];
-sha3_theta_elts eltificator (
+sha3_theta_elts #(.OUTPUT_BUFFER(0)) eltificator (
     .clk(clk),
-    .sample(fetched), .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
+    .sample(fetched), .iterm(term),
     .oelt(elt)
 );
 
-// While I don't really buffer the input signals themselves I still need to delay them to match elt output!
-// There's no good signal output, just make sure to instantiate elts correctly and match them!
+// Now elts and state come at the same clock so this isn't necessary anymore.
 wire[63:0] od[5][5];
 wire sample_delayed;
-sha3_state_delayer#( .DELAY(1) ) delay (
+sha3_state_delayer#( .DELAY(0) ) delay (
     .clk(clk),
     .sample(fetched), .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
     .oda(od[0]), .odb(od[1]), .odc(od[2]), .odd(od[3]), .ode(od[4]),
@@ -52,7 +59,10 @@ sha3_state_delayer#( .DELAY(1) ) delay (
 );
 
 // Let's just put the things together. Again, I don't buffer the outputs here, everything is delegated.
-sha3_theta_updater#( .LOGIC_STYLE(UPDATE_LOGIC_STYLE) ) slice_xorrer (
+sha3_theta_updater#(
+    .LOGIC_STYLE(UPDATE_LOGIC_STYLE),
+    .AB_COMPENSATE(0)
+) slice_xorrer (
     .clk(clk),
     .sample(sample_delayed), .isa(od[0]), .isb(od[1]), .isc(od[2]), .isd(od[3]), .ise(od[4]),
     .elt(elt),

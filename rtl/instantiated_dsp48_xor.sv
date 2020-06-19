@@ -1,14 +1,16 @@
 `timescale 1ns / 1ps
 
-module instantiated_dsp48_xor(
+module instantiated_dsp48_xor #(
+    AB_COUNT = 2
+)(
     input clk,
     input[47:0] one, two,
     output[47:0] res
 );
 
 DSP48E1 #(
-    .USE_MULT("NONE"),
-    .AREG(2), .BREG(2)
+    .USE_MULT("NONE"), .MREG(0),
+    .AREG(AB_COUNT), .BREG(AB_COUNT)
 ) widexor (
     .CLK(clk),
     .ALUMODE(4'b0100), // xor all the things

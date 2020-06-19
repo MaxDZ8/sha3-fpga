@@ -8,15 +8,10 @@ module sha3_theta_elts #(
     OUTPUT_BUFFER = 1
 )(
     input clk,
-    input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
+    input[63:0] iterm[5],
     input sample,
     output[63:0] oelt[5]
 );
-
-wire[63:0] term[5];
-for (genvar comp = 0; comp < 5; comp++) begin : xor5
-    assign term[comp] = isa[comp] ^ isb[comp] ^ isc[comp] ^ isd[comp] ^ ise[comp];
-end
 
 // Elt = termA ^ rotate(termB, amount=1, direction=left).
 // Again, this is best done in a large chunk so in the future I can pack bits with ease.
@@ -26,8 +21,8 @@ endfunction
 
 wire[63:0] rotated[5], result[5];
 for (genvar comp = 0; comp < 5; comp++) begin : lane
-    assign rotated[comp] = roltl_1(term[comp]);
-    assign result[comp] = term[(comp + 4) % 5] ^ rotated[(comp + 1) % 5];
+    assign rotated[comp] = roltl_1(iterm[comp]);
+    assign result[comp] = iterm[(comp + 4) % 5] ^ rotated[(comp + 1) % 5];
 end
 
 if (STYLE == "basic") begin

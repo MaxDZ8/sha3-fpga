@@ -14,7 +14,8 @@ module sha3_theta_updater #(
     //                 absorbed once, therefore no savings appear. Maybe it'll change its mind in implementation
     //                 but I'd rather have the synth results be coherent.
     // "instantiated-dsp": instantiate DSP48E1 explicitly and be what I want!
-    LOGIC_STYLE = "basic"
+    LOGIC_STYLE = "basic",
+    AB_COMPENSATE = 1
 )(
     input clk,
     input sample,
@@ -47,6 +48,7 @@ if (LOGIC_STYLE == "basic") begin
     assign ogood = buffgood;
 end
 else if(LOGIC_STYLE == "inferred-dsp" || LOGIC_STYLE == "instantiated-dsp") begin
+    localparam abcount = AB_COMPENSATE ? 2 : 1;
     wire[47:0] slices[34], elt48[34], updated[34];
     sha3_state_slice_to_48 splitter (
         .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .ispare({ sample, 15'b0 }),
@@ -56,14 +58,14 @@ else if(LOGIC_STYLE == "inferred-dsp" || LOGIC_STYLE == "instantiated-dsp") begi
     
     if (LOGIC_STYLE == "inferred-dsp") begin : inferred
         for (genvar loop = 0; loop < 34; loop++) begin : lane
-            inferred_dsp48_xor xorring(
+            inferred_dsp48_xor #(.AB_COUNT(abcount)) xorring(
                 .clk(clk), .one(slices[loop]), .two(elt48[loop]), .res(updated[loop])
             );
         end
     end
     else begin : instantiated
         for (genvar loop = 0; loop < 34; loop++) begin : lane
-            instantiated_dsp48_xor xorring(
+            instantiated_dsp48_xor #(.AB_COUNT(abcount)) xorring(
                 .clk(clk), .one(slices[loop]), .two(elt48[loop]), .res(updated[loop])
             );
         end
