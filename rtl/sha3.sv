@@ -5,7 +5,8 @@ module sha3 #(
     /* See also sha3_round_function RHOPI_BUFFERS */
     RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
-    IOTA_STYLE = "basic"
+    IOTA_STYLE = "basic",
+    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111
 )(
     input clk,
     input[63:0] isa[5],
@@ -23,12 +24,14 @@ module sha3 #(
 );
 
 localparam first_theta_style = THETA_UPDATE_BY_DSP[0] ? "instantiated-dsp" : "basic";
+localparam first_round_buffered = ROUND_OUTPUT_BUFFERED[0];
 wire feed_next[23];
 wire[63:0] chain[23][5][5];
 sha3_round_function #(
     .THETA_UPDATE_LOGIC_STYLE(first_theta_style),
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
     .IOTA_STYLE(IOTA_STYLE),
+    .OUTPUT_BUFFERED(first_round_buffered),
     .ROUND_INDEX(0)
 ) first_round (
     .clk(clk),
@@ -38,6 +41,7 @@ sha3_round_function #(
 
 for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similarly
     localparam theta_style = THETA_UPDATE_BY_DSP[intermediate] ? "instantiated-dsp" : "basic";
+    localparam output_buffered = ROUND_OUTPUT_BUFFERED[intermediate];
     localparam previously = intermediate - 1; 
     wire fetch = feed_next[previously];
     wire[63:0] ina[5] = chain[previously][0];
@@ -49,7 +53,8 @@ for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similar
         .THETA_UPDATE_LOGIC_STYLE(theta_style),
         .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
         .IOTA_STYLE(IOTA_STYLE),
-        .ROUND_INDEX(intermediate)
+        .ROUND_INDEX(intermediate),
+        .OUTPUT_BUFFERED(output_buffered)
     ) cruncher (
         .clk(clk),
         .sample(fetch), .isa(ina), .isb(inb), .isc(inc), .isd(ind), .ise(ine),
@@ -59,11 +64,13 @@ for (genvar intermediate = 1; intermediate < 23; intermediate++) begin : similar
 end
 
 localparam last_theta_style = THETA_UPDATE_BY_DSP[23] ? "instantiated-dsp" : "basic";
+localparam last_round_buffered = ROUND_OUTPUT_BUFFERED[23];
 sha3_round_function #(
     .THETA_UPDATE_LOGIC_STYLE(last_theta_style),
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
     .IOTA_STYLE(IOTA_STYLE),
-    .ROUND_INDEX(23)
+    .ROUND_INDEX(23),
+    .OUTPUT_BUFFERED(last_round_buffered)
 ) last_round (
     .clk(clk),
     .sample(feed_next[22]),

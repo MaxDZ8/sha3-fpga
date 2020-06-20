@@ -25,7 +25,9 @@ module sha3_round_function #(
     RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
-    ROUND_INDEX = 0 // 0..23 integer
+    ROUND_INDEX = 0, // 0..23 integer
+    // If true-ish my final theta will also buffer, otherwise flow right away to next round.
+    OUTPUT_BUFFERED = 1'b1
 )(
     input clk,
     input[63:0] isa[5],
@@ -90,7 +92,8 @@ if (ROUND_INDEX < 23) begin : std_round
     );
     
     sha3_iota #(
-       .VALUE(IOTA_VALUE)
+       .VALUE(IOTA_VALUE),
+       .OUTPUT_BUFFER(OUTPUT_BUFFERED)
     ) iota (
        .clk(clk),
        .isa(ioina), .isb(ioinb), .isc(ioinc), .isd(ioind), .ise(ioine), .sample(io_fetch),
@@ -98,7 +101,10 @@ if (ROUND_INDEX < 23) begin : std_round
   );
 end
 else begin : last_round
-    sha3_finalizer #( .VALUE(IOTA_VALUE) ) finalizer (
+    sha3_finalizer #(
+        .VALUE(IOTA_VALUE),
+        .OUTPUT_BUFFER(OUTPUT_BUFFERED)
+    ) finalizer (
         .clk(clk),
         .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
         .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)

@@ -3,7 +3,8 @@
 module sha3_scanner #(
     THETA_UPDATE_BY_DSP = 24'b0010_0010_0010_0010_0010_0010,
     CHI_MODIFY_STYLE = "basic",
-    IOTA_STYLE = "basic"
+    IOTA_STYLE = "basic",
+    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111
 )(
     input clk, rst,
     input start,
@@ -72,7 +73,8 @@ localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0
 
 wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
 sha3 #(
-    .THETA_UPDATE_BY_DSP(THETA_UPDATE_BY_DSP)
+    .THETA_UPDATE_BY_DSP(THETA_UPDATE_BY_DSP),
+    .ROUND_OUTPUT_BUFFERED(ROUND_OUTPUT_BUFFERED)
 ) hasher(
     .clk(clk),
     .isa(rowa), .isb(rowb),
