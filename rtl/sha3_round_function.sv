@@ -81,7 +81,8 @@ if (ROUND_INDEX < 23) begin : std_round
     wire[63:0] ioina[0:4], ioinb[0:4], ioinc[0:4], ioind[0:4], ioine[0:4];
     wire io_fetch;
     sha3_chi #(
-        .STYLE(CHI_MODIFY_STYLE)
+        .STYLE(CHI_MODIFY_STYLE),
+        .OUTPUT_BUFFER(0)
     ) chi (
         .clk(clk),
         .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
