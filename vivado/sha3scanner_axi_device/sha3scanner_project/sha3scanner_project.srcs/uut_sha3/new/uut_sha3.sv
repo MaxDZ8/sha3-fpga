@@ -154,7 +154,12 @@ endgenerate
 wire[63:0] result[5][5];
 wire ogood;
 
-sha3 hasher(
+sha3 #(
+    .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
+    .CHI_MODIFY_STYLE("basic"),
+    .IOTA_STYLE("basic"),
+    .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
+) hasher(
     .clk(clk),
     .isa(feeda), .isb(feedb), .isc(feedc), .isd(feedd), .ise(feede),
     .sample(start),
