@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_round_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3_round" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="160750fs"></ZoomStartTime>
+      <ZoomEndTime time="297851fs"></ZoomEndTime>
+      <Cursor1Time time="275000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="193"></NameColumnWidth>
+      <ValueColumnWidth column_width="70"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="11" />
+   <wvobject fp_name="/uut_sha3_round/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/dispatching" type="logic">
+      <obj_property name="ElementShortName">dispatching</obj_property>
+      <obj_property name="ObjectShortName">dispatching</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/dispatch_index" type="array">
+      <obj_property name="ElementShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/round00/theta/sample" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">sample</obj_property>
+      <obj_property name="ObjectShortName">sample</obj_property>
+      <obj_property name="label">theta_sample</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/round00/rhopi/sample" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">sample</obj_property>
+      <obj_property name="ObjectShortName">sample</obj_property>
+      <obj_property name="label">rhopi_sample</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/round00/\std_round.chi /sample" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">sample</obj_property>
+      <obj_property name="ObjectShortName">sample</obj_property>
+      <obj_property name="label">chi_sample</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/round00/\std_round.iota /sample" type="logic">
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="ElementShortName">sample</obj_property>
+      <obj_property name="ObjectShortName">sample</obj_property>
+      <obj_property name="label">iota_sample</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/ogood" type="logic">
+      <obj_property name="ElementShortName">ogood</obj_property>
+      <obj_property name="ObjectShortName">ogood</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/result_index" type="array">
+      <obj_property name="ElementShortName">result_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+</wave_config>

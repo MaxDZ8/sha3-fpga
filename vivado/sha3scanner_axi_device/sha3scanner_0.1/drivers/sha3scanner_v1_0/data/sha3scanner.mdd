@@ -1,0 +1,10 @@
+
+
+OPTION psf_version = 2.1;
+
+BEGIN DRIVER sha3scanner
+	OPTION supported_peripherals = (sha3scanner);
+	OPTION copyfiles = all;
+	OPTION VERSION = 1.0;
+	OPTION NAME = sha3scanner;
+END DRIVER

@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_theta_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3_theta" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="160835fs"></ZoomStartTime>
+      <ZoomEndTime time="261833fs"></ZoomEndTime>
+      <Cursor1Time time="245000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="193"></NameColumnWidth>
+      <ValueColumnWidth column_width="70"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="15" />
+   <wvobject fp_name="/uut_sha3_theta/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/reset" type="logic">
+      <obj_property name="ElementShortName">reset</obj_property>
+      <obj_property name="ObjectShortName">reset</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/dispatching" type="logic">
+      <obj_property name="ElementShortName">dispatching</obj_property>
+      <obj_property name="ObjectShortName">dispatching</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/dispatch_index" type="array">
+      <obj_property name="ElementShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dispatch_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="group35" type="group">
+      <obj_property name="label">eltificator</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/sample" type="logic">
+         <obj_property name="ElementShortName">sample</obj_property>
+         <obj_property name="ObjectShortName">sample</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/isa" type="array">
+         <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/isb" type="array">
+         <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/isc" type="array">
+         <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/isd" type="array">
+         <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/eltificator/ise" type="array">
+         <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="group42" type="group">
+         <obj_property name="label">evaluator</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <wvobject fp_name="/uut_sha3_theta/testing/eltificator/rotxor/term" type="array">
+            <obj_property name="ElementShortName">term[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">term[0:4][63:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_theta/testing/eltificator/rotxor/elt" type="array">
+            <obj_property name="ElementShortName">elt[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">elt[0:4][63:0]</obj_property>
+            <obj_property name="isExpanded"></obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group52" type="group">
+      <obj_property name="label">delayer</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/DELAY" type="array">
+         <obj_property name="ElementShortName">DELAY[31:0]</obj_property>
+         <obj_property name="ObjectShortName">DELAY[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/sample" type="logic">
+         <obj_property name="ElementShortName">sample</obj_property>
+         <obj_property name="ObjectShortName">sample</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/isa[0]" type="array">
+         <obj_property name="ElementShortName">[0][63:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/\generically.pullout " type="logic">
+         <obj_property name="ElementShortName">\generically.pullout </obj_property>
+         <obj_property name="ObjectShortName">\generically.pullout </obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/\generically.giving [0]" type="array">
+         <obj_property name="ElementShortName">[0][63:0]</obj_property>
+         <obj_property name="ObjectShortName">[0][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/\generically.buffo " type="logic">
+         <obj_property name="ElementShortName">\generically.buffo </obj_property>
+         <obj_property name="ObjectShortName">\generically.buffo </obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/delay/good" type="logic">
+         <obj_property name="ElementShortName">good</obj_property>
+         <obj_property name="ObjectShortName">good</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group113" type="group">
+      <obj_property name="label">updater</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/sample" type="logic">
+         <obj_property name="ElementShortName">sample</obj_property>
+         <obj_property name="ObjectShortName">sample</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/isa" type="array">
+         <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/isb" type="array">
+         <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/isc" type="array">
+         <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/isd" type="array">
+         <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/ise" type="array">
+         <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_theta/testing/slice_xorrer/elt" type="array">
+         <obj_property name="ElementShortName">elt[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">elt[0:4][63:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/good" type="logic">
+      <obj_property name="ElementShortName">good</obj_property>
+      <obj_property name="ObjectShortName">good</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/result_index" type="array">
+      <obj_property name="ElementShortName">result_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">result_index[31:0]</obj_property>
+      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
+      <obj_property name="UseCustomSignalColor">true</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/testing/osa" type="array">
+      <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/testing/osb" type="array">
+      <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/testing/osc" type="array">
+      <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/testing/osd" type="array">
+      <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_theta/testing/ose" type="array">
+      <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
+   </wvobject>
+</wave_config>

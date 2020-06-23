@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_scanner_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3_scanner" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="200309fs"></ZoomStartTime>
+      <ZoomEndTime time="304510fs"></ZoomEndTime>
+      <Cursor1Time time="215000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="173"></NameColumnWidth>
+      <ValueColumnWidth column_width="58"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="7" />
+   <wvobject fp_name="/uut_sha3_scanner/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/dispatching" type="logic">
+      <obj_property name="ElementShortName">dispatching</obj_property>
+      <obj_property name="ObjectShortName">dispatching</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/start" type="logic">
+      <obj_property name="ElementShortName">start</obj_property>
+      <obj_property name="ObjectShortName">start</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/scanning" type="logic">
+      <obj_property name="ElementShortName">scanning</obj_property>
+      <obj_property name="ObjectShortName">scanning</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/evaluating" type="logic">
+      <obj_property name="ElementShortName">evaluating</obj_property>
+      <obj_property name="ObjectShortName">evaluating</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/found" type="logic">
+      <obj_property name="ElementShortName">found</obj_property>
+      <obj_property name="ObjectShortName">found</obj_property>
+   </wvobject>
+   <wvobject fp_name="group33" type="group">
+      <obj_property name="label">scanner</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/capture" type="logic">
+         <obj_property name="ElementShortName">capture</obj_property>
+         <obj_property name="ObjectShortName">capture</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/dispatch_iterator" type="array">
+         <obj_property name="ElementShortName">dispatch_iterator[31:0]</obj_property>
+         <obj_property name="ObjectShortName">dispatch_iterator[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/result_iterator" type="array">
+         <obj_property name="ElementShortName">result_iterator[31:0]</obj_property>
+         <obj_property name="ObjectShortName">result_iterator[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/threshold" type="array">
+         <obj_property name="ElementShortName">threshold[63:0]</obj_property>
+         <obj_property name="ObjectShortName">threshold[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/good_enough" type="logic">
+         <obj_property name="ElementShortName">good_enough</obj_property>
+         <obj_property name="ObjectShortName">good_enough</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_scanner/scanner/empty_pipeline" type="logic">
+         <obj_property name="ElementShortName">empty_pipeline</obj_property>
+         <obj_property name="ObjectShortName">empty_pipeline</obj_property>
+      </wvobject>
+      <wvobject fp_name="group40" type="group">
+         <obj_property name="label">hasher</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/sample" type="logic">
+            <obj_property name="ElementShortName">sample</obj_property>
+            <obj_property name="ObjectShortName">sample</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[1].fetch " type="logic">
+            <obj_property name="ElementShortName">\similarly[1].fetch </obj_property>
+            <obj_property name="ObjectShortName">\similarly[1].fetch </obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[2].fetch " type="logic">
+            <obj_property name="ElementShortName">\similarly[2].fetch </obj_property>
+            <obj_property name="ObjectShortName">\similarly[2].fetch </obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[21].fetch " type="logic">
+            <obj_property name="ElementShortName">\similarly[21].fetch </obj_property>
+            <obj_property name="ObjectShortName">\similarly[21].fetch </obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[22].fetch " type="logic">
+            <obj_property name="ElementShortName">\similarly[22].fetch </obj_property>
+            <obj_property name="ObjectShortName">\similarly[22].fetch </obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/ogood" type="logic">
+            <obj_property name="ElementShortName">ogood</obj_property>
+            <obj_property name="ObjectShortName">ogood</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+</wave_config>
