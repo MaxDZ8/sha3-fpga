@@ -14,7 +14,7 @@ module sha3_iterating_pipe6(
 
 // Everything is based on bursting inside inputs as long as the outputs don't come out.
 // If the outputs start flowing back, it's time to feedback them!
-localparam bit[3:0] burst_len_and_delay = 4'd14;
+localparam bit[3:0] burst_len_and_delay = 4'd15;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
@@ -34,11 +34,11 @@ always_ff @(posedge clk)  begin
             if(input_iteration == 3'd3) begin
                 input_iteration <= 2'h0;
                 buff_gimme <= 1'b1;
+                waiting_input <= 1'b1;
             end
             else begin
                 input_iteration <= input_iteration + 1'b1;
                 buff_gimme <= 1'b0;
-                waiting_input <= 1'b1;
             end
         end
     end
@@ -49,13 +49,14 @@ localparam bit[5:0] start_rounds[4] = '{ 0, 6, 12, 18 };
 wire[5:0] round_base = start_rounds[input_iteration];
 
 wire consume_iterated = input_iteration != 5'd0;
-wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5];
+longint unsigned buffa[5], buffb[5], buffc[5], buffd[5], buffe[5]; // output and feedback buffers
 wire[63:0] muxoa[5], muxob[5], muxoc[5], muxod[5], muxoe[5];
 wire[4:0] round_after_mux;
 wire muxo_good;
+wire into_mux = waiting_input ? 1'b0 : (consume_iterated | gimme);
 mux1600 uglee(
     .clk(clk),
-    .sample(sample), .selector(consume_iterated), .round(round_base),
+    .sample(into_mux), .selector(consume_iterated), .round(round_base),
     .a('{
         ina[0], ina[1], ina[2], ina[3], ina[4],
         inb[0], inb[1], inb[2], inb[3], inb[4],
@@ -64,11 +65,11 @@ mux1600 uglee(
         ine[0], ine[1], ine[2], ine[3], ine[4]
     }),
     .b('{
-        feeda[0], feeda[1], feeda[2], feeda[3], feeda[4],
-        feedb[0], feedb[1], feedb[2], feedb[3], feedb[4],
-        feedc[0], feedc[1], feedc[2], feedc[3], feedc[4],
-        feedd[0], feedd[1], feedd[2], feedd[3], feedd[4],
-        feede[0], feede[1], feede[2], feede[3], feede[4]
+        buffa[0], buffa[1], buffa[2], buffa[3], buffa[4],
+        buffb[0], buffb[1], buffb[2], buffb[3], buffb[4],
+        buffc[0], buffc[1], buffc[2], buffc[3], buffc[4],
+        buffd[0], buffd[1], buffd[2], buffd[3], buffd[4],
+        buffe[0], buffe[1], buffe[2], buffe[3], buffe[4]
     }),
     .ogood(muxo_good),
     .o('{
@@ -91,19 +92,13 @@ sha3_iterating_pack crunchy (
     .ogood(rndo_good)
 );
 
-longint unsigned buffa[5], buffb[5], buffc[5], buffd[5], buffe[5];
 for (genvar comp = 0; comp < 5; comp++) begin
     always_ff @(posedge clk) if(rndo_good) buffa[comp] <= rndoa[comp];
     always_ff @(posedge clk) if(rndo_good) buffb[comp] <= rndob[comp];
     always_ff @(posedge clk) if(rndo_good) buffc[comp] <= rndoc[comp];
     always_ff @(posedge clk) if(rndo_good) buffd[comp] <= rndod[comp];
     always_ff @(posedge clk) if(rndo_good) buffe[comp] <= rndoe[comp];
-    
-    assign feeda[comp] = buffa[comp];
-    assign feedb[comp] = buffb[comp];
-    assign feedc[comp] = buffc[comp];
-    assign feedd[comp] = buffd[comp];
-    assign feede[comp] = buffe[comp];
+
     assign oa[comp] = buffa[comp];
     assign ob[comp] = buffb[comp];
     assign oc[comp] = buffc[comp];

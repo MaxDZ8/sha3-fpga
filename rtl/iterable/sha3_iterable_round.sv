@@ -66,7 +66,7 @@ if (FINALIZATION_ENABLED) begin : quirky
     mux1600 ohno(
         .clk(clk),
         .sample(rhopi_good), .selector(chi_fetch),
-        .round(round_after_rhopi),
+        .round(round_index_after_rhopi),
         .a('{
             china[0], china[1], china[2], china[3], china[4],
             chinb[0], chinb[1], chinb[2], chinb[3], chinb[4],
