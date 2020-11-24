@@ -10,7 +10,7 @@ module mux1600(
     input[63:0] b[25],
     output ogood,
     output[63:0] o[25],
-    output[5:0] oround
+    output[4:0] oround
 );
 
 longint unsigned obuff[25];
@@ -19,7 +19,7 @@ for (genvar comp = 0; comp < 25; comp++) begin
     assign o[comp] = obuff[comp];
 end
 
-bit[5:0] buff_oround = 6'b0;
+bit[4:0] buff_oround = 6'b0;
 always_ff @(posedge clk) if (sample) buff_oround <= round;
 assign oround = buff_oround;
 
