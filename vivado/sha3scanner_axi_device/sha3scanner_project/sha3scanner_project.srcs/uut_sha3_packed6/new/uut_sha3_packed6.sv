@@ -4,26 +4,22 @@
 // Goal is to check latencies and balance the signals.
 module uut_sha3_packed6();
 
-wire hasher_ready, clk, start;
-wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5];
+wire hasher_ready, clk;
+iSha3_1600_BusIn inputBus();
 
 sha_round_dispatch_logic #(
     .TESTBENCH_NAME("SHA3-1600 (pipeline folded to 1/4, 6 pipelined rounds)")
 ) driver(
     .clock(clk), .hasher_can_take(hasher_ready),
-    .feeda(feeda), .feedb(feedb), .feedc(feedc), .feedd(feedd), .feede(feede),
-    .feedx_good(start)
+    .toCrunch(inputBus)
 );
 
-wire[63:0] result[5][5];
-wire ogood;
-
+iSha3_1600_BusIn resbus();
 sha3_iterating_pipe6 hasher(
     .clk(clk),
-    .ina(feeda), .inb(feedb), .inc(feedc), .ind(feedd), .ine(feede),
-    .sample(start), .gimme(hasher_ready),
-    .oa(result[0]), .ob(result[1]), .oc(result[2]), .od(result[3]), .oe(result[4]),
-    .good(ogood)
+    .busin(inputBus),
+    .gimme(hasher_ready),
+    .busout(resbus)
 );
 
 
@@ -144,8 +140,9 @@ localparam longint unsigned expected_result[16][5][5] = '{
 };
 
 int result_index = 0;
+wire[63:0] result[5][5] = '{ resbus.ina, resbus.inb, resbus.inc, resbus.ind, resbus.ine };
 
-always @(posedge clk) if(ogood) begin
+always @(posedge clk) if(resbus.sample) begin
   for (int loop = 0; loop < 5; loop++) begin
       for (int comp = 0; comp < 5; comp++) begin
           if (result[loop][comp] != expected_result[result_index][loop][comp]) begin

@@ -5,8 +5,8 @@
 module sha_round_dispatch_logic #(
     TESTBENCH_NAME = "<FORGOT TO SET ME>"
 ) (
-    output clock, rst, feedx_good,
-    input wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5],
+    output clock, rst, 
+    iSha3_1600_BusIn.controller toCrunch,
     input hasher_can_take
 );
 
@@ -146,15 +146,15 @@ localparam longint unsigned give[16][5][5] = '{
 };
 
 bit start = 1'b0, done = 1'b0;
-assign feedx_good = start & hasher_can_take & ~done;
+assign toCrunch.sample = start & hasher_can_take & ~done;
 
 int dispatch_index = 0;
 for (genvar loop = 0; loop < 5; loop++) begin
-	assign feeda[loop] = give[dispatch_index][0][loop];
-	assign feedb[loop] = give[dispatch_index][1][loop]; 
-	assign feedc[loop] = give[dispatch_index][2][loop]; 
-	assign feedd[loop] = give[dispatch_index][3][loop]; 
-	assign feede[loop] = give[dispatch_index][4][loop]; 
+	assign toCrunch.ina[loop] = give[dispatch_index][0][loop];
+	assign toCrunch.inb[loop] = give[dispatch_index][1][loop]; 
+	assign toCrunch.inc[loop] = give[dispatch_index][2][loop]; 
+	assign toCrunch.ind[loop] = give[dispatch_index][3][loop]; 
+	assign toCrunch.ine[loop] = give[dispatch_index][4][loop]; 
 end
 
 initial begin

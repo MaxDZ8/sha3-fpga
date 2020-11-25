@@ -6,10 +6,10 @@
 // C- each clock sample is hi, provide a matrix to churn (gimme will go low when no more can be accepted).
 // D- Wait until good becomes high. Results will come in bursts.
 module sha3_iterating_pipe6(
-    input clk, sample,
-    input[63:0] ina[5], inb[5], inc[5], ind[5], ine[5],
-    output gimme, good,
-    input[63:0] oa[5], ob[5], oc[5], od[5], oe[5]
+    input clk, 
+    iSha3_1600_BusIn.periph busin,
+    output gimme, 
+    iSha3_1600_BusIn.controller busout
 );
 
 // Everything is based on bursting inside inputs as long as the outputs don't come out.
@@ -24,7 +24,7 @@ bit[1:0] input_iteration = 2'b0;
 bit[3:0] input_divide = 4'b0;
 always_ff @(posedge clk)  begin
     if(waiting_input) begin // start the burst. I will fetch myself as much as I can, no matter what!
-        if(sample) begin
+        if(busin.sample) begin
             input_divide <= 1'b1;
             waiting_input <= 1'b0;
         end
@@ -59,16 +59,16 @@ wire[63:0] muxoa[5], muxob[5], muxoc[5], muxod[5], muxoe[5];
 wire[4:0] round_after_mux;
 wire muxo_good;
 wire consume_iterated = input_iteration != 2'h0;
-wire mux_sample = waiting_input ? sample : (gimme | consume_iterated);
+wire mux_sample = waiting_input ? busin.sample : (gimme | consume_iterated);
 mux1600 uglee(
     .clk(clk),
     .sample(mux_sample), .selector(consume_iterated), .round(round_base),
     .a('{
-        ina[0], ina[1], ina[2], ina[3], ina[4],
-        inb[0], inb[1], inb[2], inb[3], inb[4],
-        inc[0], inc[1], inc[2], inc[3], inc[4],
-        ind[0], ind[1], ind[2], ind[3], ind[4],
-        ine[0], ine[1], ine[2], ine[3], ine[4]
+        busin.ina[0], busin.ina[1], busin.ina[2], busin.ina[3], busin.ina[4],
+        busin.inb[0], busin.inb[1], busin.inb[2], busin.inb[3], busin.inb[4],
+        busin.inc[0], busin.inc[1], busin.inc[2], busin.inc[3], busin.inc[4],
+        busin.ind[0], busin.ind[1], busin.ind[2], busin.ind[3], busin.ind[4],
+        busin.ine[0], busin.ine[1], busin.ine[2], busin.ine[3], busin.ine[4]
     }),
     .b('{
         tomuxa[0], tomuxa[1], tomuxa[2], tomuxa[3], tomuxa[4],
@@ -144,8 +144,8 @@ sha3_finalizer #(
 ) finalizer(
     .clk(clk), .sample(into_finalizer),
     .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
-    .ogood(good)
+    .osa(busout.ina), .osb(busout.inb), .osc(busout.inc), .osd(busout.ind), .ose(busout.ine),
+    .ogood(busout.sample)
 );
 
 endmodule
