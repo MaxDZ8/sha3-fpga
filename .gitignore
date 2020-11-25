@@ -10,6 +10,7 @@ vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/sim_sh
 vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3/behav/
 vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3_scanner/behav/
 vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed6/behav/
+vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed6_scanner/behav/
 *.so
 *.sh
 vivado/sha3main/sha3main.ip_user_files/bd/design_1/sim/
