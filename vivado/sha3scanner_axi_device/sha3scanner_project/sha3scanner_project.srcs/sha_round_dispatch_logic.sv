@@ -145,8 +145,8 @@ localparam longint unsigned give[16][5][5] = '{
     }
 };
 
-bit start = 1'b0;
-assign feedx_good = start & hasher_can_take;
+bit start = 1'b0, done = 1'b0;
+assign feedx_good = start & hasher_can_take & ~done;
 
 int dispatch_index = 0;
 for (genvar loop = 0; loop < 5; loop++) begin
@@ -167,10 +167,10 @@ initial begin
 end
 
 always @(posedge clk) if(dispatching & hasher_can_take) begin
-    if(dispatch_index != $size(give, 1)) begin
+    if(~done) begin
         if (start) begin // 1 clock sample pulse
             dispatch_index <= dispatch_index + 1;
-            start <= dispatch_index != $size(give, 1);
+            done <= dispatch_index + 1 == $size(give, 1);
         end
         else start <= 1'b1;
     end
