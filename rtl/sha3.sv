@@ -9,18 +9,8 @@ module sha3 #(
     ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111
 )(
     input clk,
-    input[63:0] isa[5],
-    input[63:0] isb[5],
-    input[63:0] isc[5],
-    input[63:0] isd[5],
-    input[63:0] ise[5],
-    input sample,
-    output[63:0] osa[5],
-    output[63:0] osb[5],
-    output[63:0] osc[5],
-    output[63:0] osd[5],
-    output[63:0] ose[5],
-    output ogood
+    i_sha3_1600_row_bus.periph busin,
+    i_sha3_1600_row_bus.controller busout
 );
 
 localparam first_theta_style = THETA_UPDATE_BY_DSP[0] ? "instantiated-dsp" : "basic";
@@ -35,7 +25,8 @@ sha3_round_function #(
     .ROUND_INDEX(0)
 ) first_round (
     .clk(clk),
-    .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .sample(busin.sample),
+    .isa(busin.rowa), .isb(busin.rowb), .isc(busin.rowc), .isd(busin.rowd), .ise(busin.rowe),
     .ogood(feed_next[0]), .osa(chain[0][0]),  .osb(chain[0][1]),  .osc(chain[0][2]),  .osd(chain[0][3]),  .ose(chain[0][4]) 
 );
 
@@ -75,7 +66,8 @@ sha3_round_function #(
     .clk(clk),
     .sample(feed_next[22]),
     .isa(chain[22][0]), .isb(chain[22][1]), .isc(chain[22][2]), .isd(chain[22][3]), .ise(chain[22][4]),
-    .ogood(ogood), .osa(osa),  .osb(osb),  .osc(osc),  .osd(osd),  .ose(ose) 
+    .ogood(busout.sample),
+    .osa(busout.rowa),  .osb(busout.rowb),  .osc(busout.rowc),  .osd(busout.rowd),  .ose(busout.rowe)
 );
 
 endmodule
