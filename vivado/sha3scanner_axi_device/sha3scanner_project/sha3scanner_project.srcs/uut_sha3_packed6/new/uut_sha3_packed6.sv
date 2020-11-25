@@ -5,7 +5,7 @@
 module uut_sha3_packed6();
 
 wire hasher_ready, clk;
-iSha3_1600_BusIn inputBus();
+i_sha3_1600_row_bus inputBus();
 
 sha_round_dispatch_logic #(
     .TESTBENCH_NAME("SHA3-1600 (pipeline folded to 1/4, 6 pipelined rounds)")
@@ -14,7 +14,7 @@ sha_round_dispatch_logic #(
     .toCrunch(inputBus)
 );
 
-iSha3_1600_BusIn resbus();
+i_sha3_1600_row_bus resbus();
 sha3_iterating_pipe6 hasher(
     .clk(clk),
     .busin(inputBus),
@@ -140,7 +140,7 @@ localparam longint unsigned expected_result[16][5][5] = '{
 };
 
 int result_index = 0;
-wire[63:0] result[5][5] = '{ resbus.ina, resbus.inb, resbus.inc, resbus.ind, resbus.ine };
+wire[63:0] result[5][5] = '{ resbus.rowa, resbus.rowb, resbus.rowc, resbus.rowd, resbus.rowe };
 
 always @(posedge clk) if(resbus.sample) begin
   for (int loop = 0; loop < 5; loop++) begin

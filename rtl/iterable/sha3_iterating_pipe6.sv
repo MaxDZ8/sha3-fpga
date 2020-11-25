@@ -7,9 +7,9 @@
 // D- Wait until good becomes high. Results will come in bursts.
 module sha3_iterating_pipe6(
     input clk, 
-    iSha3_1600_BusIn.periph busin,
+    i_sha3_1600_row_bus.periph busin,
     output gimme, 
-    iSha3_1600_BusIn.controller busout
+    i_sha3_1600_row_bus.controller busout
 );
 
 // Everything is based on bursting inside inputs as long as the outputs don't come out.
@@ -64,11 +64,11 @@ mux1600 uglee(
     .clk(clk),
     .sample(mux_sample), .selector(consume_iterated), .round(round_base),
     .a('{
-        busin.ina[0], busin.ina[1], busin.ina[2], busin.ina[3], busin.ina[4],
-        busin.inb[0], busin.inb[1], busin.inb[2], busin.inb[3], busin.inb[4],
-        busin.inc[0], busin.inc[1], busin.inc[2], busin.inc[3], busin.inc[4],
-        busin.ind[0], busin.ind[1], busin.ind[2], busin.ind[3], busin.ind[4],
-        busin.ine[0], busin.ine[1], busin.ine[2], busin.ine[3], busin.ine[4]
+        busin.rowa[0], busin.rowa[1], busin.rowa[2], busin.rowa[3], busin.rowa[4],
+        busin.rowb[0], busin.rowb[1], busin.rowb[2], busin.rowb[3], busin.rowb[4],
+        busin.rowc[0], busin.rowc[1], busin.rowc[2], busin.rowc[3], busin.rowc[4],
+        busin.rowd[0], busin.rowd[1], busin.rowd[2], busin.rowd[3], busin.rowd[4],
+        busin.rowe[0], busin.rowe[1], busin.rowe[2], busin.rowe[3], busin.rowe[4]
     }),
     .b('{
         tomuxa[0], tomuxa[1], tomuxa[2], tomuxa[3], tomuxa[4],
@@ -144,7 +144,7 @@ sha3_finalizer #(
 ) finalizer(
     .clk(clk), .sample(into_finalizer),
     .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(busout.ina), .osb(busout.inb), .osc(busout.inc), .osd(busout.ind), .ose(busout.ine),
+    .osa(busout.rowa), .osb(busout.rowb), .osc(busout.rowc), .osd(busout.rowd), .ose(busout.rowe),
     .ogood(busout.sample)
 );
 
