@@ -26,7 +26,7 @@ enum bit[2:0] {
 } state = s_waiting;
 
 assign ostatus.ready = state[0];
-assign ostatus.dispatching = state[1];
+assign ostatus.dispatching = state[1] & hasher_ready; // the hasher will not really care but I like to see movement in waves
 assign ostatus.evaluating = hash.sample; 
 
 assign crunch.sample = state[1];
