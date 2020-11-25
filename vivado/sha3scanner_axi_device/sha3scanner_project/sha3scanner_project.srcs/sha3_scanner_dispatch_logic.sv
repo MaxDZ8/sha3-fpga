@@ -42,7 +42,7 @@ localparam longint unsigned short_threshold = 64'h0400040704000406;
 
 // A lower difficulty results in less nonces found. Here you will need to scan the above block template
 // until testing nonce 61855. It's quite excessive for behavioural simulation.
-localparam longint unsigned long_threshold = 64'h0007000000060000;
+localparam longint unsigned long_threshold = 64'h0005000000060000;
 
 assign data.threshold = TEST_MODE == "short" ? short_threshold : long_threshold;
 

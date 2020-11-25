@@ -21,13 +21,13 @@ localparam longint unsigned short_nonce = 55; // NOTE: scan_hash in legacy miner
 
 
 localparam longint unsigned long_hash[25] = '{
-    64'h8c6497333bf0600, 64'h3f0191abab17029, 64'ha4e95e1d037ee98, 64'h03f3c3a05bae7ba, 64'h1ace62e0314fd98,
-    64'h6eba51026524539, 64'ha7b72892679212f, 64'h0e08f9fad233445, 64'h7c6c8bc84070a32, 64'he13ff443162a018,
-    64'h32a7af4473da4a2, 64'hcfaf557cdc5ab9d, 64'h2f5fecce8b864cb, 64'h6af9c1b1a2f217f, 64'h1bf3838216a029f,
-    64'habb45c48e248076, 64'hfe5664f4d03a4b0, 64'h3d5a56330548eef, 64'h7a258259bb0d2cd, 64'h1ae69eeed21744d,
-    64'h0fd711ebcc5d45f, 64'h9fcebe5166ab01e, 64'ha574eed4d6df9ae, 64'hb6efcd50e6d2e80, 64'hc9818df1d4f8128
+    64'ha05c614d02110400, 64'h4ad565d35b796818, 64'hd5047964213164b2, 64'hc71db42361703d68, 64'hd93819a3c8a2de5d,
+    64'hce4199f33c2e703b, 64'h76e73458248e23f9, 64'h5d22b12a85dacb7d, 64'hf3476db037c28b0f, 64'hbad3ea429e0a34a8,
+    64'hcd54ca9be7fea14d, 64'hb6619224b88aa4bd, 64'h55513b675b00a282, 64'h45a6f08b54eb14cc, 64'hc2214ca9082e4c2e,
+    64'h1754758408491211, 64'hb12fa77789e6baa3, 64'hf61ca1980788d79c, 64'h86e853bd93da3e70, 64'h1f89bf63af0c3f51,
+    64'h42b388df80fe3c76, 64'h787858f32ab2f323, 64'he19e24e99b695fb0, 64'h823ced538edb8f0a, 64'h153f38c09a81684a
 };
-localparam longint unsigned long_nonce = 132091; // remember scan_hash in legacy returns count of hashes done so +1
+localparam longint unsigned long_nonce = 161639; // remember scan_hash in legacy returns count of hashes done so +1
 
 
 function longint unsigned expected_hash(input int index);
