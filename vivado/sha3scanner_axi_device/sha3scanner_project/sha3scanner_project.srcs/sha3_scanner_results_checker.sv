@@ -54,7 +54,7 @@ always @(posedge clk) if(validate.found) begin
         $fatal;
         $finish;
   end
-  $display("Result @ %t nonce = %d %h", $realtime, validate.nonce, validate.nonce);
+  $display("Result @ %t nonce = %d 0x%h", $realtime, validate.nonce, validate.nonce);
   $display("%s scanner GOOD", TESTBENCH_NAME);
   $finish;
 end

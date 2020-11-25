@@ -18,7 +18,6 @@ module sha3_scanner_control(
     i_sha3_1600_row_bus.periph hash
 );
 
-assign ostatus.evaluating = oresults.start;
 
 enum bit[2:0] {   
     s_waiting     = 3'b001,
@@ -28,6 +27,8 @@ enum bit[2:0] {
 
 assign ostatus.ready = state[0];
 assign ostatus.dispatching = state[1];
+assign ostatus.evaluating = hash.sample; 
+
 assign crunch.sample = state[1];
 
 int unsigned dispatch_iterator = 32'b0, next_nonce = 32'b0;
@@ -107,7 +108,7 @@ wire[63:0] hash_diff = {
     hash.rowa[0][ 7: 0], hash.rowa[0][15: 8], hash.rowa[0][23:16], hash.rowa[0][31:24],
     hash.rowa[0][39:32], hash.rowa[0][47:40], hash.rowa[0][55:48], hash.rowa[0][63:56]
 };
-wire good_enough = oresults.start & $unsigned(hash_diff) < $unsigned(irequest.threshold);
+wire good_enough = hash.sample & ($unsigned(hash_diff) < $unsigned(irequest.threshold));
 
 int unsigned result_iter = 32'b0;
 
@@ -116,7 +117,7 @@ always_ff @(posedge clk) begin
         if(irequest.start) begin
             buff_found <= 1'b0;
             good_scan <= 32'b0;
-            good_hash <= '{ 50{ 32'b0 } };
+            good_hash <= '{ 25{ 64'b0 } };
             result_iter <= 32'b0;
         end
     end

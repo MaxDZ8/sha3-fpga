@@ -19,6 +19,7 @@ initial begin
     #(PERIOD/2.0) buff_clk = ~buff_clk;
   end
 end
+assign clk = buff_clk;
 
 
 // This represents a work->data from legacy miners, where it is usually uint[48].
@@ -43,7 +44,7 @@ localparam longint unsigned short_threshold = 64'h0400040704000406;
 // until testing nonce 61855. It's quite excessive for behavioural simulation.
 localparam longint unsigned long_threshold = 64'h0007000000060000;
 
-assign data.treshold = TEST_MODE == "short" ? short_threshold : long_threshold;
+assign data.threshold = TEST_MODE == "short" ? short_threshold : long_threshold;
 
 bit dispatching = 1'b0;
 

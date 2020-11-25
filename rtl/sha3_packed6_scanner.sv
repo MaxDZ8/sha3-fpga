@@ -9,7 +9,7 @@ module sha3_packed6_scanner(
     i_scanner_status.producer ostatus
 );
 
-i_sha3_1600_row_bus crunch, hash;
+i_sha3_1600_row_bus crunch(), hash();
 wire hasher_can_take;
 sha3_scanner_control fsm (
     .clk(clk),
@@ -24,7 +24,7 @@ sha3_iterating_pipe6 hasher (
     .clk(clk),
     .busin(crunch),
     .gimme(hasher_can_take),
-    .busout(res)    
+    .busout(hash)    
 );
 
 
