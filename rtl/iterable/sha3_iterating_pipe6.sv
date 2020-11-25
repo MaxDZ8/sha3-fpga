@@ -16,12 +16,12 @@ module sha3_iterating_pipe6(
 // If the outputs start flowing back, it's time to feedback them!
 // Keep accepting new values until the feedback mux needs to take the back-routed values,
 // this keeps the pipeline busy for a while!
-localparam bit[3:0] burst_len_and_delay = 4'd15;
+localparam bit[3:0] burst_len_and_delay = 4'd13;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
 bit[1:0] input_iteration = 2'b0;
-bit[5:0] input_divide = 6'b0;
+bit[3:0] input_divide = 4'b0;
 always_ff @(posedge clk)  begin
     if(waiting_input) begin // start the burst. I will fetch myself as much as I can, no matter what!
         if(sample) begin
