@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: Maxdz8:crypto:sha3scanner:0.1
-// IP Revision: 2
+// IP VLNV: Maxdz8:crypto:sha3scanner:0.2
+// IP Revision: 3
 
 (* X_CORE_INFO = "sha3scanner_v0_1,Vivado 2019.2" *)
 (* CHECK_LICENSE_TYPE = "design_1_sha3scanner_1_0,sha3scanner_v0_1,{}" *)
@@ -132,7 +132,8 @@ input wire s00_axi_rready;
 
   sha3scanner_v0_1 #(
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
-    .C_S00_AXI_ADDR_WIDTH(9)  // Width of S_AXI address bus
+    .C_S00_AXI_ADDR_WIDTH(9),  // Width of S_AXI address bus
+    .STYLE("fully-unrolled-fully-parallel")
   ) inst (
     .dispatching(dispatching),
     .evaluating(evaluating),
