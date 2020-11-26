@@ -39,11 +39,6 @@ else if (STYLE == "iterate-four-times") begin : smallish
     i_sha3_scan_result_bus result();
     i_scanner_status status();
     
-    for (genvar loop = 0; loop < 25; loop++) begin
-        assign hash[loop * 2    ] = result.hash[loop][63:32];
-        assign hash[loop * 2 + 1] = result.hash[loop][31: 0];
-    end
-    
     pack_into_scan_request_bus make_request(
         .start(start), .blobby(blobby), .threshold(max_diff),
         .as(request)
@@ -56,7 +51,7 @@ else if (STYLE == "iterate-four-times") begin : smallish
     
     unpack_from_scan_result_bus from_result(
         .from(result),
-        .found(found), .hash(hash), .nonce(nonce)
+        .found(found), .hash32_hilo(hash), .nonce(nonce)
     );
     
     unpack_from_scanner_status from_status(

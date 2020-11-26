@@ -71,19 +71,29 @@ localparam longint unsigned rowc_final[2] = '{ 64'h0, 64'h0 };
 localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
 localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
 
-wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
+i_sha3_1600_row_bus to_hasher(), hashed();
+pack_lines_into_1600_row_bus feed_in(
+    .rowa(rowa), .rowb(rowb),
+    .rowc('{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] }),
+    .rowd('{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] }),
+    .rowe('{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] }),
+    .sample(buff_dispatching),
+    .as(to_hasher)
+);
+
 sha3 #(
     .THETA_UPDATE_BY_DSP(THETA_UPDATE_BY_DSP),
     .ROUND_OUTPUT_BUFFERED(ROUND_OUTPUT_BUFFERED)
 ) hasher(
     .clk(clk),
-    .isa(rowa), .isb(rowb),
-    .isc('{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] }),
-    .isd('{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] }),
-    .ise('{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] }),
-    .sample(buff_dispatching),
-    .osa(resa), .osb(resb), .osc(resc), .osd(resd), .ose(rese),
-    .ogood(evaluating)
+    .busin(to_hasher),
+    .busout(hashed)
+);
+
+wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
+unpack_from_1600_row_bus_to_lines take_out(
+    .from(hashed),
+    .rowa(resa), .rowb(resb), .rowc(resc), .rowd(resd), .rowe(rese)
 );
 
 wire[63:0] hash_diff = { resa[0][7:0], resa[0][15:8], resa[0][23:16], resa[0][31:24], resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:56] };
