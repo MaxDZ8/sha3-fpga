@@ -15,12 +15,12 @@ sha3_scanner_dispatch_logic #(
 );
 
 i_sha3_scan_result_bus outputBus();
-i_scanner_status statusBus();
+wire oready, odispatching, oevaluating;
 sha3_packed6_scanner testing (
     .clk(clk),
     .irequest(inputBus),
     .oresults(outputBus),
-    .ostatus(statusBus)
+    .oready(oready), .odispatching(odispatching), .oevaluating(oevaluating)
 );
 
 sha3_scanner_results_checker #(

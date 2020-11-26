@@ -6,14 +6,15 @@ module sha3_packed6_scanner(
     input clk,
     i_sha3_scan_request_bus.consumer irequest,
     i_sha3_scan_result_bus.producer oresults,
-    i_scanner_status.producer ostatus
+    output odispatching, oevaluating, oready
 );
 
 i_sha3_1600_row_bus crunch(), hash();
 wire hasher_can_take;
 sha3_scanner_control fsm (
     .clk(clk),
-    .irequest(irequest), .oresults(oresults), .ostatus(ostatus),
+    .irequest(irequest), .oresults(oresults),
+    .odispatching(odispatching), .oevaluating(oevaluating), .oready(oready),
     
     .hasher_ready(hasher_can_take),
     .crunch(crunch), .hash(hash)

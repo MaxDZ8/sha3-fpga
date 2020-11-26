@@ -95,7 +95,7 @@ unpack_from_1600_row_bus_to_lines take_out(
     .from(hashed),
     .rowa(resa), .rowb(resb), .rowc(resc), .rowd(resd), .rowe(rese)
 );
-
+assign evaluating = hashed.sample;
 wire[63:0] hash_diff = { resa[0][7:0], resa[0][15:8], resa[0][23:16], resa[0][31:24], resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:56] };
 wire good_enough = evaluating & $unsigned(hash_diff) < $unsigned(threshold);
 

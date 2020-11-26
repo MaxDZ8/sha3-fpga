@@ -11,7 +11,7 @@ module sha3_scanner_control(
     input clk,
     i_sha3_scan_request_bus.consumer irequest,
     i_sha3_scan_result_bus.producer oresults,
-    i_scanner_status.producer ostatus,
+    output odispatching, oevaluating, oready,
     
     wire hasher_ready,
     i_sha3_1600_row_bus.controller crunch,
@@ -25,9 +25,9 @@ enum bit[2:0] {
     s_flushing    = 3'b100
 } state = s_waiting;
 
-assign ostatus.ready = state[0];
-assign ostatus.dispatching = state[1] & hasher_ready; // the hasher will not really care but I like to see movement in waves
-assign ostatus.evaluating = hash.sample; 
+assign oready = state[0];
+assign odispatching = state[1] & hasher_ready; // the hasher will not really care but I like to see movement in waves
+assign oevaluating = hash.sample; 
 
 assign crunch.sample = state[1];
 
@@ -98,7 +98,7 @@ endcase
 // No need to sync on the FSM or anything. We'll be wasting a few hundred clocks but what's the issue really?
 // For first, I help the FSM by monitoring hash output.
 always_ff @(posedge clk) begin
-    if (ostatus.ready) hash_observed <= 1'b0;
+    if (oready) hash_observed <= 1'b0;
     else if(~hash_observed) hash_observed <= hash.sample;
 end
 
@@ -113,7 +113,7 @@ wire good_enough = hash.sample & ($unsigned(hash_diff) < $unsigned(irequest.thre
 int unsigned result_iter = 32'b0;
 
 always_ff @(posedge clk) begin
-    if(ostatus.ready) begin
+    if(oready) begin
         if(irequest.start) begin
             buff_found <= 1'b0;
             good_scan <= 32'b0;

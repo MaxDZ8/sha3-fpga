@@ -9,7 +9,7 @@ module sha3_scanner_instantiator #(
     input[63:0] threshold,
     input[31:0] blobby[24],
     
-    output dispatching, evaluating,
+    output dispatching, evaluating, ready,
     output found,
     output[31:0] hash[50],
     output[31:0] nonce
@@ -37,7 +37,6 @@ else if (STYLE == "iterate-four-times") begin : smallish
     // but results come in bursts so effectively 4 clocks per hash overall.
     i_sha3_scan_request_bus request();
     i_sha3_scan_result_bus result();
-    i_scanner_status status();
     
     pack_into_scan_request_bus make_request(
         .start(start), .blobby(blobby), .threshold(max_diff),
@@ -46,17 +45,13 @@ else if (STYLE == "iterate-four-times") begin : smallish
     
     sha3_packed6_scanner nice_deal (
         .clk(clk),
-        .irequest(request), .oresults(result), .ostatus(status)
+        .irequest(request), .oresults(result),
+        .oready(ready), .odispatching(dispatching), .oevaluating(evaluating)
     );
     
     unpack_from_scan_result_bus from_result(
         .from(result),
         .found(found), .hash32_hilo(hash), .nonce(nonce)
-    );
-    
-    unpack_from_scanner_status from_status(
-        .from(status),
-        .dispatching(dispatching), .evaluating(evaluating), .ready(ready)
     );
 end
 	
