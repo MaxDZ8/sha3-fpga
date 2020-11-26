@@ -581,11 +581,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Nov 26 16:38:15 UTC 2020</spirit:value>
+            <spirit:value>Thu Nov 26 14:36:20 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9029f23d</spirit:value>
+            <spirit:value>9:90172e08</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -596,7 +596,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9029f23d</spirit:value>
+            <spirit:value>9:90172e08</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -612,11 +612,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Nov 26 16:38:15 UTC 2020</spirit:value>
+            <spirit:value>Thu Nov 26 17:31:18 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9029f23d</spirit:value>
+            <spirit:value>9:90172e08</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -632,11 +632,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Nov 26 16:38:15 UTC 2020</spirit:value>
+            <spirit:value>Thu Nov 26 14:36:20 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9c01e5c4</spirit:value>
+            <spirit:value>9:04b28181</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -652,11 +652,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Thu Nov 26 16:38:15 UTC 2020</spirit:value>
+            <spirit:value>Thu Nov 26 17:31:18 UTC 2020</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:9c01e5c4</spirit:value>
+            <spirit:value>9:04b28181</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1027,7 +1027,7 @@
       <spirit:modelParameter spirit:dataType="string">
         <spirit:name>STYLE</spirit:name>
         <spirit:displayName>Style</spirit:displayName>
-        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.STYLE">fully-unrolled-fully-parallel</spirit:value>
+        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.STYLE">iterate-four-times</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -1367,7 +1367,7 @@
     <spirit:parameter>
       <spirit:name>STYLE</spirit:name>
       <spirit:displayName>Style</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.STYLE" spirit:choiceRef="choice_list_c60c9b86">fully-unrolled-fully-parallel</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.STYLE" spirit:choiceRef="choice_list_c60c9b86">iterate-four-times</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -1451,6 +1451,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_CLK.FREQ_HZ" xilinx:valueSource="user_prop" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_CLK.PHASE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_RST.POLARITY" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.STYLE" xilinx:valueSource="user"/>
       </xilinx:configElementInfos>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>

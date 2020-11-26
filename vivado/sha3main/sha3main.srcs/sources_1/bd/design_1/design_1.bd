@@ -1868,20 +1868,19 @@
       },
       "sha3scanner_1": {
         "vlnv": "Maxdz8:crypto:sha3scanner:0.2",
-        "xci_name": "design_1_sha3scanner_1_0"
+        "xci_name": "design_1_sha3scanner_1_0",
+        "parameters": {
+          "STYLE": {
+            "value": "iterate-four-times"
+          }
+        }
       }
     },
     "interface_nets": {
-      "processing_system7_0_DDR": {
+      "ps7_0_axi_periph_M00_AXI": {
         "interface_ports": [
-          "DDR",
-          "processing_system7_0/DDR"
-        ]
-      },
-      "processing_system7_0_M_AXI_GP0": {
-        "interface_ports": [
-          "processing_system7_0/M_AXI_GP0",
-          "ps7_0_axi_periph/S00_AXI"
+          "ps7_0_axi_periph/M00_AXI",
+          "sha3scanner_1/S00_AXI"
         ]
       },
       "processing_system7_0_FIXED_IO": {
@@ -1890,10 +1889,16 @@
           "processing_system7_0/FIXED_IO"
         ]
       },
-      "ps7_0_axi_periph_M00_AXI": {
+      "processing_system7_0_M_AXI_GP0": {
         "interface_ports": [
-          "ps7_0_axi_periph/M00_AXI",
-          "sha3scanner_1/S00_AXI"
+          "processing_system7_0/M_AXI_GP0",
+          "ps7_0_axi_periph/S00_AXI"
+        ]
+      },
+      "processing_system7_0_DDR": {
+        "interface_ports": [
+          "DDR",
+          "processing_system7_0/DDR"
         ]
       }
     },

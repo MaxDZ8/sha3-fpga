@@ -12,7 +12,12 @@ module sha3_state_capture #(
     output[63:0] osa[5], osb[5], osc[5], osd[5], ose[5]
 );
 
-if (BUFFERIZE < 0) $error("Valid values are 0,1");
+if (BUFFERIZE < 0) begin
+    initial begin
+        $display("Valid BUFFERIZE values are 0,1");
+        $finish;
+    end
+end
 else if (BUFFERIZE == 0) begin : rename
     assign ogood = sample;
     assign osa = isa;

@@ -44,7 +44,10 @@ if (STYLE == "basic") begin
 end
 else begin
     // Another candidate is: DSP48
-    $error("Logic style unsupported.");
+    initial begin
+        $display("Logic style unsupported.");
+        $finish;
+    end
 end
 
 endmodule

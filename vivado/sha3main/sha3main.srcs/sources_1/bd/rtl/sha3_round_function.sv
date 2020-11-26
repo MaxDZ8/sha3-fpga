@@ -25,7 +25,9 @@ module sha3_round_function #(
     RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
-    ROUND_INDEX = 0 // 0..23 integer
+    ROUND_INDEX = 0, // 0..23 integer
+    // If true-ish my final theta will also buffer, otherwise flow right away to next round.
+    OUTPUT_BUFFERED = 1'b1
 )(
     input clk,
     input[63:0] isa[5],
@@ -73,7 +75,12 @@ localparam longint unsigned rc[24] = {
     64'h8000000000008002, 64'h8000000000000080, 64'h000000000000800a, 64'h800000008000000a,
     64'h8000000080008081, 64'h8000000000008080, 64'h0000000080000001, 64'h8000000080008008
 };
-if (ROUND_INDEX < 0 || ROUND_INDEX > 23) $error("SHA3 round index is integer 0..23 extremes included");
+if(ROUND_INDEX < 0 || ROUND_INDEX > 23) begin
+    initial begin
+        $display("SHA3 round index is integer 0..23 extremes included");
+        $finish;
+    end
+end
 localparam longint unsigned IOTA_VALUE = rc[ROUND_INDEX];
 
 
@@ -81,7 +88,8 @@ if (ROUND_INDEX < 23) begin : std_round
     wire[63:0] ioina[0:4], ioinb[0:4], ioinc[0:4], ioind[0:4], ioine[0:4];
     wire io_fetch;
     sha3_chi #(
-        .STYLE(CHI_MODIFY_STYLE)
+        .STYLE(CHI_MODIFY_STYLE),
+        .OUTPUT_BUFFER(0)
     ) chi (
         .clk(clk),
         .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
@@ -89,7 +97,8 @@ if (ROUND_INDEX < 23) begin : std_round
     );
     
     sha3_iota #(
-       .VALUE(IOTA_VALUE)
+       .VALUE(IOTA_VALUE),
+       .OUTPUT_BUFFER(OUTPUT_BUFFERED)
     ) iota (
        .clk(clk),
        .isa(ioina), .isb(ioinb), .isc(ioinc), .isd(ioind), .ise(ioine), .sample(io_fetch),
@@ -97,7 +106,10 @@ if (ROUND_INDEX < 23) begin : std_round
   );
 end
 else begin : last_round
-    sha3_finalizer #( .VALUE(IOTA_VALUE) ) finalizer (
+    sha3_finalizer #(
+        .VALUE(IOTA_VALUE),
+        .OUTPUT_BUFFER(OUTPUT_BUFFERED)
+    ) finalizer (
         .clk(clk),
         .isa(china), .isb(chinb), .isc(chinc), .isd(chind), .ise(chine), .sample(chi_fetch),
         .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)
