@@ -16,12 +16,15 @@ sha3_scanner_dispatch_logic #(
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate)
 );
 
-i_sha3_scan_result_bus outputBus();
+
 wire oready, odispatching, oevaluating;
+wire found;
+wire[63:0] hash[25];
+wire[31:0] nonce;
 sha3_packed6_scanner testing (
     .clk(clk),
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
-    .oresults(outputBus),
+    .ofound(found), .ohash(hash), .ononce(nonce),
     .oready(oready), .odispatching(odispatching), .oevaluating(oevaluating)
 );
 
@@ -30,7 +33,7 @@ sha3_scanner_results_checker #(
     .TEST_MODE(TEST_MODE)
 ) result_checker (
     .clk(clk),
-    .validate(outputBus)
+    .found(found), .hash(hash), .nonce(nonce)
 );
   
 endmodule

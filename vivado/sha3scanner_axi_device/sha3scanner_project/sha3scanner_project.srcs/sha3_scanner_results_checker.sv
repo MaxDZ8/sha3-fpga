@@ -6,7 +6,9 @@ module sha3_scanner_results_checker #(
     TEST_MODE = "short"
 )(
     input clk,
-    i_sha3_scan_result_bus.consumer validate
+    input found,
+    input[63:0] hash[25],
+    input[31:0] nonce
 );
 
 
@@ -41,20 +43,20 @@ function longint unsigned expected_nonce();
 endfunction
 
 
-always @(posedge clk) if(validate.found) begin
+always @(posedge clk) if(found) begin
   for (int loop = 0; loop < 25; loop++) begin
-      if (validate.hash[loop] != expected_hash(loop)) begin
-        $display("Result[%d] !! FAILED !! (expected %h, found %h)", loop, expected_hash(loop), validate.hash[loop]);
+      if (hash[loop] != expected_hash(loop)) begin
+        $display("Result[%d] !! FAILED !! (expected %h, found %h)", loop, expected_hash(loop), hash[loop]);
         $fatal;
         $finish;
       end
   end
-  if (validate.nonce != expected_nonce()) begin
-        $display("Nonce differs !! FAILED !! (expected %h, found %h)", expected_nonce(), validate.nonce);
+  if (nonce != expected_nonce()) begin
+        $display("Nonce differs !! FAILED !! (expected %h, found %h)", expected_nonce(), nonce);
         $fatal;
         $finish;
   end
-  $display("Result @ %t nonce = %d 0x%h", $realtime, validate.nonce, validate.nonce);
+  $display("Result @ %t nonce = %d 0x%h", $realtime, nonce, nonce);
   $display("%s scanner GOOD", TESTBENCH_NAME);
   $finish;
 end

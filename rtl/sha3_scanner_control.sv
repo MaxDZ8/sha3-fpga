@@ -14,7 +14,11 @@ module sha3_scanner_control(
     input[63:0] threshold,
     input[31:0] blockTemplate[24],
     
-    i_sha3_scan_result_bus.producer oresults,
+    // Results
+    output ofound,
+    output[63:0] ohash[25],
+    output[31:0] ononce,
+    
     // Status
     output odispatching, oevaluating, oready,
     
@@ -63,9 +67,9 @@ bit buff_found = 1'b0;
 int unsigned good_scan = 32'b0;
 longint unsigned good_hash[25];
 
-assign oresults.found = buff_found;
-assign oresults.nonce = good_scan; // lying big way. This is nonce from given start, not nonce absolutely
-for (genvar loop = 0; loop < 25; loop++) assign oresults.hash[loop] = good_hash[loop];
+assign ofound = buff_found;
+assign ononce = good_scan; // lying big way. This is nonce from given start, not nonce absolutely
+for (genvar loop = 0; loop < 25; loop++) assign ohash[loop] = good_hash[loop];
 
 bit hash_observed = 1'b0;
 
@@ -88,7 +92,7 @@ always_ff @(posedge clk) case(state)
         state <= s_dispatching;
     end
     s_dispatching: begin
-        if(exhausted | oresults.found) state <= s_flushing;
+        if(exhausted | ofound) state <= s_flushing;
         else if (hasher_ready) begin
             next_nonce <= next_nonce + 1'b1;
             dispatch_iterator <= dispatch_iterator + 1'b1;

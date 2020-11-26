@@ -9,7 +9,9 @@ module sha3_packed6_scanner(
     input[63:0] threshold,
     input[31:0] blockTemplate[24],
 
-    i_sha3_scan_result_bus.producer oresults,
+    output ofound,
+    output[63:0] ohash[25],
+    output[31:0] ononce,
     // Status
     output odispatching, oevaluating, oready
 );
@@ -19,7 +21,7 @@ wire hasher_can_take;
 sha3_scanner_control fsm (
     .clk(clk),
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
-    .oresults(oresults),
+    .ofound(ofound), .ohash(ohash), .ononce(ononce),
     .odispatching(odispatching), .oevaluating(oevaluating), .oready(oready),
     
     .hasher_ready(hasher_can_take),
