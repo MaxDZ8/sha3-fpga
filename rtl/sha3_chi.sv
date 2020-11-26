@@ -46,7 +46,10 @@ if (STYLE == "basic") begin : threeway
 end
 else begin
     // in the future: inferred DSP? Cascaded DSP?
-    $error("unsupported STYLE");
+    initial begin
+        $display("unsupported STYLE");
+        $finish;
+    end
 end
 
 sha3_state_capture#(

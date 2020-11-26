@@ -79,7 +79,10 @@ else if(LOGIC_STYLE == "inferred-dsp" || LOGIC_STYLE == "instantiated-dsp") begi
 end
 else begin
     // Another candidate is: DSP48 explicit
-    $error("Logic style unsupported.");
+    initial begin
+        $display("Logic style unsupported.");
+        $finish;
+    end
 end
 
 endmodule

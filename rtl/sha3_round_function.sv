@@ -75,7 +75,12 @@ localparam longint unsigned rc[24] = {
     64'h8000000000008002, 64'h8000000000000080, 64'h000000000000800a, 64'h800000008000000a,
     64'h8000000080008081, 64'h8000000000008080, 64'h0000000080000001, 64'h8000000080008008
 };
-if (ROUND_INDEX < 0 || ROUND_INDEX > 23) $error("SHA3 round index is integer 0..23 extremes included");
+if(ROUND_INDEX < 0 || ROUND_INDEX > 23) begin
+    initial begin
+        $display("SHA3 round index is integer 0..23 extremes included");
+        $finish;
+    end
+end
 localparam longint unsigned IOTA_VALUE = rc[ROUND_INDEX];
 
 

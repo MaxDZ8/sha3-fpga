@@ -23,7 +23,12 @@ module sha3_state_delayer #(
 
 genvar comp;
 
-if (DELAY < 0) $error("DELAY must be at least 0");
+if (DELAY < 0) begin
+    initial begin
+        $display("DELAY must be at least 0");
+        $finish;
+    end
+end
 else if(DELAY == 0) begin
     // Added to support some possible async module permutations w/o surprises, not expected to be used.
     for (comp = 0; comp < 5; comp++) begin
