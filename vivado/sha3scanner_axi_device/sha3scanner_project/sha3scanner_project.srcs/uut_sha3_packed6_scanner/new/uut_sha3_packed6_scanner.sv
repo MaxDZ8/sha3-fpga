@@ -17,15 +17,17 @@ sha3_scanner_dispatch_logic #(
 );
 
 
-wire oready, odispatching, oevaluating;
+wire ready, dispatching, evaluating;
 wire found;
 wire[63:0] hash[25];
 wire[31:0] nonce;
-sha3_packed6_scanner testing (
-    .clk(clk),
-    .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
-    .ofound(found), .ohash(hash), .ononce(nonce),
-    .oready(oready), .odispatching(odispatching), .oevaluating(oevaluating)
+sha3_scanner_instantiator #(
+    .STYLE("iterate-four-times")
+) thing (
+    .clk(clk), .rst(1'b0),
+    .start(start), .threshold(threshold), .blobby(blockTemplate),
+    .found(found), .nonce(nonce), .hash(hash),
+    .dispatching(dispatching), .evaluating(evaluating), .ready(ready)
 );
 
 sha3_scanner_results_checker #(

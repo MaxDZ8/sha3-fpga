@@ -715,6 +715,7 @@
   wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 7'h7F;
 	wire start = ~busy & writing_control;
 	wire[63:0] max_diff = { threshold[1], threshold[0] };
+	wire[63:0] wide_hash[25];
 	
 	sha3_scanner_instantiator #(
 	    .STYLE(STYLE)
@@ -724,8 +725,13 @@
       .threshold(max_diff),
       
       .blobby(blktemplate),  .nonce(promising_nonce),
-      .hash(interesting_hash)
+      .hash(wide_hash)
 	);
+	
+	for (genvar loop = 0; loop < 25; loop++) begin : cp
+	    assign interesting_hash[loop * 2 + 1] = wide_hash[loop][63:32];
+	    assign interesting_hash[loop * 2 + 0] = wide_hash[loop][31: 0];
+	end
 	
 	// User logic ends
 
