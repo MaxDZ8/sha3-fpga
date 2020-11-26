@@ -9,8 +9,13 @@
 // so there's no point of optimizing multi-flush or all the things.
 module sha3_scanner_control(
     input clk,
-    i_sha3_scan_request_bus.consumer irequest,
+    // Scan request
+    input start,
+    input[63:0] threshold,
+    input[31:0] blockTemplate[24],
+    
     i_sha3_scan_result_bus.producer oresults,
+    // Status
     output odispatching, oevaluating, oready,
     
     wire hasher_ready,
@@ -65,19 +70,19 @@ for (genvar loop = 0; loop < 25; loop++) assign oresults.hash[loop] = good_hash[
 bit hash_observed = 1'b0;
 
 always_ff @(posedge clk) case(state)
-    s_waiting: if(irequest.start) begin
-        rowa[0] <= { irequest.blockTemplate[ 1], irequest.blockTemplate[ 0] };
-        rowa[1] <= { irequest.blockTemplate[ 3], irequest.blockTemplate[ 2] };
-        rowa[2] <= { irequest.blockTemplate[ 5], irequest.blockTemplate[ 4] };
-        rowa[3] <= { irequest.blockTemplate[ 7], irequest.blockTemplate[ 6] };
-        rowa[4] <= { irequest.blockTemplate[ 9], irequest.blockTemplate[ 8] };
-        rowb[0] <= { irequest.blockTemplate[11], irequest.blockTemplate[10] };
-        rowb[1] <= { irequest.blockTemplate[13], irequest.blockTemplate[12] };
-        rowb[2] <= { irequest.blockTemplate[15], irequest.blockTemplate[14] };
-        rowb[3] <= { irequest.blockTemplate[17], irequest.blockTemplate[16] };
-        rowb[4] <= { irequest.blockTemplate[19], irequest.blockTemplate[18] };
-        rowc[0] <= { irequest.blockTemplate[21], irequest.blockTemplate[20] };
-        rowc[1] <= { irequest.blockTemplate[23], irequest.blockTemplate[22] };
+    s_waiting: if(start) begin
+        rowa[0] <= { blockTemplate[ 1], blockTemplate[ 0] };
+        rowa[1] <= { blockTemplate[ 3], blockTemplate[ 2] };
+        rowa[2] <= { blockTemplate[ 5], blockTemplate[ 4] };
+        rowa[3] <= { blockTemplate[ 7], blockTemplate[ 6] };
+        rowa[4] <= { blockTemplate[ 9], blockTemplate[ 8] };
+        rowb[0] <= { blockTemplate[11], blockTemplate[10] };
+        rowb[1] <= { blockTemplate[13], blockTemplate[12] };
+        rowb[2] <= { blockTemplate[15], blockTemplate[14] };
+        rowb[3] <= { blockTemplate[17], blockTemplate[16] };
+        rowb[4] <= { blockTemplate[19], blockTemplate[18] };
+        rowc[0] <= { blockTemplate[21], blockTemplate[20] };
+        rowc[1] <= { blockTemplate[23], blockTemplate[22] };
         next_nonce <= scan_start;
         dispatch_iterator <= 1'b0;
         state <= s_dispatching;
@@ -108,13 +113,13 @@ wire[63:0] hash_diff = {
     hash.rowa[0][ 7: 0], hash.rowa[0][15: 8], hash.rowa[0][23:16], hash.rowa[0][31:24],
     hash.rowa[0][39:32], hash.rowa[0][47:40], hash.rowa[0][55:48], hash.rowa[0][63:56]
 };
-wire good_enough = hash.sample & ($unsigned(hash_diff) < $unsigned(irequest.threshold));
+wire good_enough = hash.sample & ($unsigned(hash_diff) < $unsigned(threshold));
 
 int unsigned result_iter = 32'b0;
 
 always_ff @(posedge clk) begin
     if(oready) begin
-        if(irequest.start) begin
+        if(start) begin
             buff_found <= 1'b0;
             good_scan <= 32'b0;
             good_hash <= '{ 25{ 64'b0 } };

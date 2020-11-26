@@ -5,7 +5,10 @@ module sha3_scanner_dispatch_logic #(
     TEST_MODE = "short"
 )(
     output clk,
-    i_sha3_scan_request_bus.producer data
+    // Scan request
+    output start,
+    output[63:0] threshold,
+    output[31:0] blockTemplate[24]
 );
 
 localparam CLOCK_RATE = 100_000_000;
@@ -33,7 +36,7 @@ localparam int unsigned block_template[24] = '{
     32'h00100010, 32'h00100011, 32'h00100012, 32'h00100013, 32'h00100014, 32'h00000000, 32'h00100016, 32'h00100017
 };
 
-for (genvar loop = 0; loop < 24; loop++) assign data.blockTemplate[loop] = block_template[loop];
+for (genvar loop = 0; loop < 24; loop++) assign blockTemplate[loop] = block_template[loop];
 
 // In legacy miners this is usually work->target[6,7]. They are two uints, loaded as an ulong.
 // Now if each uint is assigned 64*1024*1024 + 1024+i you get those magic values.
@@ -44,7 +47,7 @@ localparam longint unsigned short_threshold = 64'h0400040704000406;
 // until testing nonce 61855. It's quite excessive for behavioural simulation.
 localparam longint unsigned long_threshold = 64'h0005000000060000;
 
-assign data.threshold = TEST_MODE == "short" ? short_threshold : long_threshold;
+assign threshold = TEST_MODE == "short" ? short_threshold : long_threshold;
 
 bit dispatching = 1'b0;
 
@@ -59,14 +62,14 @@ initial begin
 end
 
   
-bit start = 1'b0, pulsed = 1'b0;
+bit buff_start = 1'b0, pulsed = 1'b0;
 always_ff @(posedge clk) begin
     if (dispatching) begin
-        start <= ~start & ~pulsed;
+        buff_start <= ~buff_start & ~pulsed;
         if (!pulsed) pulsed <= 1'b1;
     end
 end
 
-assign data.start = start;
+assign start = buff_start;
 
 endmodule

@@ -35,17 +35,12 @@ end
 else if (STYLE == "iterate-four-times") begin : smallish
     // Small overhead by iterating on a 6-round-deep pipeline. The pipeline itself does 1 result clock
     // but results come in bursts so effectively 4 clocks per hash overall.
-    i_sha3_scan_request_bus request();
     i_sha3_scan_result_bus result();
-    
-    pack_into_scan_request_bus make_request(
-        .start(start), .blobby(blobby), .threshold(max_diff),
-        .as(request)
-    );
     
     sha3_packed6_scanner nice_deal (
         .clk(clk),
-        .irequest(request), .oresults(result),
+        .start(start), .threshold(max_diff), .blockTemplate(blobby),
+        .oresults(result),
         .oready(ready), .odispatching(dispatching), .oevaluating(evaluating)
     );
     
