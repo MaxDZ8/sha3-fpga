@@ -8,6 +8,6 @@ interface i_sha3_scan_result_bus();
     wire[63:0] hash[25];
     wire[31:0] nonce;
     
-    modport producer(input found, hash, nonce);
-    modport consumer(output found, hash, nonce);
+    modport producer(output found, hash, nonce);
+    modport consumer(input found, hash, nonce);
 endinterface
