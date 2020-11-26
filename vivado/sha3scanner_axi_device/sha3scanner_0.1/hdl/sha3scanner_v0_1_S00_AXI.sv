@@ -3,7 +3,7 @@
 	module sha3scanner_v0_1_S00_AXI #
 	(
 		// Users to add parameters here
-
+		parameter STYLE = "fully-unrolled-fully-parallel",
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -716,18 +716,15 @@
 	wire start = ~busy & writing_control;
 	wire[63:0] max_diff = { threshold[1], threshold[0] };
 	
-	sha3_scanner #(
-    .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
-    .CHI_MODIFY_STYLE("basic"),
-    .IOTA_STYLE("basic"),
-    .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
-  ) scanner(
-	  .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
-	  .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
-	  .threshold(max_diff),
-	  
-	  .blobby(blktemplate),  .nonce(promising_nonce),
-	  .hash(interesting_hash)
+	sha3_scanner_instantiator #(
+	    .STYLE(STYLE)
+	) thing (
+      .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
+      .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
+      .threshold(max_diff),
+      
+      .blobby(blktemplate),  .nonce(promising_nonce),
+      .hash(interesting_hash)
 	);
 	
 	// User logic ends
