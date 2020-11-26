@@ -6,7 +6,8 @@ module sha_round_dispatch_logic #(
     TESTBENCH_NAME = "<FORGOT TO SET ME>"
 ) (
     output clock, rst, 
-    i_sha3_1600_row_bus.controller toCrunch,
+    output sample,
+    output[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5],
     input hasher_can_take
 );
 
@@ -146,15 +147,15 @@ localparam longint unsigned give[16][5][5] = '{
 };
 
 bit start = 1'b0, done = 1'b0;
-assign toCrunch.sample = start & hasher_can_take & ~done;
+assign sample = start & hasher_can_take & ~done;
 
 int dispatch_index = 0;
 for (genvar loop = 0; loop < 5; loop++) begin
-	assign toCrunch.rowa[loop] = give[dispatch_index][0][loop];
-	assign toCrunch.rowb[loop] = give[dispatch_index][1][loop]; 
-	assign toCrunch.rowc[loop] = give[dispatch_index][2][loop]; 
-	assign toCrunch.rowd[loop] = give[dispatch_index][3][loop]; 
-	assign toCrunch.rowe[loop] = give[dispatch_index][4][loop]; 
+	assign rowa[loop] = give[dispatch_index][0][loop];
+	assign rowb[loop] = give[dispatch_index][1][loop]; 
+	assign rowc[loop] = give[dispatch_index][2][loop]; 
+	assign rowd[loop] = give[dispatch_index][3][loop]; 
+	assign rowe[loop] = give[dispatch_index][4][loop]; 
 end
 
 initial begin

@@ -22,9 +22,11 @@ module sha3_scanner_control(
     // Status
     output odispatching, oevaluating, oready,
     
-    wire hasher_ready,
-    i_sha3_1600_row_bus.controller crunch,
-    i_sha3_1600_row_bus.periph hash
+    input hasher_ready,
+    output feedgood,
+    output[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5],
+    input hashgood,
+    input[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5]
 );
 
 
@@ -36,9 +38,9 @@ enum bit[2:0] {
 
 assign oready = state[0];
 assign odispatching = state[1] & hasher_ready; // the hasher will not really care but I like to see movement in waves
-assign oevaluating = hash.sample; 
+assign oevaluating = hashgood; 
 
-assign crunch.sample = state[1];
+assign feedgood = state[1];
 
 int unsigned dispatch_iterator = 32'b0, next_nonce = 32'b0;
 localparam int unsigned SCAN_LIMIT = 32'hFFFFFFFF;
@@ -57,11 +59,11 @@ localparam longint unsigned rowc_final[2] = '{ 64'h0, 64'h0 };
 localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
 localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
 
-assign crunch.rowa = rowa;
-assign crunch.rowb = rowb;
-assign crunch.rowc = '{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] };
-assign crunch.rowd = '{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] };
-assign crunch.rowe = '{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] };
+assign feeda = '{ rowa[0], rowa[1], rowa[2], rowa[3], rowa[4] };
+assign feedb = '{ rowb[0], rowb[1], rowb[2], rowb[3], rowb[4] };
+assign feedc = '{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] };
+assign feedd = '{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] };
+assign feede = '{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] };
 
 bit buff_found = 1'b0;
 int unsigned good_scan = 32'b0;
@@ -99,7 +101,7 @@ always_ff @(posedge clk) case(state)
         end
     end
     s_flushing: begin
-        if (hash_observed & ~hash.sample) state <= s_waiting;
+        if (hash_observed & ~hashgood) state <= s_waiting;
     end
 endcase
 
@@ -108,16 +110,16 @@ endcase
 // For first, I help the FSM by monitoring hash output.
 always_ff @(posedge clk) begin
     if (oready) hash_observed <= 1'b0;
-    else if(~hash_observed) hash_observed <= hash.sample;
+    else if(~hash_observed) hash_observed <= hashgood;
 end
 
 // The real deal. Mangle the results and select a good hash.
 // Takes some extra care as we must reboot on need!
 wire[63:0] hash_diff = {
-    hash.rowa[0][ 7: 0], hash.rowa[0][15: 8], hash.rowa[0][23:16], hash.rowa[0][31:24],
-    hash.rowa[0][39:32], hash.rowa[0][47:40], hash.rowa[0][55:48], hash.rowa[0][63:56]
+    hasha[0][ 7: 0], hasha[0][15: 8], hasha[0][23:16], hasha[0][31:24],
+    hasha[0][39:32], hasha[0][47:40], hasha[0][55:48], hasha[0][63:56]
 };
-wire good_enough = hash.sample & ($unsigned(hash_diff) < $unsigned(threshold));
+wire good_enough = hashgood & ($unsigned(hash_diff) < $unsigned(threshold));
 
 int unsigned result_iter = 32'b0;
 
@@ -130,17 +132,17 @@ always_ff @(posedge clk) begin
             result_iter <= 32'b0;
         end
     end
-    else if(hash.sample) begin
+    else if(hashgood) begin
         result_iter <= result_iter + 1'b1;
         if(~buff_found & good_enough) begin
             buff_found <= 1'b1;
             good_scan <= result_iter;
             good_hash <= '{
-                hash.rowa[0], hash.rowa[1], hash.rowa[2], hash.rowa[3], hash.rowa[4],
-                hash.rowb[0], hash.rowb[1], hash.rowb[2], hash.rowb[3], hash.rowb[4],
-                hash.rowc[0], hash.rowc[1], hash.rowc[2], hash.rowc[3], hash.rowc[4],
-                hash.rowd[0], hash.rowd[1], hash.rowd[2], hash.rowd[3], hash.rowd[4],
-                hash.rowe[0], hash.rowe[1], hash.rowe[2], hash.rowe[3], hash.rowe[4]
+                hasha[0], hasha[1], hasha[2], hasha[3], hasha[4],
+                hashb[0], hashb[1], hashb[2], hashb[3], hashb[4],
+                hashc[0], hashc[1], hashc[2], hashc[3], hashc[4],
+                hashd[0], hashd[1], hashd[2], hashd[3], hashd[4],
+                hashe[0], hashe[1], hashe[2], hashe[3], hashe[4]
             };
         end
     end

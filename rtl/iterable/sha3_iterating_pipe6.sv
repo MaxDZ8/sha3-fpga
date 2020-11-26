@@ -7,9 +7,11 @@
 // D- Wait until good becomes high. Results will come in bursts.
 module sha3_iterating_pipe6(
     input clk, 
-    i_sha3_1600_row_bus.periph busin,
+    input sample,
+    input[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5],
     output gimme, 
-    i_sha3_1600_row_bus.controller busout
+    output ogood,
+    output[63:0] oa[5], ob[5], oc[5], od[5], oe[5]
 );
 
 // Everything is based on bursting inside inputs as long as the outputs don't come out.
@@ -24,7 +26,7 @@ bit[1:0] input_iteration = 2'b0;
 bit[3:0] input_divide = 4'b0;
 always_ff @(posedge clk)  begin
     if(waiting_input) begin // start the burst. I will fetch myself as much as I can, no matter what!
-        if(busin.sample) begin
+        if(sample) begin
             input_divide <= 1'b1;
             waiting_input <= 1'b0;
         end
@@ -59,16 +61,16 @@ wire[63:0] muxoa[5], muxob[5], muxoc[5], muxod[5], muxoe[5];
 wire[4:0] round_after_mux;
 wire muxo_good;
 wire consume_iterated = input_iteration != 2'h0;
-wire mux_sample = waiting_input ? busin.sample : (gimme | consume_iterated);
+wire mux_sample = waiting_input ? sample : (gimme | consume_iterated);
 mux1600 uglee(
     .clk(clk),
     .sample(mux_sample), .selector(consume_iterated), .round(round_base),
     .a('{
-        busin.rowa[0], busin.rowa[1], busin.rowa[2], busin.rowa[3], busin.rowa[4],
-        busin.rowb[0], busin.rowb[1], busin.rowb[2], busin.rowb[3], busin.rowb[4],
-        busin.rowc[0], busin.rowc[1], busin.rowc[2], busin.rowc[3], busin.rowc[4],
-        busin.rowd[0], busin.rowd[1], busin.rowd[2], busin.rowd[3], busin.rowd[4],
-        busin.rowe[0], busin.rowe[1], busin.rowe[2], busin.rowe[3], busin.rowe[4]
+        rowa[0], rowa[1], rowa[2], rowa[3], rowa[4],
+        rowb[0], rowb[1], rowb[2], rowb[3], rowb[4],
+        rowc[0], rowc[1], rowc[2], rowc[3], rowc[4],
+        rowd[0], rowd[1], rowd[2], rowd[3], rowd[4],
+        rowe[0], rowe[1], rowe[2], rowe[3], rowe[4]
     }),
     .b('{
         tomuxa[0], tomuxa[1], tomuxa[2], tomuxa[3], tomuxa[4],
@@ -144,8 +146,8 @@ sha3_finalizer #(
 ) finalizer(
     .clk(clk), .sample(into_finalizer),
     .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(busout.rowa), .osb(busout.rowb), .osc(busout.rowc), .osd(busout.rowd), .ose(busout.rowe),
-    .ogood(busout.sample)
+    .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
+    .ogood(ogood)
 );
 
 endmodule

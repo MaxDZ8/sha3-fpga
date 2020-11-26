@@ -5,7 +5,7 @@
 	(
 		// Users to add parameters here
 
-		parameter STYLE = "iterate-four-times",
+		parameter STYLE = "fully-unrolled-fully-parallel",
 
 		// User parameters ends
 		// Do not modify the parameters beyond this line

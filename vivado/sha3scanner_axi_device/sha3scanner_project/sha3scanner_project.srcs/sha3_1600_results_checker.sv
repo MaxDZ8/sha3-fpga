@@ -5,7 +5,8 @@ module sha3_1600_results_checker #(
     TESTBENCH_NAME = "<FORGOT TO SET ME>"
 ) (
     input clk,
-    i_sha3_1600_row_bus.periph crunched
+    input sample,
+    input[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5]
 );
 
 
@@ -126,9 +127,9 @@ localparam longint unsigned expected_result[16][5][5] = '{
 };
 
 int result_index = 0;
-wire[63:0] result[5][5] = '{ crunched.rowa, crunched.rowb, crunched.rowc, crunched.rowd, crunched.rowe };
+wire[63:0] result[5][5] = '{ rowa, rowb, rowc, rowd, rowe };
 
-always @(posedge clk) if(crunched.sample) begin
+always @(posedge clk) if(sample) begin
   for (int loop = 0; loop < 5; loop++) begin
       for (int comp = 0; comp < 5; comp++) begin
           if (result[loop][comp] != expected_result[result_index][loop][comp]) begin
