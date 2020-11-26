@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: Maxdz8:crypto:sha3scanner:0.2
-// IP Revision: 3
+// IP VLNV: Maxdz8:crypto:sha3scanner:0.3
+// IP Revision: 6
 
 `timescale 1ns/1ps
 

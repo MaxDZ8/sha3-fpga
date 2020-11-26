@@ -18,7 +18,7 @@ module sha3_scanner #(
 	  
 	  output dispatching, evaluating, found, ready,
 	  output[31:0] nonce,
-	  output[31:0] hash[50]
+	  output[63:0] hash[25]
 );
 
 wire capture = start & ready;
@@ -132,8 +132,7 @@ else begin
 end
 assign nonce = good_nonce;
 for (genvar loop = 0; loop < 25; loop++) begin
-    assign hash[loop * 2    ] = good_hash[loop][63:32];
-    assign hash[loop * 2 + 1] = good_hash[loop][31: 0];
+    assign hash[loop] = good_hash[loop];
 end
 
 
