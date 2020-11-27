@@ -5,7 +5,9 @@
 // B- if gimme is high, then take sample hi and keep it high for XXXXX clocks.
 // C- each clock sample is hi, provide a matrix to churn (gimme will go low when no more can be accepted).
 // D- Wait until good becomes high. Results will come in bursts.
-module sha3_iterating_pipe6(
+module sha3_iterating_pipe6 #(
+    FEEDBACK_MUX_STYLE = "fabric"
+) (
     input clk, 
     input sample,
     input[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5],
@@ -18,7 +20,8 @@ module sha3_iterating_pipe6(
 // If the outputs start flowing back, it's time to feedback them!
 // Keep accepting new values until the feedback mux needs to take the back-routed values,
 // this keeps the pipeline busy for a while!
-localparam bit[3:0] burst_len_and_delay = 4'd13;
+localparam FEEDBACK_MUX_LATENCY = FEEDBACK_MUX_STYLE == "fabric" ? 1 : 2;
+localparam bit[3:0] burst_len_and_delay = 4'd12 + FEEDBACK_MUX_LATENCY;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
@@ -62,7 +65,9 @@ wire[4:0] round_after_mux;
 wire muxo_good;
 wire consume_iterated = input_iteration != 2'h0;
 wire mux_sample = waiting_input ? sample : (gimme | consume_iterated);
-mux1600 uglee(
+mux1600 #(
+    .STYLE(FEEDBACK_MUX_STYLE)
+) uglee(
     .clk(clk),
     .sample(mux_sample), .selector(consume_iterated), .round(round_base),
     .a('{

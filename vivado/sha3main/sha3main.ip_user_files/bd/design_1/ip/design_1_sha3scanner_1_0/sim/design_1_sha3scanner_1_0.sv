@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: Maxdz8:crypto:sha3scanner:0.3
-// IP Revision: 6
+// IP VLNV: Maxdz8:crypto:sha3scanner:0.4
+// IP Revision: 7
 
 `timescale 1ns/1ps
 
@@ -133,7 +133,8 @@ input wire s00_axi_rready;
   sha3scanner_v0_1 #(
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
     .C_S00_AXI_ADDR_WIDTH(9),  // Width of S_AXI address bus
-    .STYLE("iterate-four-times")
+    .STYLE("iterate-four-times"),
+    .FEEDBACK_MUX_STYLE("fabric")
   ) inst (
     .dispatching(dispatching),
     .evaluating(evaluating),

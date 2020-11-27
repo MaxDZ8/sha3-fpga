@@ -4,6 +4,7 @@
 	(
 		// Users to add parameters here
 		parameter STYLE = "fully-unrolled-fully-parallel",
+		parameter FEEDBACK_MUX_STYLE = "fabric",
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -718,7 +719,8 @@
 	wire[63:0] wide_hash[25];
 	
 	sha3_scanner_instantiator #(
-	    .STYLE(STYLE)
+	    .STYLE(STYLE),
+	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
 	) thing (
       .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),

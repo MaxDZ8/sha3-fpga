@@ -6,6 +6,7 @@
 		// Users to add parameters here
 
 		parameter STYLE = "fully-unrolled-fully-parallel",
+		parameter FEEDBACK_MUX_STYLE = "fabric",
 
 		// User parameters ends
 		// Do not modify the parameters beyond this line
@@ -55,6 +56,7 @@
 // Instantiation of Axi Bus Interface S00_AXI
 	sha3scanner_v0_1_S00_AXI # (
 	  .STYLE(STYLE),
+	  .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) sha3scanner_v0_1_S00_AXI_inst (
