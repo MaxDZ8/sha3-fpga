@@ -2,7 +2,9 @@
 
 // A scanner dealing with the SHA3-packed-by-6 iterative hasher needs to be quite smarter than just dispatch
 // like there's no tomorrow.
-module sha3_packed6_scanner(
+module sha3_packed6_scanner #(
+    FEEDBACK_MUX_STYLE = "fabric"
+) (
     input clk,
     // Scan request
     input start,
@@ -33,7 +35,9 @@ sha3_scanner_control fsm (
 );
 
 
-sha3_iterating_pipe6 hasher (
+sha3_iterating_pipe6 #(
+    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+) hasher (
     .clk(clk),
     .sample(feedgood),
     .rowa(feeda), .rowb(feedb), .rowc(feedc), .rowd(feedd), .rowe(feede),

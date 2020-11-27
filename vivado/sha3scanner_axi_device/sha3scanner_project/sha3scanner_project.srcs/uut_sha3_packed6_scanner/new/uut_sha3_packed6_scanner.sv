@@ -3,7 +3,8 @@
 module uut_sha3_packed6_scanner();
 
 localparam IMPL_NAME = "SHA3 scanner (packed by 6)";
-localparam TEST_MODE = "short";
+localparam TEST_MODE = "long";
+localparam FEEDBACK_MUX_STYLE = "DSP";
 
 wire start;
 wire[31:0] blockTemplate[24];
@@ -22,7 +23,8 @@ wire found;
 wire[63:0] hash[25];
 wire[31:0] nonce;
 sha3_scanner_instantiator #(
-    .STYLE("iterate-four-times")
+    .STYLE("iterate-four-times"),
+    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
 ) thing (
     .clk(clk), .rst(1'b0),
     .start(start), .threshold(threshold), .blobby(blockTemplate),

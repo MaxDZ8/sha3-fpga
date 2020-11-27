@@ -1,7 +1,8 @@
 `timescale 1ns / 1ps
 
 module sha3_scanner_instantiator #(
-    STYLE = "fully-unrolled-fully-parallel"
+    STYLE = "fully-unrolled-fully-parallel",
+    FEEDBACK_MUX_STYLE = "fabric"
 ) (
     input clk, rst,
 
@@ -35,7 +36,9 @@ end
 else if (STYLE == "iterate-four-times") begin : smallish
     // Small overhead by iterating on a 6-round-deep pipeline. The pipeline itself does 1 result clock
     // but results come in bursts so effectively 4 clocks per hash overall.
-    sha3_packed6_scanner nice_deal (
+    sha3_packed6_scanner #(
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+    ) nice_deal (
         .clk(clk),
         .start(start), .threshold(threshold), .blockTemplate(blobby),
         .ofound(found), .ohash(hash), .ononce(nonce),
