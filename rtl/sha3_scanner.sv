@@ -139,6 +139,6 @@ end
 bit was_evaluating = 1'b0;
 always_ff @(posedge clk) was_evaluating <= evaluating;
 wire empty_pipeline = was_evaluating & ~evaluating;
-assign ready = result_iterator == dispatch_iterator;
+assign ready = result_iterator == dispatch_iterator & ~dispatching;
 
 endmodule

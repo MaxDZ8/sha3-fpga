@@ -40,3 +40,5 @@ vivado/sha3main/sha3main.srcs/sources_1/bd/design_1/sim/
 vivado/sha3main/sha3main.srcs/sources_1/bd/design_1/ui/
 vivado/sha3main/sha3main.runs/impl_1/
 vivado/sha3main/sha3main.srcs/sources_1/bd/design_1/ip/design_1_artyz7_hasher_led_dr_0_1/
+vivado/sha3scanner_axi_device/sha3scanner_0.1/xgui/
+vivado/sha3main/sha3main.ip_user_files/bd/design_1/ipshared/

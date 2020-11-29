@@ -32,21 +32,21 @@ module artyz7_4level_leds(
 	input[1:0] led[4],
 	output pulse[4],
 	
-	// RGB requests. Here, led4 has index 0, led5 has index 1.
-	input[1:0] red[2], green[2], blue[2], // currently ignored, provided for forward compatibility!
-	output ored[2], ogreen[2], oblue[2]
+  input[1:0] rgb4r, rgb4g, rgb4b,
+  input[1:0] rgb5r, rgb5g, rgb5b,
+  // 0=R, 1=G, 2=B
+  output[2:0] orgb4, orgb5 
 );
 
 for (genvar cp = 0; cp < 4; cp++) begin : mono
     led_4levels pwmer ( .clk(clk), .level(led[cp]), .onoff(pulse[cp]));
 end
 
-// RGB is currently unused, really.
-for (genvar cp = 0; cp < 2; cp++) begin : rgb_is_hardwired
-    assign ored[cp] = 1'b0;
-    assign ogreen[cp] = 1'b0;
-    assign oblue[cp] = 1'b0;
-end
-
+led_4levels red4 ( .clk(clk), .level(rgb4r), .onoff(orgb4[0]));
+led_4levels red5 ( .clk(clk), .level(rgb5r), .onoff(orgb5[0]));
+led_4levels green4 ( .clk(clk), .level(rgb4g), .onoff(orgb4[1]));
+led_4levels green5 ( .clk(clk), .level(rgb5g), .onoff(orgb5[1]));
+led_4levels blue4 ( .clk(clk), .level(rgb4b), .onoff(orgb4[2]));
+led_4levels blue5 ( .clk(clk), .level(rgb5b), .onoff(orgb5[2]));
 
 endmodule

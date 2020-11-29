@@ -18,7 +18,6 @@ module sha3_scanner_instantiator #(
 	
 if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
     // Lowest overhead, maximum resource utilization and performance. 1 result/clock.
-    assign ready = 1'b1;
     sha3_scanner #(
       .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
       .CHI_MODIFY_STYLE("basic"),
@@ -26,6 +25,7 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
     ) scanner(
       .clk(clk), .rst(rst),
+      .ready(ready),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
       .threshold(threshold),
       
