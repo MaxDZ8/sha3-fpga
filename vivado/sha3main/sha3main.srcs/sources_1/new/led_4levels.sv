@@ -17,7 +17,7 @@
 // Leds can flip in the Mhz with ease, but the driving transistors might distort a lot.
 // Contemporary (Dec 2020) LED dimmers go 100khz - 1Mhz. 
 module led_4levels #(
-    shortint unsigned FAINT = 16'b1000_0000_0000_0000, // 6.125%
+    shortint unsigned FAINT = 16'b1000_0000_1000_0000, // 12.5%
     shortint unsigned ON    = 16'b1010_1000_1010_1000 // 25% + 12.5% = 37.5%
 ) (
     input clk,

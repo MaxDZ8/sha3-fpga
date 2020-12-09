@@ -123,12 +123,12 @@
 	// as the nonce we effectively test is scan_start + iterator.
 	// The remaining bits of the SHA3 state are built internally. 
 	// AXI logical addressing: 0..23
-	int unsigned blktemplate[23:0];
+	int unsigned blktemplate[24];
 	
 	// Often called "difficulty target", an hash is good enough if its 0-th ulong element is less than this.
 	// Or more, depending on how you think your endianess.
 	// AXI logical addressing: 24..25
-	int unsigned threshold[1:0];
+	longint unsigned threshold;
 	
 	//----------------------------------------------
 	//-- Output registers. Writing them is NOP.
@@ -146,8 +146,8 @@
 	// bits to guess if we were good enough or anything.
 	// Here, I mantain the full hash for you to evaluate.
 	// Only meaningful is .found is high.
-	// AXI logical addressing: 27..52
-	wire [31:0]	interesting_hash[49:0];
+	// AXI logical addressing: 27..76
+	wire [31:0]	interesting_hash[50];
 	
 	//----------------------------------------------
 	//-- Special registers. Writing them might cause special things to happen.
@@ -289,7 +289,7 @@
 	      blktemplate[18] <= 32'b0;    blktemplate[19] <= 32'b0;
 	      blktemplate[20] <= 32'b0;    blktemplate[21] <= 32'b0;
 	      blktemplate[22] <= 32'b0;    blktemplate[23] <= 32'b0;
-	      threshold[0] <= 32'b0;       threshold[1] <= 32'b0;
+	      threshold <= 64'b0;
 	    end 
 	  else begin
 	    if (slv_reg_wren)
@@ -463,20 +463,12 @@
 	                // Slave register 23
 	                blktemplate[23][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          7'h18:
+	          7'h18: // Register 24
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 24
-	                threshold[0][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end  
-	          7'h19:
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) threshold[( 0 + (byte_index*8)) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+	          7'h19: // Register 25
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 25
-	                threshold[1][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) threshold[(32 + (byte_index*8)) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	          default : begin
 	                      blktemplate[ 0] <= blktemplate[ 0];
 	                      blktemplate[ 1] <= blktemplate[ 1];
@@ -502,8 +494,7 @@
 	                      blktemplate[21] <= blktemplate[21];
 	                      blktemplate[22] <= blktemplate[22];
 	                      blktemplate[23] <= blktemplate[23];
-	                      threshold[0] <= threshold[0];
-	                      threshold[1] <= threshold[1];
+	                      threshold <= threshold;
 	                    end
 	        endcase
 	      end
@@ -636,8 +627,8 @@
 	        7'h15   : reg_data_out <= blktemplate[21];
 	        7'h16   : reg_data_out <= blktemplate[22];
 	        7'h17   : reg_data_out <= blktemplate[23];
-	        7'h18   : reg_data_out <= threshold[0];
-	        7'h19   : reg_data_out <= threshold[1];
+	        7'h18   : reg_data_out <= threshold[31: 0];
+	        7'h19   : reg_data_out <= threshold[63:32];
 	        
 	        7'h1A   : reg_data_out <= promising_nonce;
 	        7'h1C   : reg_data_out <= interesting_hash[ 0];
@@ -719,7 +710,6 @@
 
   wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
 	wire start = idle & writing_control;
-	wire[63:0] max_diff = { threshold[1], threshold[0] };
 	wire[63:0] wide_hash[25];
 	
 	sha3_scanner_instantiator #(
@@ -729,7 +719,7 @@
       .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
       .ready(idle),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
-      .threshold(max_diff),
+      .threshold(threshold),
       
       .blobby(blktemplate),  .nonce(promising_nonce),
       .hash(wide_hash)
