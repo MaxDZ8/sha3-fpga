@@ -770,111 +770,111 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_round_function.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_round_function.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_iota.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_iota.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_chi.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_chi.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_rho_pi.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_rho_pi.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta_elts.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_elts.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_delayer.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_delayer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta_updater.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_updater.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_capture.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_capture.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_finalizer.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_finalizer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_slice_to_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_slice_to_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_merge_from_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_merge_from_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/inferred_dsp48_xor.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/inferred_dsp48_xor.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_elts_slice_to_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_elts_slice_to_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/instantiated_dsp48_xor.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/instantiated_dsp48_xor.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_iota.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_iota.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_round.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_round.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterating_6pack.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_6pack.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterating_pipe6.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe6.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/mux1600.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_semiround.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_semiround.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_generic_round_second_half.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_generic_round_second_half.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_packed6_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_packed6_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner_control.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_control.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner_instantiator.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_instantiator.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
@@ -902,111 +902,111 @@
         <spirit:fileType>verilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_round_function.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_round_function.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_iota.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_iota.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_chi.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_chi.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_rho_pi.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_rho_pi.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta_elts.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_elts.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_delayer.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_delayer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_theta_updater.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_updater.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_capture.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_capture.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_finalizer.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_finalizer.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_slice_to_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_slice_to_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_state_merge_from_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_merge_from_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/inferred_dsp48_xor.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/inferred_dsp48_xor.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_elts_slice_to_48.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_elts_slice_to_48.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/instantiated_dsp48_xor.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/instantiated_dsp48_xor.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_iota.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_iota.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_round.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_round.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterating_6pack.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_6pack.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterating_pipe6.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe6.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/mux1600.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_iterable_semiround.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_semiround.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/iterable/sha3_generic_round_second_half.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_generic_round_second_half.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_packed6_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_packed6_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner_control.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_control.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
-        <spirit:name>../../../rtl/sha3_scanner_instantiator.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_instantiator.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
       </spirit:file>
       <spirit:file>
