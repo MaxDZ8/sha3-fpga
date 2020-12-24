@@ -79,6 +79,74 @@ if (ROUND_COUNT == 6) begin : sixth
         .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
     );
 end
+else if (ROUND_COUNT == 12) begin : twelve // those could also be generated but for what it takes, they are not.
+    wire[63:0] n5osa[5], n5osb[5], n5osc[5], n5osd[5], n5ose[5];
+    wire n5good;
+    wire[4:0] n5round;
+    sha3_iterable_round r6n5(
+        .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
+        .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
+        .ogood(n5good), .oround(n5round),
+        .osa(n5osa), .osb(n5osb), .osc(n5osc), .osd(n5osd), .ose(n5ose)
+    );
+    
+    wire[63:0] n6osa[5], n6osb[5], n6osc[5], n6osd[5], n6ose[5];
+    wire n6good;
+    wire[4:0] n6round;
+    sha3_iterable_round r6n6(
+        .clk(clk), .round_index(n5round + 1'b1), .sample(n5good),
+        .isa(n5osa), .isb(n5osb), .isc(n5osc), .isd(n5osd), .ise(n5ose),
+        .ogood(n6good), .oround(n6round),
+        .osa(n6osa), .osb(n6osb), .osc(n6osc), .osd(n6osd), .ose(n6ose)
+    );
+    
+    wire[63:0] n7osa[5], n7osb[5], n7osc[5], n7osd[5], n7ose[5];
+    wire n7good;
+    wire[4:0] n7round;
+    sha3_iterable_round r6n7(
+        .clk(clk), .round_index(n6round + 1'b1), .sample(n6good),
+        .isa(n6osa), .isb(n6osb), .isc(n6osc), .isd(n6osd), .ise(n6ose),
+        .ogood(n7good), .oround(n7round),
+        .osa(n7osa), .osb(n7osb), .osc(n7osc), .osd(n7osd), .ose(n7ose)
+    );
+    
+    wire[63:0] n8osa[5], n8osb[5], n8osc[5], n8osd[5], n8ose[5];
+    wire n8good;
+    wire[4:0] n8round;
+    sha3_iterable_round r6n8(
+        .clk(clk), .round_index(n7round + 1'b1), .sample(n7good),
+        .isa(n7osa), .isb(n7osb), .isc(n7osc), .isd(n7osd), .ise(n7ose),
+        .ogood(n8good), .oround(n8round),
+        .osa(n8osa), .osb(n8osb), .osc(n8osc), .osd(n8osd), .ose(n8ose)
+    );
+    
+    wire[63:0] n9osa[5], n9osb[5], n9osc[5], n9osd[5], n9ose[5];
+    wire n9good;
+    wire[4:0] n9round;
+    sha3_iterable_round r6n9(
+        .clk(clk), .round_index(n8round + 1'b1), .sample(n8good),
+        .isa(n8osa), .isb(n8osb), .isc(n8osc), .isd(n8osd), .ise(n8ose),
+        .ogood(n9good), .oround(n9round),
+        .osa(n9osa), .osb(n9osb), .osc(n9osc), .osd(n9osd), .ose(n9ose)
+    );
+    
+    wire[63:0] nAosa[5], nAosb[5], nAosc[5], nAosd[5], nAose[5];
+    wire nAgood;
+    wire[4:0] nAround;
+    sha3_iterable_round r6nA(
+        .clk(clk), .round_index(n9round + 1'b1), .sample(n9good),
+        .isa(n9osa), .isb(n9osb), .isc(n9osc), .isd(n9osd), .ise(n9ose),
+        .ogood(nAgood), .oround(nAround),
+        .osa(nAosa), .osb(nAosb), .osc(nAosc), .osd(nAosd), .ose(nAose)
+    );
+	
+    sha3_iterable_semiround r6nB(
+        .clk(clk), .round_index(nAround + 1'b1), .sample(nAgood),
+        .isa(nAosa), .isb(nAosb), .isc(nAosc), .isd(nAosd), .ise(nAose),
+        .ogood(ogood), .oround(oround),
+        .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+    );
+end
 else begin
     initial begin
         $display("Round count unsupported.");
