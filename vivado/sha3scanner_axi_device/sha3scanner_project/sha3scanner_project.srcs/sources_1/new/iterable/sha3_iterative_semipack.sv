@@ -1,12 +1,17 @@
 `timescale 1ns / 1ps
 
-// A pack of 6 SHA rounds, where the last is partial.
-// Iterate a single hash 4 times through this to produce a full SHA3!
+// A pack of 6 (or 12) SHA rounds, where the last is partial.
+// Iterate a single hash (4 or 2) times through this to produce a full SHA3!
 // Note it takes the index of the first round as port parameter.
 //
 // Because the last round is only partial, when iterating you should be adjusting outputs accordingly
 // by applying the last CHI+IOTA or the FINALIZER before feeding back in!
-module sha3_iterating_6pack(
+//
+// Latency is ROUND_COUNT * LATENCY_EACH_ROUND, the fact last round is only partial is of little matter
+// as latency of the CHI+IOTA is typically 0.
+module sha3_iterating_semipack #(
+    ROUND_COUNT = 6
+) (
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input sample,
@@ -66,11 +71,19 @@ sha3_iterable_round r6n4(
     .osa(n4osa), .osb(n4osb), .osc(n4osc), .osd(n4osd), .ose(n4ose)
 );
 
-sha3_iterable_semiround r6n5(
-    .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
-    .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
-    .ogood(ogood), .oround(oround),
-    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
-);
+if (ROUND_COUNT == 6) begin : sixth
+    sha3_iterable_semiround r6n5(
+        .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
+        .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
+        .ogood(ogood), .oround(oround),
+        .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+    );
+end
+else begin
+    initial begin
+        $display("Round count unsupported.");
+        $finish;
+    end
+end
 
 endmodule

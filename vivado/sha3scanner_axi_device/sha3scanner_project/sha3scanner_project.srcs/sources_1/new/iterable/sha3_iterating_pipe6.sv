@@ -97,7 +97,9 @@ mux1600 #(
 
 wire rndo_good;
 wire[63:0] rndoa[5], rndob[5], rndoc[5], rndod[5], rndoe[5];
-sha3_iterating_6pack crunchy (
+sha3_iterating_semipack #(
+    .ROUND_COUNT(6)
+) crunchy (
     .clk(clk),
     .isa(muxoa), .isb(muxob), .isc(muxoc), .isd(muxod), .ise(muxoe),
     .base_round(round_after_mux), .sample(muxo_good),
