@@ -1,9 +1,9 @@
 `timescale 1ns / 1ps
 
-module uut_sha3_packed6_scanner();
+module uut_sha3_packed12_scanner();
 
-localparam IMPL_NAME = "SHA3 scanner (packed by 6)";
-localparam TEST_MODE = "short";
+localparam IMPL_NAME = "SHA3 scanner (packed by 12)";
+localparam TEST_MODE = "long";
 localparam FEEDBACK_MUX_STYLE = "fabric";
 
 wire start;
@@ -23,7 +23,7 @@ wire found;
 wire[63:0] hash[25];
 wire[31:0] nonce;
 sha3_scanner_instantiator #(
-    .STYLE("iterate-four-times"),
+    .STYLE("iterate-twice"),
     .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
 ) thing (
     .clk(clk), .rst(1'b0),

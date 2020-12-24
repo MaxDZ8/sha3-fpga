@@ -33,17 +33,26 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .hash(hash)
     );
 end
-else if (STYLE == "iterate-four-times") begin : smallish
+else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : smallish
     // Small overhead by iterating on a 6-round-deep pipeline. The pipeline itself does 1 result clock
     // but results come in bursts so effectively 4 clocks per hash overall.
-    sha3_packed6_scanner #(
-        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+    // 12-round deep pipe very nice, even lower overhead to drive twice the cores, minor advantages.
+    localparam ROUND_DEPTH = STYLE == "iterate-twice" ? 12 : 6; 
+    sha3_packed_pipeline_scanner #(
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
+        .PIPE_ROUNDS(ROUND_DEPTH)
     ) nice_deal (
         .clk(clk),
         .start(start), .threshold(threshold), .blockTemplate(blobby),
         .ofound(found), .ohash(hash), .ononce(nonce),
         .oready(ready), .odispatching(dispatching), .oevaluating(evaluating)
     );
+end
+else begin
+    initial begin
+        $display("Round count unsupported.");
+        $finish;
+    end
 end
 	
 endmodule

@@ -3,7 +3,8 @@
 // A scanner dealing with the SHA3-packed-by-6 iterative hasher needs to be quite smarter than just dispatch
 // like there's no tomorrow.
 module sha3_packed_pipeline_scanner #(
-    FEEDBACK_MUX_STYLE = "fabric"
+    FEEDBACK_MUX_STYLE = "fabric",
+    PIPE_ROUNDS = 6
 ) (
     input clk,
     // Scan request
@@ -35,16 +36,36 @@ sha3_scanner_control fsm (
 );
 
 
-sha3_iterating_pipe6 #(
-    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
-) hasher (
-    .clk(clk),
-    .sample(feedgood),
-    .rowa(feeda), .rowb(feedb), .rowc(feedc), .rowd(feedd), .rowe(feede),
-    .gimme(hasher_can_take),
-    .ogood(hashgood),
-    .oa(hasha), .ob(hashb), .oc(hashc), .od(hashd), .oe(hashe)
-);
+if (PIPE_ROUNDS == 6) begin : tiny
+    sha3_iterating_pipe6 #(
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+    ) hasher (
+        .clk(clk),
+        .sample(feedgood),
+        .rowa(feeda), .rowb(feedb), .rowc(feedc), .rowd(feedd), .rowe(feede),
+        .gimme(hasher_can_take),
+        .ogood(hashgood),
+        .oa(hasha), .ob(hashb), .oc(hashc), .od(hashd), .oe(hashe)
+  );
+end
+else if(PIPE_ROUNDS == 12) begin : nice
+    sha3_iterating_pipe12 #(
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+    ) hasher (
+        .clk(clk),
+        .sample(feedgood),
+        .rowa(feeda), .rowb(feedb), .rowc(feedc), .rowd(feedd), .rowe(feede),
+        .gimme(hasher_can_take),
+        .ogood(hashgood),
+        .oa(hasha), .ob(hashb), .oc(hashc), .od(hashd), .oe(hashe)
+  );
+end
+else begin
+    initial begin
+        $display("Pipeline depth unsupported.");
+        $finish;
+    end
+end
 
 
 endmodule
