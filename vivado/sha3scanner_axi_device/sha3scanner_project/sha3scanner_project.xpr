@@ -240,7 +240,7 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_packed6_scanner.sv">
+      <File Path="$PSRCDIR/sources_1/new/sha3_packed_pipeline_scanner.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>

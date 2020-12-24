@@ -46,3 +46,4 @@ vivado/sha3main/sha3main.ip_user_files/bd/design_1/ip/
 vivado/sha3main/usage_statistics_webtalk.xml
 vivado/sha3main/usage_statistics_webtalk.html
 vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed12/behav/
+vivado/sha3scanner_axi_device/sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed12_scanner/behav/

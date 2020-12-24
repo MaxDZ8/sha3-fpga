@@ -2,7 +2,7 @@
 
 // A scanner dealing with the SHA3-packed-by-6 iterative hasher needs to be quite smarter than just dispatch
 // like there's no tomorrow.
-module sha3_packed6_scanner #(
+module sha3_packed_pipeline_scanner #(
     FEEDBACK_MUX_STYLE = "fabric"
 ) (
     input clk,
