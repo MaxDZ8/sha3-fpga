@@ -5,6 +5,9 @@
 	(
 		// Users to add parameters here
 
+		parameter STYLE = "fully-unrolled-fully-parallel",
+		parameter FEEDBACK_MUX_STYLE = "fabric",
+
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -20,6 +23,11 @@
     output wire dispatching,
     // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
     output wire evaluating,
+    // While we produce results we might be multi-cycle and waiting for them to pour out.
+    // In that case, we would evaluate only once every few cycles.
+    // When we are not dispatching and not waiting for any result we are idle.
+    // Idle also means "ready to start a new scan".
+    output wire idle,
     // True if at least one resulting hash is good enough.
     output wire found,
 
@@ -51,7 +59,9 @@
 		input wire  s00_axi_rready
 	);
 // Instantiation of Axi Bus Interface S00_AXI
-	sha3scanner_v0_1_S00_AXI # ( 
+	sha3scanner_v0_1_S00_AXI # (
+	  .STYLE(STYLE),
+	  .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) sha3scanner_v0_1_S00_AXI_inst (
@@ -77,6 +87,7 @@
 		.S_AXI_RVALID(s00_axi_rvalid),
 		.S_AXI_RREADY(s00_axi_rready),
 		
+		.idle(idle),
 		.dispatching(dispatching),
 		.evaluating(evaluating),
 		.found(found)

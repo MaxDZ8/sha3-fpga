@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="200309fs"></ZoomStartTime>
-      <ZoomEndTime time="304510fs"></ZoomEndTime>
-      <Cursor1Time time="215000fs"></Cursor1Time>
+      <ZoomStartTime time="1449737fs"></ZoomStartTime>
+      <ZoomEndTime time="1588053fs"></ZoomEndTime>
+      <Cursor1Time time="1565000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
-      <NameColumnWidth column_width="173"></NameColumnWidth>
+      <NameColumnWidth column_width="169"></NameColumnWidth>
       <ValueColumnWidth column_width="58"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="7" />
+   <WVObjectSize size="8" />
    <wvobject fp_name="/uut_sha3_scanner/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -39,6 +39,10 @@
    <wvobject fp_name="/uut_sha3_scanner/evaluating" type="logic">
       <obj_property name="ElementShortName">evaluating</obj_property>
       <obj_property name="ObjectShortName">evaluating</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_scanner/scanner/good_enough" type="logic">
+      <obj_property name="ElementShortName">good_enough</obj_property>
+      <obj_property name="ObjectShortName">good_enough</obj_property>
    </wvobject>
    <wvobject fp_name="/uut_sha3_scanner/found" type="logic">
       <obj_property name="ElementShortName">found</obj_property>
@@ -64,10 +68,6 @@
          <obj_property name="ElementShortName">threshold[63:0]</obj_property>
          <obj_property name="ObjectShortName">threshold[63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_scanner/scanner/good_enough" type="logic">
-         <obj_property name="ElementShortName">good_enough</obj_property>
-         <obj_property name="ObjectShortName">good_enough</obj_property>
-      </wvobject>
       <wvobject fp_name="/uut_sha3_scanner/scanner/empty_pipeline" type="logic">
          <obj_property name="ElementShortName">empty_pipeline</obj_property>
          <obj_property name="ObjectShortName">empty_pipeline</obj_property>
@@ -76,10 +76,6 @@
          <obj_property name="label">hasher</obj_property>
          <obj_property name="DisplayName">label</obj_property>
          <obj_property name="isExpanded"></obj_property>
-         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/sample" type="logic">
-            <obj_property name="ElementShortName">sample</obj_property>
-            <obj_property name="ObjectShortName">sample</obj_property>
-         </wvobject>
          <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[1].fetch " type="logic">
             <obj_property name="ElementShortName">\similarly[1].fetch </obj_property>
             <obj_property name="ObjectShortName">\similarly[1].fetch </obj_property>
@@ -95,10 +91,6 @@
          <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/\similarly[22].fetch " type="logic">
             <obj_property name="ElementShortName">\similarly[22].fetch </obj_property>
             <obj_property name="ObjectShortName">\similarly[22].fetch </obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_scanner/scanner/hasher/ogood" type="logic">
-            <obj_property name="ElementShortName">ogood</obj_property>
-            <obj_property name="ObjectShortName">ogood</obj_property>
          </wvobject>
       </wvobject>
    </wvobject>

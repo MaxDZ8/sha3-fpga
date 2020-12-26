@@ -3,7 +3,8 @@
 	module sha3scanner_v0_1_S00_AXI #
 	(
 		// Users to add parameters here
-
+		parameter STYLE = "fully-unrolled-fully-parallel",
+		parameter FEEDBACK_MUX_STYLE = "fabric",
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -15,6 +16,11 @@
 	(
 		// Users to add ports here
 		
+    // While we produce results we might be multi-cycle and waiting for them to pour out.
+    // In that case, we would evaluate only once every few cycles.
+    // When we are not dispatching and not waiting for any result we are idle.
+    // Idle also means "ready to start a new scan".
+    output wire idle,
 		// True if we are actively scanning. 
     output wire dispatching,
     // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
@@ -117,12 +123,12 @@
 	// as the nonce we effectively test is scan_start + iterator.
 	// The remaining bits of the SHA3 state are built internally. 
 	// AXI logical addressing: 0..23
-	int unsigned blktemplate[23:0];
+	int unsigned blktemplate[24];
 	
 	// Often called "difficulty target", an hash is good enough if its 0-th ulong element is less than this.
 	// Or more, depending on how you think your endianess.
 	// AXI logical addressing: 24..25
-	int unsigned threshold[1:0];
+	longint unsigned threshold;
 	
 	//----------------------------------------------
 	//-- Output registers. Writing them is NOP.
@@ -140,8 +146,8 @@
 	// bits to guess if we were good enough or anything.
 	// Here, I mantain the full hash for you to evaluate.
 	// Only meaningful is .found is high.
-	// AXI logical addressing: 27..52
-	wire [31:0]	interesting_hash[49:0];
+	// AXI logical addressing: 27..76
+	wire [31:0]	interesting_hash[50];
 	
 	//----------------------------------------------
 	//-- Special registers. Writing them might cause special things to happen.
@@ -283,7 +289,7 @@
 	      blktemplate[18] <= 32'b0;    blktemplate[19] <= 32'b0;
 	      blktemplate[20] <= 32'b0;    blktemplate[21] <= 32'b0;
 	      blktemplate[22] <= 32'b0;    blktemplate[23] <= 32'b0;
-	      threshold[0] <= 32'b0;       threshold[1] <= 32'b0;
+	      threshold <= 64'b0;
 	    end 
 	  else begin
 	    if (slv_reg_wren)
@@ -457,20 +463,12 @@
 	                // Slave register 23
 	                blktemplate[23][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	              end  
-	          7'h18:
+	          7'h18: // Register 24
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 24
-	                threshold[0][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end  
-	          7'h19:
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) threshold[( 0 + (byte_index*8)) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
+	          7'h19: // Register 25
 	            for ( byte_index = 0; byte_index <= (C_S_AXI_DATA_WIDTH/8)-1; byte_index = byte_index+1 )
-	              if ( S_AXI_WSTRB[byte_index] == 1 ) begin
-	                // Respective byte enables are asserted as per write strobes 
-	                // Slave register 25
-	                threshold[1][(byte_index*8) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
-	              end
+	              if ( S_AXI_WSTRB[byte_index] == 1 ) threshold[(32 + (byte_index*8)) +: 8] <= S_AXI_WDATA[(byte_index*8) +: 8];
 	          default : begin
 	                      blktemplate[ 0] <= blktemplate[ 0];
 	                      blktemplate[ 1] <= blktemplate[ 1];
@@ -496,8 +494,7 @@
 	                      blktemplate[21] <= blktemplate[21];
 	                      blktemplate[22] <= blktemplate[22];
 	                      blktemplate[23] <= blktemplate[23];
-	                      threshold[0] <= threshold[0];
-	                      threshold[1] <= threshold[1];
+	                      threshold <= threshold;
 	                    end
 	        endcase
 	      end
@@ -630,8 +627,8 @@
 	        7'h15   : reg_data_out <= blktemplate[21];
 	        7'h16   : reg_data_out <= blktemplate[22];
 	        7'h17   : reg_data_out <= blktemplate[23];
-	        7'h18   : reg_data_out <= threshold[0];
-	        7'h19   : reg_data_out <= threshold[1];
+	        7'h18   : reg_data_out <= threshold[31: 0];
+	        7'h19   : reg_data_out <= threshold[63:32];
 	        
 	        7'h1A   : reg_data_out <= promising_nonce;
 	        7'h1C   : reg_data_out <= interesting_hash[ 0];
@@ -685,7 +682,7 @@
 	        7'h4C   : reg_data_out <= interesting_hash[48];
 	        7'h4D   : reg_data_out <= interesting_hash[49];
 	        
-	        7'h7F   : reg_data_out <= { 28'b0, found, evaluating, dispatching };
+	        7'h7F   : reg_data_out <= { 28'b0, found, idle, evaluating, dispatching };
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -711,24 +708,27 @@
 
 	// Add user logic here
 
-  wire busy = dispatching | evaluating;
-  wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == 7'h7F;
-	wire start = ~busy & writing_control;
-	wire[63:0] max_diff = { threshold[1], threshold[0] };
+  wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
+	wire start = idle & writing_control;
+	wire[63:0] wide_hash[25];
 	
-	sha3_scanner #(
-    .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
-    .CHI_MODIFY_STYLE("basic"),
-    .IOTA_STYLE("basic"),
-    .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
-  ) scanner(
-	  .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
-	  .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
-	  .threshold(max_diff),
-	  
-	  .blobby(blktemplate),  .nonce(promising_nonce),
-	  .hash(interesting_hash)
+	sha3_scanner_instantiator #(
+	    .STYLE(STYLE),
+	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+	) thing (
+      .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
+      .ready(idle),
+      .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
+      .threshold(threshold),
+      
+      .blobby(blktemplate),  .nonce(promising_nonce),
+      .hash(wide_hash)
 	);
+	
+	for (genvar loop = 0; loop < 25; loop++) begin : cp
+	    assign interesting_hash[loop * 2 + 1] = wide_hash[loop][63:32];
+	    assign interesting_hash[loop * 2 + 0] = wide_hash[loop][31: 0];
+	end
 	
 	// User logic ends
 

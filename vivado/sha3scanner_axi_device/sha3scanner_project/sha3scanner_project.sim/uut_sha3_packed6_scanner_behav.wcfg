@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="uut_sha3_packed6_scanner_behav.wdb" id="1">
+         <top_modules>
+            <top_module name="glbl" />
+            <top_module name="uut_sha3_packed6_scanner" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="6465275833fs"></ZoomStartTime>
+      <ZoomEndTime time="6466114834fs"></ZoomEndTime>
+      <Cursor1Time time="6465975000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="169"></NameColumnWidth>
+      <ValueColumnWidth column_width="265"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="5" />
+   <wvobject fp_name="/uut_sha3_packed6_scanner/clk" type="logic">
+      <obj_property name="ElementShortName">clk</obj_property>
+      <obj_property name="ObjectShortName">clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="group182" type="group">
+      <obj_property name="label">driver</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/driver/dispatching" type="logic">
+         <obj_property name="ElementShortName">dispatching</obj_property>
+         <obj_property name="ObjectShortName">dispatching</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/driver/start" type="logic">
+         <obj_property name="ElementShortName">start</obj_property>
+         <obj_property name="ObjectShortName">start</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/driver/pulsed" type="logic">
+         <obj_property name="ElementShortName">pulsed</obj_property>
+         <obj_property name="ObjectShortName">pulsed</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/driver/threshold" type="array">
+         <obj_property name="ElementShortName">threshold[63:0]</obj_property>
+         <obj_property name="ObjectShortName">threshold[63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/driver/blockTemplate" type="array">
+         <obj_property name="ElementShortName">blockTemplate[0:23][31:0]</obj_property>
+         <obj_property name="ObjectShortName">blockTemplate[0:23][31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group190" type="group">
+      <obj_property name="label">scanner-fsm</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/hasher_ready" type="logic">
+         <obj_property name="ElementShortName">hasher_ready</obj_property>
+         <obj_property name="ObjectShortName">hasher_ready</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/ofound" type="logic">
+         <obj_property name="ElementShortName">ofound</obj_property>
+         <obj_property name="ObjectShortName">ofound</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/feedgood" type="logic">
+         <obj_property name="ElementShortName">feedgood</obj_property>
+         <obj_property name="ObjectShortName">feedgood</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/state" type="array">
+         <obj_property name="ElementShortName">state[2:0]</obj_property>
+         <obj_property name="ObjectShortName">state[2:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/dispatch_iterator" type="array">
+         <obj_property name="ElementShortName">dispatch_iterator[31:0]</obj_property>
+         <obj_property name="ObjectShortName">dispatch_iterator[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/next_nonce" type="array">
+         <obj_property name="ElementShortName">next_nonce[31:0]</obj_property>
+         <obj_property name="ObjectShortName">next_nonce[31:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/exhausted" type="logic">
+         <obj_property name="ElementShortName">exhausted</obj_property>
+         <obj_property name="ObjectShortName">exhausted</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/hash_observed" type="logic">
+         <obj_property name="ElementShortName">hash_observed</obj_property>
+         <obj_property name="ObjectShortName">hash_observed</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/good_enough" type="logic">
+         <obj_property name="ElementShortName">good_enough</obj_property>
+         <obj_property name="ObjectShortName">good_enough</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /fsm/result_iter" type="array">
+         <obj_property name="ElementShortName">result_iter[31:0]</obj_property>
+         <obj_property name="ObjectShortName">result_iter[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group89" type="group">
+      <obj_property name="label">cruncher</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group90" type="group">
+         <obj_property name="label">round0</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/sample" type="logic">
+            <obj_property name="ElementShortName">sample</obj_property>
+            <obj_property name="ObjectShortName">sample</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/round_index" type="array">
+            <obj_property name="ElementShortName">round_index[4:0]</obj_property>
+            <obj_property name="ObjectShortName">round_index[4:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/isa" type="array">
+            <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/isb" type="array">
+            <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/isc" type="array">
+            <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/isd" type="array">
+            <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/ise" type="array">
+            <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/ogood" type="logic">
+            <obj_property name="ElementShortName">ogood</obj_property>
+            <obj_property name="ObjectShortName">ogood</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/oround" type="array">
+            <obj_property name="ElementShortName">oround[4:0]</obj_property>
+            <obj_property name="ObjectShortName">oround[4:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/osa" type="array">
+            <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/osb" type="array">
+            <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/osc" type="array">
+            <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/osd" type="array">
+            <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_packed6_scanner/thing/\smallish.nice_deal /hasher/crunchy/r6n0/ose" type="array">
+            <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
+         </wvobject>
+      </wvobject>
+   </wvobject>
+   <wvobject fp_name="group186" type="group">
+      <obj_property name="label">checker</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/result_checker/found" type="logic">
+         <obj_property name="ElementShortName">found</obj_property>
+         <obj_property name="ObjectShortName">found</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/result_checker/hash" type="array">
+         <obj_property name="ElementShortName">hash[0:24][63:0]</obj_property>
+         <obj_property name="ObjectShortName">hash[0:24][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6_scanner/result_checker/nonce" type="array">
+         <obj_property name="ElementShortName">nonce[31:0]</obj_property>
+         <obj_property name="ObjectShortName">nonce[31:0]</obj_property>
+      </wvobject>
+   </wvobject>
+</wave_config>

@@ -47,8 +47,8 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: Maxdz8:crypto:sha3scanner:0.1
-// IP Revision: 2
+// IP VLNV: Maxdz8:crypto:sha3scanner:0.7
+// IP Revision: 11
 
 `timescale 1ns/1ps
 
@@ -56,6 +56,7 @@
 module design_1_sha3scanner_1_0 (
   dispatching,
   evaluating,
+  idle,
   found,
   s00_axi_aclk,
   s00_axi_aresetn,
@@ -82,6 +83,7 @@ module design_1_sha3scanner_1_0 (
 
 output wire dispatching;
 output wire evaluating;
+output wire idle;
 output wire found;
 (* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME S00_AXI_CLK, ASSOCIATED_BUSIF S00_AXI, ASSOCIATED_RESET s00_axi_aresetn, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 S00_AXI_CLK CLK" *)
@@ -132,10 +134,13 @@ input wire s00_axi_rready;
 
   sha3scanner_v0_1 #(
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
-    .C_S00_AXI_ADDR_WIDTH(9)  // Width of S_AXI address bus
+    .C_S00_AXI_ADDR_WIDTH(9),  // Width of S_AXI address bus
+    .STYLE("iterate-four-times"),
+    .FEEDBACK_MUX_STYLE("fabric")
   ) inst (
     .dispatching(dispatching),
     .evaluating(evaluating),
+    .idle(idle),
     .found(found),
     .s00_axi_aclk(s00_axi_aclk),
     .s00_axi_aresetn(s00_axi_aresetn),
