@@ -1932,19 +1932,25 @@
         }
       },
       "sha3scanner_1": {
-        "vlnv": "Maxdz8:crypto:sha3scanner:0.6",
+        "vlnv": "Maxdz8:crypto:sha3scanner:0.7",
         "xci_name": "design_1_sha3scanner_1_0",
         "parameters": {
           "FEEDBACK_MUX_STYLE": {
-            "value": "fabric"
+            "value": "DSP"
           },
           "STYLE": {
-            "value": "iterate-four-times"
+            "value": "iterate-twice"
           }
         }
       }
     },
     "interface_nets": {
+      "processing_system7_0_FIXED_IO": {
+        "interface_ports": [
+          "FIXED_IO",
+          "processing_system7_0/FIXED_IO"
+        ]
+      },
       "processing_system7_0_M_AXI_GP0": {
         "interface_ports": [
           "processing_system7_0/M_AXI_GP0",
@@ -1961,12 +1967,6 @@
         "interface_ports": [
           "DDR",
           "processing_system7_0/DDR"
-        ]
-      },
-      "processing_system7_0_FIXED_IO": {
-        "interface_ports": [
-          "FIXED_IO",
-          "processing_system7_0/FIXED_IO"
         ]
       }
     },
