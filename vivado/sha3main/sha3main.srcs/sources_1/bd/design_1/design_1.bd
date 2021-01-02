@@ -16,8 +16,8 @@
         }
       },
       "rst_ps7_0_100M": "",
-      "artyz7_hasher_led_dr_0": "",
-      "sha3scanner_1": ""
+      "sha3scanner_1": "",
+      "artyz7_hasher_led_dr_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -1879,6 +1879,18 @@
         "vlnv": "xilinx.com:ip:proc_sys_reset:5.0",
         "xci_name": "design_1_rst_ps7_0_100M_0"
       },
+      "sha3scanner_1": {
+        "vlnv": "Maxdz8:crypto:sha3scanner:0.7",
+        "xci_name": "design_1_sha3scanner_1_0",
+        "parameters": {
+          "FEEDBACK_MUX_STYLE": {
+            "value": "DSP"
+          },
+          "STYLE": {
+            "value": "iterate-twice"
+          }
+        }
+      },
       "artyz7_hasher_led_dr_0": {
         "vlnv": "xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0",
         "xci_name": "design_1_artyz7_hasher_led_dr_0_2",
@@ -1930,21 +1942,15 @@
             "right": "0"
           }
         }
-      },
-      "sha3scanner_1": {
-        "vlnv": "Maxdz8:crypto:sha3scanner:0.7",
-        "xci_name": "design_1_sha3scanner_1_0",
-        "parameters": {
-          "FEEDBACK_MUX_STYLE": {
-            "value": "DSP"
-          },
-          "STYLE": {
-            "value": "iterate-twice"
-          }
-        }
       }
     },
     "interface_nets": {
+      "ps7_0_axi_periph_M00_AXI": {
+        "interface_ports": [
+          "ps7_0_axi_periph/M00_AXI",
+          "sha3scanner_1/S00_AXI"
+        ]
+      },
       "processing_system7_0_FIXED_IO": {
         "interface_ports": [
           "FIXED_IO",
@@ -1955,12 +1961,6 @@
         "interface_ports": [
           "processing_system7_0/M_AXI_GP0",
           "ps7_0_axi_periph/S00_AXI"
-        ]
-      },
-      "ps7_0_axi_periph_M00_AXI": {
-        "interface_ports": [
-          "ps7_0_axi_periph/M00_AXI",
-          "sha3scanner_1/S00_AXI"
         ]
       },
       "processing_system7_0_DDR": {
@@ -1979,8 +1979,8 @@
           "ps7_0_axi_periph/S00_ACLK",
           "ps7_0_axi_periph/M00_ACLK",
           "rst_ps7_0_100M/slowest_sync_clk",
-          "artyz7_hasher_led_dr_0/clk",
-          "sha3scanner_1/s00_axi_aclk"
+          "sha3scanner_1/s00_axi_aclk",
+          "artyz7_hasher_led_dr_0/clk"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {

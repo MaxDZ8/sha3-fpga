@@ -135,8 +135,8 @@ input wire s00_axi_rready;
   sha3scanner_v0_1 #(
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
     .C_S00_AXI_ADDR_WIDTH(9),  // Width of S_AXI address bus
-    .STYLE("iterate-four-times"),
-    .FEEDBACK_MUX_STYLE("fabric")
+    .STYLE("iterate-twice"),
+    .FEEDBACK_MUX_STYLE("DSP")
   ) inst (
     .dispatching(dispatching),
     .evaluating(evaluating),
