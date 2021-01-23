@@ -47,44 +47,50 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0
-// IP Revision: 1
+#include "design_1_auto_pc_0_sc.h"
 
-(* X_CORE_INFO = "artyz7_hasher_led_driver_wrap,Vivado 2020.2" *)
-(* CHECK_LICENSE_TYPE = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{}" *)
-(* CORE_GENERATION_INFO = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=artyz7_hasher_led_driver_wrap,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
-(* IP_DEFINITION_SOURCE = "module_ref" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module design_1_artyz7_hasher_led_dr_0_2 (
-  clk,
-  dispatching,
-  evaluating,
-  idle,
-  found,
-  omono,
-  orgb4,
-  orgb5
-);
+#include "axi_protocol_converter.h"
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
-input wire clk;
-input wire dispatching;
-input wire evaluating;
-input wire idle;
-input wire found;
-output wire [3 : 0] omono;
-output wire [2 : 0] orgb4;
-output wire [2 : 0] orgb5;
+#include <map>
+#include <string>
 
-  artyz7_hasher_led_driver_wrap inst (
-    .clk(clk),
-    .dispatching(dispatching),
-    .evaluating(evaluating),
-    .idle(idle),
-    .found(found),
-    .omono(omono),
-    .orgb4(orgb4),
-    .orgb5(orgb5)
-  );
-endmodule
+design_1_auto_pc_0_sc::design_1_auto_pc_0_sc(const sc_core::sc_module_name& nm) : sc_core::sc_module(nm), mp_impl(NULL)
+{
+  // configure connectivity manager
+  xsc::utils::xsc_sim_manager::addInstance("design_1_auto_pc_0", this);
+
+  // initialize module
+    xsc::common_cpp::properties model_param_props;
+    model_param_props.addLong("C_M_AXI_PROTOCOL", "2");
+    model_param_props.addLong("C_S_AXI_PROTOCOL", "1");
+    model_param_props.addLong("C_IGNORE_ID", "0");
+    model_param_props.addLong("C_AXI_ID_WIDTH", "12");
+    model_param_props.addLong("C_AXI_ADDR_WIDTH", "32");
+    model_param_props.addLong("C_AXI_DATA_WIDTH", "32");
+    model_param_props.addLong("C_AXI_SUPPORTS_WRITE", "1");
+    model_param_props.addLong("C_AXI_SUPPORTS_READ", "1");
+    model_param_props.addLong("C_AXI_SUPPORTS_USER_SIGNALS", "0");
+    model_param_props.addLong("C_AXI_AWUSER_WIDTH", "1");
+    model_param_props.addLong("C_AXI_ARUSER_WIDTH", "1");
+    model_param_props.addLong("C_AXI_WUSER_WIDTH", "1");
+    model_param_props.addLong("C_AXI_RUSER_WIDTH", "1");
+    model_param_props.addLong("C_AXI_BUSER_WIDTH", "1");
+    model_param_props.addLong("C_TRANSLATION_MODE", "2");
+    model_param_props.addString("C_FAMILY", "zynq");
+
+  mp_impl = new axi_protocol_converter("inst", model_param_props);
+
+  // initialize AXI sockets
+  target_rd_socket = mp_impl->target_rd_socket;
+  target_wr_socket = mp_impl->target_wr_socket;
+  initiator_rd_socket = mp_impl->initiator_rd_socket;
+  initiator_wr_socket = mp_impl->initiator_wr_socket;
+}
+
+design_1_auto_pc_0_sc::~design_1_auto_pc_0_sc()
+{
+  xsc::utils::xsc_sim_manager::clean();
+
+  delete mp_impl;
+}
+

@@ -1,3 +1,6 @@
+#ifndef IP_DESIGN_1_AUTO_PC_0_SC_H_
+#define IP_DESIGN_1_AUTO_PC_0_SC_H_
+
 // (c) Copyright 1995-2021 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
@@ -47,44 +50,49 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0
-// IP Revision: 1
+#ifndef XTLM
+#include "xtlm.h"
+#endif
+#ifndef SYSTEMC_INCLUDED
+#include <systemc>
+#endif
 
-(* X_CORE_INFO = "artyz7_hasher_led_driver_wrap,Vivado 2020.2" *)
-(* CHECK_LICENSE_TYPE = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{}" *)
-(* CORE_GENERATION_INFO = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=artyz7_hasher_led_driver_wrap,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
-(* IP_DEFINITION_SOURCE = "module_ref" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module design_1_artyz7_hasher_led_dr_0_2 (
-  clk,
-  dispatching,
-  evaluating,
-  idle,
-  found,
-  omono,
-  orgb4,
-  orgb5
-);
+#if defined(_MSC_VER)
+#define DllExport __declspec(dllexport)
+#elif defined(__GNUC__)
+#define DllExport __attribute__ ((visibility("default")))
+#else
+#define DllExport
+#endif
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
-input wire clk;
-input wire dispatching;
-input wire evaluating;
-input wire idle;
-input wire found;
-output wire [3 : 0] omono;
-output wire [2 : 0] orgb4;
-output wire [2 : 0] orgb5;
+class axi_protocol_converter;
 
-  artyz7_hasher_led_driver_wrap inst (
-    .clk(clk),
-    .dispatching(dispatching),
-    .evaluating(evaluating),
-    .idle(idle),
-    .found(found),
-    .omono(omono),
-    .orgb4(orgb4),
-    .orgb5(orgb5)
-  );
-endmodule
+class DllExport design_1_auto_pc_0_sc : public sc_core::sc_module
+{
+public:
+
+  design_1_auto_pc_0_sc(const sc_core::sc_module_name& nm);
+  virtual ~design_1_auto_pc_0_sc();
+
+  // module socket-to-socket AXI TLM interfaces
+
+  xtlm::xtlm_aximm_target_socket* target_rd_socket;
+  xtlm::xtlm_aximm_target_socket* target_wr_socket;
+  xtlm::xtlm_aximm_initiator_socket* initiator_rd_socket;
+  xtlm::xtlm_aximm_initiator_socket* initiator_wr_socket;
+
+  // module socket-to-socket TLM interfaces
+
+
+protected:
+
+  axi_protocol_converter* mp_impl;
+
+private:
+
+  design_1_auto_pc_0_sc(const design_1_auto_pc_0_sc&);
+  const design_1_auto_pc_0_sc& operator=(const design_1_auto_pc_0_sc&);
+
+};
+
+#endif // IP_DESIGN_1_AUTO_PC_0_SC_H_
