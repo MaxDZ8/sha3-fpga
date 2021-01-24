@@ -5,12 +5,12 @@ module sha3_1600_results_checker #(
     TESTBENCH_NAME = "<FORGOT TO SET ME>"
 ) (
     input clk,
-    input sample,
-    input[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5]
+    input qsample,
+    input[63:0] qrowa[5], qrowb[5], qrowc[5], qrowd[5], qrowe[5]
 );
 
 
-localparam longint unsigned expected_result[24][5][5] = '{
+localparam longint unsigned qexpected_result[24][5][5] = '{
     '{
         '{ 64'h30ce10fab53edc10, 64'h79eae51020809c25, 64'h14304698fc873745, 64'h9e7b50fc25013fb8, 64'h0a1483c12b5b5961 },
         '{ 64'hd8e7f6d215d229d3, 64'h92a2f9afcb663415, 64'hf036c837dacda4bb, 64'hcc2632255c7d22fa, 64'h022f6573a5529bef },
@@ -181,26 +181,35 @@ localparam longint unsigned expected_result[24][5][5] = '{
     }
 };
 
-int result_index = 0;
-wire[63:0] result[5][5] = '{ rowa, rowb, rowc, rowd, rowe };
+int qresult_index = 0;
+wire[63:0] qresult[5][5] = '{ qrowa, qrowb, qrowc, qrowd, qrowe };
 
-always @(posedge clk) if(sample) begin
+always @(posedge clk) if(qsample) begin
   for (int loop = 0; loop < 5; loop++) begin
       for (int comp = 0; comp < 5; comp++) begin
-          if (result[loop][comp] != expected_result[result_index][loop][comp]) begin
-            $display("Result[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
-                     result_index, loop, comp, expected_result[result_index][loop][comp], result[loop][comp]);
+          if (qresult[loop][comp] != qexpected_result[qresult_index][loop][comp]) begin
+            $display("ResultQ[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
+                     qresult_index, loop, comp, qexpected_result[qresult_index][loop][comp], qresult[loop][comp]);
             $fatal;
             $finish;
           end
       end
   end
-  $display("Result[%d] %t", result_index, $realtime);
-  result_index++;
-  if(result_index == $size(expected_result, 1)) begin
-    $display("%s GOOD", TESTBENCH_NAME);
-    $finish;
+  $display("Result[%d] %t", qresult_index, $realtime);
+  qresult_index++;
+  if(qresult_index == $size(qexpected_result, 1)) begin
+    $display("%s GOOD (QUIRKY)", TESTBENCH_NAME);
   end
+end
+
+bit tests_done = 1'b0;
+always_ff @(posedge clk) begin
+    tests_done <= qresult_index == $size(qexpected_result, 1);
+end
+
+always @(posedge clk) if(tests_done) begin
+    $display("Tests done for %s", TESTBENCH_NAME);
+    $finish();
 end
 
 endmodule

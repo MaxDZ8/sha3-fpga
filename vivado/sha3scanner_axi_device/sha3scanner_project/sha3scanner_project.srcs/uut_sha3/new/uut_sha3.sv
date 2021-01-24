@@ -17,17 +17,18 @@ sha_round_dispatch_logic #(
     .sample(sample), .rowa(rowa), .rowb(rowb), .rowc(rowc), .rowd(rowd), .rowe(rowe)
 );
 
-wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
-wire resgood;
+wire[63:0] qresa[5], qresb[5], qresc[5], qresd[5], qrese[5];
+wire qresgood;
 sha3 #(
     .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
     .CHI_MODIFY_STYLE("basic"),
     .IOTA_STYLE("basic"),
-    .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
-) hasher(
+    .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011),
+    .LAST_ROUND_IS_PROPER(0)
+) quirky (
     .clk(clk),
     .sample(sample), .rowa(rowa), .rowb(rowb), .rowc(rowc), .rowd(rowd), .rowe(rowe),
-    .ogood(resgood), .oa(resa), .ob(resb), .oc(resc), .od(resd), .oe(rese)
+    .ogood(qresgood), .oa(qresa), .ob(qresb), .oc(qresc), .od(qresd), .oe(qrese)
 );
 
 
@@ -35,7 +36,7 @@ sha3_1600_results_checker #(
     .TESTBENCH_NAME(IMPL_NAME)
 ) result_checker (
     .clk(clk),
-    .sample(resgood), .rowa(resa), .rowb(resb), .rowc(resc), .rowd(resd), .rowe(rese)
+    .qsample(qresgood), .qrowa(qresa), .qrowb(qresb), .qrowc(qresc), .qrowd(qresd), .qrowe(qrese)
 );
   
 endmodule

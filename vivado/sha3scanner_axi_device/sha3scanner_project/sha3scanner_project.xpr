@@ -34,7 +34,7 @@
     <Option Name="BoardPart" Val="digilentinc.com:arty-z7-20:part0:1.0"/>
     <Option Name="BoardPartRepoPaths" Val="$PPRDIR/../../../../../Xilinx/Digilent/board_files"/>
     <Option Name="SourceMgmtMode" Val="DisplayOnly"/>
-    <Option Name="ActiveSimSet" Val="sim_sha3_round"/>
+    <Option Name="ActiveSimSet" Val="uut_sha3"/>
     <Option Name="DefaultLib" Val="xil_defaultlib"/>
     <Option Name="ProjectType" Val="Default"/>
     <Option Name="IPRepoPath" Val="$PPRDIR/../sha3scanner_0.1"/>
@@ -47,7 +47,7 @@
     <Option Name="IPStaticSourceDir" Val="$PIPUSERFILESDIR/ipstatic"/>
     <Option Name="EnableBDX" Val="FALSE"/>
     <Option Name="DSABoardId" Val="arty-z7-20"/>
-    <Option Name="WTXSimLaunchSim" Val="286"/>
+    <Option Name="WTXSimLaunchSim" Val="294"/>
     <Option Name="WTModelSimLaunchSim" Val="0"/>
     <Option Name="WTQuestaLaunchSim" Val="0"/>
     <Option Name="WTIesLaunchSim" Val="0"/>
@@ -310,6 +310,13 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
+      <File Path="$PSRCDIR/uut_sha3/new/uut_sha3.sv">
+        <FileInfo>
+          <Attr Name="UsedIn" Val="synthesis"/>
+          <Attr Name="UsedIn" Val="implementation"/>
+          <Attr Name="UsedIn" Val="simulation"/>
+        </FileInfo>
+      </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
         <Option Name="TopModule" Val="sha3scanner_v0_1"/>
@@ -499,13 +506,6 @@
     </FileSet>
     <FileSet Name="uut_sha3" Type="SimulationSrcs" RelSrcDir="$PSRCDIR/uut_sha3">
       <Filter Type="Srcs"/>
-      <File Path="$PSRCDIR/uut_sha3/new/uut_sha3.sv">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSIMDIR/uut_sha3_behav.wcfg">
         <FileInfo>
           <Attr Name="UsedIn" Val="simulation"/>
@@ -548,11 +548,6 @@
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSIMDIR/uut_sha3_scanner_behav.wcfg">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="simulation"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sha3_scanner_dispatch_logic.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
@@ -569,7 +564,8 @@
       </File>
       <Config>
         <Option Name="DesignMode" Val="RTL"/>
-        <Option Name="TopModule" Val="uut_sha3_scanner"/>
+        <Option Name="TopModule" Val="uut_sha3"/>
+        <Option Name="TopLib" Val="xil_defaultlib"/>
         <Option Name="TransportPathDelay" Val="0"/>
         <Option Name="TransportIntDelay" Val="0"/>
         <Option Name="SelectedSimModel" Val="rtl"/>

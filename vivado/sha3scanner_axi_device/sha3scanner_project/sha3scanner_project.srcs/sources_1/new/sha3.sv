@@ -6,7 +6,8 @@ module sha3 #(
     RHOPI_BUFFERS = 0,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
-    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111
+    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111,
+    LAST_ROUND_IS_PROPER = 1
 )(
     input clk,
     input sample,
@@ -63,7 +64,8 @@ sha3_round_function #(
     .CHI_MODIFY_STYLE(CHI_MODIFY_STYLE),
     .IOTA_STYLE(IOTA_STYLE),
     .ROUND_INDEX(23),
-    .OUTPUT_BUFFERED(last_round_buffered)
+    .OUTPUT_BUFFERED(last_round_buffered),
+    .LAST_ROUND_IS_PROPER(LAST_ROUND_IS_PROPER)
 ) last_round (
     .clk(clk),
     .sample(feed_next[22]),
