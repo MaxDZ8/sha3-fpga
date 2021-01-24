@@ -30,9 +30,11 @@ localparam longint unsigned give[1][5][5] = '{
     }
 };
 
-bit start = 1'b0;
-int qdispatch_index = 0;
+bit qstart = 1'b0;
+bit startp = 1'b0;
+int qdispatch_index = 0, dispatch_indexp = 0;
 wire[63:0] qfeeda[5], qfeedb[5], qfeedc[5], qfeedd[5], qfeede[5];
+wire[63:0] feedap[5], feedbp[5], feedcp[5], feeddp[5], feedep[5];
 generate
     for (genvar loop = 0; loop < 5; loop++) begin
         assign qfeeda[loop] = give[qdispatch_index][0][loop];
@@ -40,6 +42,12 @@ generate
         assign qfeedc[loop] = give[qdispatch_index][2][loop]; 
         assign qfeedd[loop] = give[qdispatch_index][3][loop]; 
         assign qfeede[loop] = give[qdispatch_index][4][loop];
+        
+        assign feedap[loop] = give[dispatch_indexp][0][loop];
+        assign feedbp[loop] = give[dispatch_indexp][1][loop]; 
+        assign feedcp[loop] = give[dispatch_indexp][2][loop]; 
+        assign feeddp[loop] = give[dispatch_indexp][3][loop]; 
+        assign feedep[loop] = give[dispatch_indexp][4][loop];
     end
 endgenerate 
 
@@ -52,9 +60,23 @@ sha3_round_function #(
 ) quirky23 (
     .clk(clk),
     .isa(qfeeda), .isb(qfeedb), .isc(qfeedc), .isd(qfeedd), .ise(qfeede),
-    .sample(start),
+    .sample(qstart),
     .osa(qresult[0]), .osb(qresult[1]), .osc(qresult[2]), .osd(qresult[3]), .ose(qresult[4]),
     .ogood(qogood)
+);
+
+wire[63:0] resultp[5][5];
+wire ogoodp;
+
+sha3_round_function #(
+    .ROUND_INDEX(23),
+    .LAST_ROUND_IS_PROPER(1)
+) properly23 (
+    .clk(clk),
+    .isa(feedap), .isb(feedbp), .isc(feedcp), .isd(feeddp), .ise(feedep),
+    .sample(startp),
+    .osa(resultp[0]), .osb(resultp[1]), .osc(resultp[2]), .osd(resultp[3]), .ose(resultp[4]),
+    .ogood(ogoodp)
 );
 
 
@@ -71,12 +93,24 @@ end
 
 always @(posedge clk) if(dispatching) begin : disp_quirky
     if(qdispatch_index != $size(give, 1)) begin
-        if (start) begin // 1 clock sample pulse
-            start = 1'b0;
+        if (qstart) begin // 1 clock sample pulse
+            qstart = 1'b0;
             qdispatch_index++;
         end
         else begin // when starting just pulse the first, then pulse after a result is received
-            start = qdispatch_index == 0 | qogood;
+            qstart = qdispatch_index == 0 | qogood;
+        end
+    end
+end
+
+always @(posedge clk) if(dispatching) begin : disp_proper
+    if(dispatch_indexp != $size(give, 1)) begin
+        if (startp) begin // 1 clock sample pulse
+            startp = 1'b0;
+            dispatch_indexp++;
+        end
+        else begin // when starting just pulse the first, then pulse after a result is received
+            startp = dispatch_indexp == 0 | ogoodp;
         end
     end
 end
@@ -92,25 +126,60 @@ localparam longint unsigned qexpected_result[1][5][5] = '{ // theta, rho+pi, fin
     }
 };
 
+localparam longint unsigned expected_resultp[1][5][5] = '{ // theta, rho+pi, chi, iota(23), as usual.
+    '{
+        '{ 64'h6e849a8760431d50, 64'h1cb389032d9c3a58, 64'he38a0910c6118a13, 64'h2d896905f7ebe3b7, 64'h350cf4476de1a764 },
+        '{ 64'h87fa6d1a32fb6b80, 64'h6b5379dcec79c8a0, 64'h3c502956936854bf, 64'h02d799682d52433a, 64'hccecc675b2409b8c },
+        '{ 64'hd57073127e6a1a51, 64'h5632035364bc8308, 64'h954a87bb61085d93, 64'hf063906170d0e25e, 64'hc72bb3c1adc6aa2e },
+        '{ 64'h7131ff6f258b5fb4, 64'h1a9617abac4085ff, 64'haba2e33ecda8c168, 64'hfec25b751d1aef87, 64'h3db7710b434abea6 },
+        '{ 64'h108b57cb3e4313d2, 64'h074e2b5e749c83f3, 64'hdd7472b4e96023f4, 64'h5196c978cdc241e8, 64'h2fa25a267dcbcfa7 }
+    }
+};
+
 int qresult_index = 0;
 
 always @(posedge clk) if(qogood) begin
   for (int loop = 0; loop < 5; loop++) begin
       for (int comp = 0; comp < 5; comp++) begin
           if (qresult[loop][comp] != qexpected_result[qresult_index][loop][comp]) begin
-            $display("Result[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
+            $display("ResultQ[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
                      qresult_index, loop, comp, qexpected_result[qresult_index][loop][comp], qresult[loop][comp]);
             $fatal;
             $finish;
           end
       end
   end
-  $display("Result[%d] %t", qresult_index, $realtime);
+  $display("ResultQ[%d] %t", qresult_index, $realtime);
   qresult_index++;
   if(qresult_index == $size(qexpected_result, 1)) begin
     $display("SHA3-1600 round GOOD (QUIRKY)");
-    $finish;
   end
 end
-  
+
+int result_indexp = 0;
+
+always @(posedge clk) if(ogoodp) begin
+  for (int loop = 0; loop < 5; loop++) begin
+      for (int comp = 0; comp < 5; comp++) begin
+          if (resultp[loop][comp] != expected_resultp[result_indexp][loop][comp]) begin
+            $display("ResultP[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
+                     result_indexp, loop, comp, expected_resultp[result_indexp][loop][comp], resultp[loop][comp]);
+            $fatal;
+            $finish;
+          end
+      end
+  end
+  $display("ResultP[%d] %t", result_indexp, $realtime);
+  result_indexp++;
+  if(result_indexp == $size(expected_resultp, 1)) begin
+    $display("SHA3-1600 round GOOD (PROPER)");
+  end
+end
+
+wire tested_everything = qresult_index == $size(qexpected_result, 1) & result_indexp == $size(expected_resultp, 1);
+always @(posedge clk) if(tested_everything) begin
+    $display("tested everything.");
+    $finish();
+end
+
 endmodule

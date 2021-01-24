@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="160750fs"></ZoomStartTime>
-      <ZoomEndTime time="297851fs"></ZoomEndTime>
-      <Cursor1Time time="275000fs"></Cursor1Time>
+      <ZoomStartTime time="157356fs"></ZoomStartTime>
+      <ZoomEndTime time="251757fs"></ZoomEndTime>
+      <Cursor1Time time="245000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="193"></NameColumnWidth>
-      <ValueColumnWidth column_width="70"></ValueColumnWidth>
+      <ValueColumnWidth column_width="66"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="11" />
+   <WVObjectSize size="12" />
    <wvobject fp_name="/uut_sha3_round/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -38,46 +38,96 @@
       <obj_property name="CustomSignalColor">#FF00FF</obj_property>
       <obj_property name="UseCustomSignalColor">true</obj_property>
    </wvobject>
-   <wvobject fp_name="/uut_sha3_round/dispatch_index" type="array">
-      <obj_property name="ElementShortName">dispatch_index[31:0]</obj_property>
-      <obj_property name="ObjectShortName">dispatch_index[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/uut_sha3_round/qdispatch_index" type="array">
+      <obj_property name="ElementShortName">qdispatch_index[31:0]</obj_property>
+      <obj_property name="ObjectShortName">qdispatch_index[31:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/uut_sha3_round/round00/theta/sample" type="logic">
+   <wvobject fp_name="group45" type="group">
+      <obj_property name="label">quirky</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">sample</obj_property>
-      <obj_property name="ObjectShortName">sample</obj_property>
-      <obj_property name="label">theta_sample</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group52" type="group">
+         <obj_property name="label">theta</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/sample" type="logic">
+            <obj_property name="ElementShortName">sample</obj_property>
+            <obj_property name="ObjectShortName">sample</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/isa" type="array">
+            <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/isb" type="array">
+            <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/isc" type="array">
+            <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/isd" type="array">
+            <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/quirky23/theta/ise" type="array">
+            <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+         </wvobject>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/uut_sha3_round/round00/rhopi/sample" type="logic">
+   <wvobject fp_name="/uut_sha3_round/qresult" type="array">
+      <obj_property name="ElementShortName">qresult[0:4][0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">qresult[0:4][0:4][63:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/qogood" type="logic">
+      <obj_property name="ElementShortName">qogood</obj_property>
+      <obj_property name="ObjectShortName">qogood</obj_property>
+   </wvobject>
+   <wvobject fp_name="/uut_sha3_round/dispatch_indexp" type="array">
+      <obj_property name="ElementShortName">dispatch_indexp[31:0]</obj_property>
+      <obj_property name="ObjectShortName">dispatch_indexp[31:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="group59" type="group">
+      <obj_property name="label">proper</obj_property>
       <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">sample</obj_property>
-      <obj_property name="ObjectShortName">sample</obj_property>
-      <obj_property name="label">rhopi_sample</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <wvobject fp_name="group60" type="group">
+         <obj_property name="label">theta</obj_property>
+         <obj_property name="DisplayName">label</obj_property>
+         <obj_property name="isExpanded"></obj_property>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/sample" type="logic">
+            <obj_property name="ElementShortName">sample</obj_property>
+            <obj_property name="ObjectShortName">sample</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/isa" type="array">
+            <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/isb" type="array">
+            <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/isc" type="array">
+            <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/isd" type="array">
+            <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
+         </wvobject>
+         <wvobject fp_name="/uut_sha3_round/properly23/theta/ise" type="array">
+            <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
+            <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
+         </wvobject>
+      </wvobject>
    </wvobject>
-   <wvobject fp_name="/uut_sha3_round/round00/\std_round.chi /sample" type="logic">
-      <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">sample</obj_property>
-      <obj_property name="ObjectShortName">sample</obj_property>
-      <obj_property name="label">chi_sample</obj_property>
+   <wvobject fp_name="/uut_sha3_round/resultp" type="array">
+      <obj_property name="ElementShortName">resultp[0:4][0:4][63:0]</obj_property>
+      <obj_property name="ObjectShortName">resultp[0:4][0:4][63:0]</obj_property>
    </wvobject>
-   <wvobject fp_name="/uut_sha3_round/round00/\std_round.iota /sample" type="logic">
-      <obj_property name="DisplayName">label</obj_property>
-      <obj_property name="ElementShortName">sample</obj_property>
-      <obj_property name="ObjectShortName">sample</obj_property>
-      <obj_property name="label">iota_sample</obj_property>
-   </wvobject>
-   <wvobject fp_name="/uut_sha3_round/ogood" type="logic">
-      <obj_property name="ElementShortName">ogood</obj_property>
-      <obj_property name="ObjectShortName">ogood</obj_property>
-      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
-   </wvobject>
-   <wvobject fp_name="/uut_sha3_round/result_index" type="array">
-      <obj_property name="ElementShortName">result_index[31:0]</obj_property>
-      <obj_property name="ObjectShortName">result_index[31:0]</obj_property>
-      <obj_property name="CustomSignalColor">#FF00FF</obj_property>
-      <obj_property name="UseCustomSignalColor">true</obj_property>
+   <wvobject fp_name="/uut_sha3_round/ogoodp" type="logic">
+      <obj_property name="ElementShortName">ogoodp</obj_property>
+      <obj_property name="ObjectShortName">ogoodp</obj_property>
    </wvobject>
 </wave_config>
