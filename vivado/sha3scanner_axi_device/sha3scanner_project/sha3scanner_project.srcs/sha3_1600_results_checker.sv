@@ -6,7 +6,9 @@ module sha3_1600_results_checker #(
 ) (
     input clk,
     input qsample,
-    input[63:0] qrowa[5], qrowb[5], qrowc[5], qrowd[5], qrowe[5]
+    input[63:0] qrowa[5], qrowb[5], qrowc[5], qrowd[5], qrowe[5],
+    input samplep,
+    input[63:0] rowpa[5], rowpb[5], rowpc[5], rowpd[5], rowpe[5]
 );
 
 
@@ -188,23 +190,215 @@ always @(posedge clk) if(qsample) begin
   for (int loop = 0; loop < 5; loop++) begin
       for (int comp = 0; comp < 5; comp++) begin
           if (qresult[loop][comp] != qexpected_result[qresult_index][loop][comp]) begin
-            $display("ResultQ[%d][%d][%d] !! FAILED !! (expected %d, found %d)",
+            $display("ResultQ[%d][%d][%d] !! FAILED !! (expected %h, found %h)",
                      qresult_index, loop, comp, qexpected_result[qresult_index][loop][comp], qresult[loop][comp]);
             $fatal;
             $finish;
           end
       end
   end
-  $display("Result[%d] %t", qresult_index, $realtime);
+  $display("ResultQ[%d] %t", qresult_index, $realtime);
   qresult_index++;
   if(qresult_index == $size(qexpected_result, 1)) begin
     $display("%s GOOD (QUIRKY)", TESTBENCH_NAME);
   end
 end
 
+localparam longint unsigned expected_resultp[24][5][5] = '{
+    '{
+        '{ 64'h30ce10fab53edc10, 64'h79eae51020809c25, 64'h1434c599f6dd7704, 64'h2ab140cee52119a0, 64'h493566c52bdbd9e4 },
+        '{ 64'hb8f3f6c2055ba979, 64'h9ea2cbafcf563655, 64'hf23f8d657bcf3dbe, 64'h14e6a0a54cfd02ea, 64'h002f6c5e6f768feb },
+        '{ 64'h6d706d2b1884ad84, 64'ha5efefad0e271377, 64'h033d02e40826f4b9, 64'hdafc5c07cb20b5a3, 64'h7ac687d5114a69ce },
+        '{ 64'hdf963fe968824a46, 64'he60297bdf1d81cce, 64'ha5f279173e8f527b, 64'h4ed4e17985d760a5, 64'haa67bd7f70246a18 },
+        '{ 64'he67fbec174d20ae5, 64'h165953aa7644d3f1, 64'h1eb733145a77aa65, 64'hfcf42764ac9be404, 64'hb9628548c5064c80 }
+    },
+    '{
+        '{ 64'h3c0ef4d6695ce44d, 64'heb08357ccd9b1d35, 64'h855c49696327b530, 64'h92fadcdf0c3c1ceb, 64'hc21be9c02e5c2f22 },
+        '{ 64'h83f0672808b1b2d7, 64'h6066059f1f99ac94, 64'hd60ca610c0311570, 64'ha4e24dca66267a26, 64'h0eec6d27c96ca08e },
+        '{ 64'h1b3ca399fb3b30c9, 64'h511ea884c3b4cbb6, 64'h403f59e5e979ec7e, 64'heac6f13bca9a2c9b, 64'hf3fcbd06437ad84a },
+        '{ 64'hec8ab43690b7f9a7, 64'hdf2f11bb005576a9, 64'h719482dbb021d5ea, 64'h4ffe00b702b71a22, 64'h56c4bd164327dcce },
+        '{ 64'h8bddee04cae996d9, 64'hdc2c364a6a001a10, 64'h68c468befaf1e86e, 64'h15fd01bf51875e9d, 64'h82b05a64eb0bd610 }
+    },
+    '{
+        '{ 64'hae246f09a1fda431, 64'h53efc9f261faedcc, 64'hbcc77e2a60795f37, 64'h8bb6ce23370254ad, 64'h5188f1b333709c88 },
+        '{ 64'h68a5fbefadfd72e1, 64'h23816bd8ff39f0fb, 64'h01d52cdca6d805eb, 64'h96a80fd170812c1f, 64'h1db3a40cee1e2975 },
+        '{ 64'h521764bc44a88ade, 64'h3858c955d782226f, 64'h60960307fa92968f, 64'hb259b86d7756cecd, 64'h5a9d8a778e021360 },
+        '{ 64'h1d4d512fea371a88, 64'h3936b8d3cfbe10c6, 64'ha47f111f4d4066c3, 64'h1c4e92d7964ae9c9, 64'h0372e2252ece62fb },
+        '{ 64'h11ec4b428133d6f7, 64'hbf7cfd8043ffe741, 64'hfeb27b1a3dc7095e, 64'hc296ff994cb45afd, 64'h0cacea4a3d708052 }
+    },
+    '{
+        '{ 64'h00e414a80c2bebc8, 64'h5417bd2253870ed7, 64'hacb8d2f680d429b4, 64'hea37faf2894406c9, 64'hca7db89a780f9e3b },
+        '{ 64'h24addd032d5961a2, 64'h8f8e5a3b06a352b6, 64'h7011272d41d980eb, 64'hc80b1ff8dc585465, 64'hbd90a0836a9dd0d2 },
+        '{ 64'hd217b9774ec89576, 64'hb3e9b90eabd312ea, 64'h158b0de4415f3118, 64'h93f3f36afefa9373, 64'h1dd3b033bed0dbec },
+        '{ 64'h484531511867473c, 64'h0083fbf09674053a, 64'he7d232536bf5452b, 64'h78753057e3900bcd, 64'hd39a9b5434116280 },
+        '{ 64'h742d780dd73e0e8b, 64'h3d078c136a2fbd71, 64'h05e7b25abc44fdcd, 64'h99ea9dc84b8a2703, 64'hf7961c43d6eab834 }
+    },
+    '{
+        '{ 64'hefc054d988fcbd96, 64'h2d8618c8512958ee, 64'hf4208b1150a79bc0, 64'h7ff9d35cd2703d75, 64'h88f69a10215f52de },
+        '{ 64'ha675128197727978, 64'had12de3858d452b0, 64'ha364bbe3f32f6f2a, 64'h951ff7623315393b, 64'h673e3b3aa1e3a47b },
+        '{ 64'h8130b1c319b14714, 64'hb903d16a89a67836, 64'h7750e67be0bd6f25, 64'hc4cc85138dcb82ba, 64'h7fa28c27015abd8e },
+        '{ 64'h3ea8e0c7bcbef53c, 64'hdcb19b7cf8af303a, 64'h6126bec908bc4c59, 64'h77796d341a887a54, 64'h2cb5b2bc54eeb539 },
+        '{ 64'ha7847c847f8313fb, 64'h37148624cc047489, 64'hb8117801a58f9edc, 64'h4f0437bd6f368c36, 64'h3e8a18e8fe73e7b8 }
+    },
+    '{
+        '{ 64'h96a96b474c72b2ae, 64'h53111835de4c816c, 64'h9acd475ac3ec9f2c, 64'h2c13e19c7d766296, 64'h8cdae330453703e5 },
+        '{ 64'h29f0ac5a59b09e47, 64'hf8ed907cf4e4c4fc, 64'h020e02f195180aa2, 64'hbd7f2243a350da66, 64'h35fb6451ae748ff1 },
+        '{ 64'h48cc59861d2713a2, 64'h65b23bc181dc04b3, 64'h179a7fb9ba6a0926, 64'h8f8b5e4289a26733, 64'h8fbdf61cc30c388d },
+        '{ 64'h399d49dcc8d16f61, 64'h6cbe043614cc95c4, 64'h6b9d7f86c173887d, 64'h313fe9b1712fc94e, 64'hf0b78789967d429f },
+        '{ 64'h81f865461040a20e, 64'he9237db0082f9dae, 64'h5b368bd240f0dd42, 64'h4d2424398be6cc4e, 64'hf0ececdd6e335075 }
+    },
+    '{
+        '{ 64'h397524ae22ce1671, 64'h722e33e2b488a24a, 64'h98264e8e6d852e64, 64'hae64754759f7f3a0, 64'hdfdcdc3ff1035e62 },
+        '{ 64'hddf8b11e0230ab26, 64'h04e0f65a9358c4b1, 64'hc8f67a850e5e220a, 64'h748a069109f333ae, 64'hc1b3d76aabaa68da },
+        '{ 64'hc9ec002559d67fbd, 64'h98ee59a9a1fe0492, 64'hdcd27473949bf639, 64'h2298248283414bd8, 64'h662dec90566199ae },
+        '{ 64'hc213a605b5c05d96, 64'he80cd77bee0bbad4, 64'hf89b2836bf904bae, 64'hf3b283fcdf520fc8, 64'h8ce03436c067f81d },
+        '{ 64'hc3a19601eca12d4a, 64'h7573fddb1f3a4d78, 64'he766198a8ec73b6c, 64'h27fd2f28fd735c59, 64'h7b0b3e59681a862e }
+    },
+    '{
+        '{ 64'h3b09a563c2ab0ebc, 64'h51fd52e0d60efa3b, 64'h95e344f785173ceb, 64'h73bf16056b59d5cb, 64'h430bf0fb40693fa2 },
+        '{ 64'ha56d9d48f6a6eb92, 64'h1548b0818fccdf58, 64'habc8957fa68def94, 64'he09dcf4d80ec280e, 64'hb7efde7e11081c5e },
+        '{ 64'hde55c9b60fc40fa1, 64'ha301b18905c5ac9d, 64'h64c3212e75e25898, 64'h1318243e0b0a9311, 64'h3872f672dc478dde },
+        '{ 64'h0dcf94604bc8d720, 64'h33f5cd0c25092bc2, 64'hb6b7e6145f84c78f, 64'hb69de0aeb3588d8c, 64'h70e73ef3a03d8814 },
+        '{ 64'h3f862d4bff487a3a, 64'h8df24f0a0414dca1, 64'h62d9be6e31381a3c, 64'hc807155419020dcb, 64'h7bd58d7571c20b01 }
+    },
+    '{
+        '{ 64'hd48c02be088646cf, 64'h769a0cf19d643874, 64'h9d6eaf4de574b91e, 64'h66a3dd7260a21de4, 64'h9e46788503f528e3 },
+        '{ 64'hafab51d09acd5160, 64'hc6e782210e690132, 64'h08e90e31c424bfe5, 64'h4928d0f77766fc3a, 64'hbbc5010e046c6eeb },
+        '{ 64'h9d0043b81399aef0, 64'h9468369aa43af246, 64'h044061feaa3fcdc1, 64'hc7fef5ce7c326dd9, 64'h41375f85063aa65f },
+        '{ 64'h02e342213af04e1f, 64'h6d7061938a52dbb2, 64'h6848345f08f5b896, 64'haa90b21e8538d385, 64'hc759e59f1fddd88d },
+        '{ 64'he8e1d7f0a7b489b9, 64'h7295a153de3bdac1, 64'h0539acb47d58a66a, 64'hcc3346a835ccc0d0, 64'h6f8379edf636df22 }
+    },
+    '{
+        '{ 64'h83b0b30dbcd658cc, 64'h9bb41f2f6961e6dd, 64'h9209a084ce196415, 64'h5d786565884379d6, 64'h63c0de29fcd38350 },
+        '{ 64'hd9540191a11d05da, 64'h7a07ab486d24f4f3, 64'hef17375605ed15c0, 64'hc51d673a3e0faea9, 64'h08bdfa7d30582a09 },
+        '{ 64'h417a6e29d121412b, 64'h9ea0a362f2a3d85c, 64'hc79d10d028d347c3, 64'h25692e9a0155b322, 64'hf94cb56816c2f2f0 },
+        '{ 64'hede70514bdaf2d64, 64'h138d4ad8d476e739, 64'h5e78385e0260b2be, 64'h6c558eb75e04d745, 64'hd4fb6290092df3a3 },
+        '{ 64'hbbdbc8e721ea9e90, 64'h698733239b302395, 64'h19c8f45c09ed8893, 64'hd69a3cc09114ff1e, 64'hf66e4db6370553ff }
+    },
+    '{
+        '{ 64'h7c8145ed91e40f8a, 64'h60ad1508fc12abc2, 64'h30df9121e73bb92f, 64'h7dd2daa75ded67e9, 64'hda8035a1629d4ac8 },
+        '{ 64'hfc53584d028ccc9a, 64'hdc56a43d8f955196, 64'hbc177ef6563e70db, 64'h96eb2215140f625e, 64'h1d5f8b78ec638f28 },
+        '{ 64'h04f91d5894cdc494, 64'hcac8a6f3d60949f6, 64'h224fea36941968a3, 64'h21b1fb7ef429a017, 64'hee9e0dc6b1cc7dda },
+        '{ 64'h65bf77d2cf97ea4a, 64'h390004e88969f68f, 64'heabe3d07c9e1c87b, 64'hf6991421b97f283b, 64'h625582531651dd8e },
+        '{ 64'hd67ab2f6867b180a, 64'h9c7c3dab91cc83dd, 64'h205542d179831548, 64'h476db89a401cca59, 64'h0c3c165633bc3de6 }
+    },
+    '{
+        '{ 64'hae911c424fd9fa28, 64'h0ce47a41eb0b73ea, 64'hd2e2725b7a78c43f, 64'h1d2610d84fc6c6ea, 64'h7466effc7a43cedf },
+        '{ 64'h5a20e0deeaee8008, 64'ha0bda034e89a98c2, 64'ha411f324f23706a9, 64'h6e022ce95c97886c, 64'h3b8d0fa41b18562b },
+        '{ 64'hb550c112215083b3, 64'h1b2e075db4ec9e73, 64'h9da0d60eba61c191, 64'h06515c01783bb599, 64'haef2ffc9178a9465 },
+        '{ 64'heb5744c98b6688dc, 64'hdccd19ac200d10c8, 64'hd4c4615b85e7c196, 64'hfac73b952417dc77, 64'hdc33e36b75fc556a },
+        '{ 64'hc1ad7ed3d875451c, 64'h7d47c81b9d8ea466, 64'hfbad7ec3a773f205, 64'h808f83a5f47328f1, 64'hfc01fb0b5a845b89 }
+    },
+    '{
+        '{ 64'h1cc51eb27848a3e4, 64'h6ba1adf7459c3d5a, 64'hdf850fe9707089b7, 64'hbc6ee48358f9aca0, 64'h3ce83887a592ce62 },
+        '{ 64'h8a67a361719e187b, 64'hc92ac01659be8616, 64'hb0074a0dfb55872c, 64'h8660918911b16cf9, 64'h283a91fecafa7cbf },
+        '{ 64'h67a7d774a82e963d, 64'h26241c0c55543832, 64'h1d724acf2c70faf6, 64'h7fbcb53660314895, 64'h4abbbb8b8d938c84 },
+        '{ 64'hf8963ef30d999768, 64'h4142f01338fd7273, 64'hd175ea5660e516d0, 64'h05d8ebb90ffac61e, 64'h3ccd22207d09abc3 },
+        '{ 64'he863ab5d7a4d9afb, 64'h815b64257540fb2a, 64'h293ffbfea121c88d, 64'h05dbb285dabdb78a, 64'hebb61afd7979e383 }
+    },
+    '{
+        '{ 64'hcc1d9cb8e4b6759a, 64'h87e91d76a57cb932, 64'hacc9f0d3ed5c80f3, 64'h6dc891c3ce51f3ae, 64'hec44e52d8e59e8c8 },
+        '{ 64'h212b75f2981c4127, 64'hfd93baa5cb5a634d, 64'h2bce41eb7482fb72, 64'h5bee1495f7abd6fe, 64'h85d0c5cd46a9b050 },
+        '{ 64'hd0e80ae3deb8d42c, 64'h30885c93cb503165, 64'h1f18c4a209166e96, 64'h5bfa6f314c7f31b4, 64'h34f531ff59257298 },
+        '{ 64'h273d2bfb556140b1, 64'hf21a5c945842d849, 64'hf2fea2d6f13f9899, 64'hc83e353248138fff, 64'ha1077e867791b489 },
+        '{ 64'hc6ad56404aaf161b, 64'h00f82a5a9e226393, 64'h3311988f9a5c5754, 64'h78541fee5f3df05e, 64'hc8413ce7e731baab }
+    },
+    '{
+        '{ 64'h00945f18351aae9d, 64'h91d3d170429c4fcf, 64'h8440eac2ee009bbc, 64'he1b127e030365bd9, 64'h4348e2fb1d9087f0 },
+        '{ 64'h841b70e705175aad, 64'hbe2c819f2ab97c7d, 64'h3e334991059d2ccd, 64'hc47ebcf81c09b3ad, 64'h8311cc8359649f5b },
+        '{ 64'h372cf8d6ad05888b, 64'h24b5b526badcad87, 64'hfd3e558f592f9b82, 64'h8e77437b6ea8ef7c, 64'hd1d9705a2fdf0339 },
+        '{ 64'h2ca4ab8526d6af56, 64'h4de65c0a5651d160, 64'ha1ee50533a7c063c, 64'haaa9de3865565895, 64'h1cfd9b6cf860df2b },
+        '{ 64'h1b132523116b2754, 64'hf73f57fdea10ce56, 64'h8f3a4dd1e07183f8, 64'hc02799f84876cbe4, 64'h07422b2f6284e0c1 }
+    },
+    '{
+        '{ 64'ha26cfbd8e397ea9f, 64'h6c6320046543a636, 64'h7407888160877a21, 64'h43fc285bb0345f4a, 64'h417ea520d58565be },
+        '{ 64'hb20438647673f342, 64'h665afae9212e41a5, 64'hcf74c98b7a39bdc3, 64'h2ed3d447f12b5f84, 64'h728073fade3e432a },
+        '{ 64'h8307e40efe554c46, 64'h9cfde5dde6b8cc1e, 64'h5731a4880af71e14, 64'h64c1603c760c5845, 64'hba5a14e6b559a04c },
+        '{ 64'h1add8b7c14691915, 64'hc0edbb32607ff59f, 64'h3fede41c36468450, 64'h507b7dbe95391e70, 64'h38038635f4866104 },
+        '{ 64'hf4aa12a0bb7b6731, 64'h2bea7b5b8c2065f2, 64'h56d745b3ac80ca24, 64'h5966028b8e0bf858, 64'h43a3a4435901519d }
+    },
+    '{
+        '{ 64'hc4d1fa6a6e5c49d0, 64'h6f3f75ac3c2873b1, 64'h3c177afe96e0f6e8, 64'hdecd8eab0786cff3, 64'h7e6bf117e89a1ff8 },
+        '{ 64'hfa1069a87597b818, 64'h2aada6037e5c7deb, 64'h5daa34a290f3ba82, 64'h3bc52660da17f76a, 64'hc2c8de4c40086e1b },
+        '{ 64'h1d108e58d427eefa, 64'h45cf4da681f05424, 64'h4f7f561b33656fe1, 64'h35d6b5651e133cad, 64'h07afed946856fa78 },
+        '{ 64'ha442154b62a3795f, 64'h0efc57ad7c26df55, 64'h6a005b44a14c6cfe, 64'hcdbe9675dff93f41, 64'h23e27b440fd1e5d9 },
+        '{ 64'h98aa38c75fd40e02, 64'he05336b60e8ffa52, 64'h7aa830b5196743ed, 64'hbee7514b2ba6d669, 64'h814541aa706c3cce }
+    },
+    '{
+        '{ 64'hebbdaf2b750794f3, 64'h7c1d5fe277fa0989, 64'hbf05f8e2d68ce7db, 64'hab6699306bb5f6bd, 64'h453225ab9f33e642 },
+        '{ 64'hdf37fd1339dede22, 64'h6e26c1491bda828b, 64'hbcc2a365f317307a, 64'h00b04b3ed5f041a4, 64'h2d3897033e5c0fa5 },
+        '{ 64'h26397ae0acdf4a10, 64'hbaa7351816b73e7a, 64'hf1c07974f3cdcfab, 64'h321ba3764558e446, 64'h365686db542ad02a },
+        '{ 64'h0eb1e22bffa1b7d7, 64'h50bffd7da9df5cb0, 64'h059f0698a83d72d6, 64'h058641f0e80141b6, 64'h52157a00a35e8e10 },
+        '{ 64'h5444bd99aa0fa4e9, 64'h6615514c05ae9c56, 64'hd4e43402e5828499, 64'hc5fef95b88bb2b28, 64'ha2cc0d3260f17a97 }
+    },
+    '{
+        '{ 64'h1af18f3714edc46e, 64'ha60a56b74be8ed3e, 64'h7eaba0d7d1a3f320, 64'ha4b7839789a8731e, 64'h0425d0a0dfa8cb80 },
+        '{ 64'h1e81581df8217009, 64'h279911822ca7b54c, 64'hbf48593911a32186, 64'h8a01db5a9a1f2052, 64'hb48c9451b051edc6 },
+        '{ 64'h92a3f4c331353c79, 64'h0926258985c02a31, 64'h6d676689d3137411, 64'hf7653154f3c8ec35, 64'hb5898466c396b5b6 },
+        '{ 64'h3623c75374c462f2, 64'h9f8c1ad5b5aca771, 64'hd530c149d1570602, 64'h6fc895853e832f0b, 64'h4ba64056fca5a300 },
+        '{ 64'hb34694271432a8f5, 64'he4b57b607eb4390b, 64'hdc860029c91998ac, 64'haa23b226a3dab480, 64'h975926642cc06bc5 }
+    },
+    '{
+        '{ 64'he9408f435a3b8caf, 64'h850c2288432ea91e, 64'h91b17a4e236baa9d, 64'h4306cbadaf8a4083, 64'hfbfcb774a3264686 },
+        '{ 64'heb7467e71d9543f1, 64'hb14acd45156a0405, 64'h208dccf0f471b772, 64'h4acd1266b78effad, 64'he01bd014bb78786e },
+        '{ 64'h755156dfc7eacb14, 64'h7ce0fde31f7ec079, 64'h2411aa6a3ae32eba, 64'hfdd9e7f8c9a32bdc, 64'h790b3c676d196290 },
+        '{ 64'hcdc2c41ceb1c2abb, 64'he9a46067e6d9749f, 64'h09591e19df9d0c23, 64'h0357c71bd0d2151c, 64'hbbea7f0a3f27251b },
+        '{ 64'h1da85d5f2561916a, 64'h15eb3e502e49070a, 64'h09825ac8fc872eab, 64'hf207ba1a2b22c26e, 64'h8def1c0f2822bce1 }
+    },
+    '{
+        '{ 64'ha172c7a6b74afe4b, 64'hebbbb27b03caae38, 64'he2be46a45dc8ac2a, 64'h62be06746122098a, 64'h80bbd58c79f19140 },
+        '{ 64'hb5f8edf4ea8a4534, 64'h59d70b9c39a525ee, 64'h600fa46e0a661e1d, 64'h8fe91922bf4dbb94, 64'h734b5a013fb59f0b },
+        '{ 64'he8f23cc75103c9a6, 64'h184922380c24acd0, 64'h871c869702221679, 64'h22aae1f196ce7aed, 64'h44be075e3bcb5b56 },
+        '{ 64'h552b0088588b26ed, 64'h4481b4b8a83fbc90, 64'hddda7b4742123601, 64'h2fef6b740282f324, 64'h35281b7edfa7db00 },
+        '{ 64'h3a863bd1867dfaf9, 64'h06985c184646da1c, 64'hcd6974c2a82918ca, 64'h055899b947f3484a, 64'h3eb087deecc86e38 }
+    },
+    '{
+        '{ 64'hcb3c49e40e33fc86, 64'h2f143484819cb520, 64'h0a1155aafad42496, 64'ha7b4d1fe7c56b459, 64'h4429b5d52d5e8b33 },
+        '{ 64'hc9936c403bbe2b48, 64'hf9020a1d41e057e0, 64'hf9b3b073c44265a5, 64'h2d46e17242926265, 64'h8fc9e1917f90d2f2 },
+        '{ 64'ha558dce712b31b5b, 64'h8c67c9cc365d7f6b, 64'h18938868f38e63c8, 64'h0036ed5eb9e1e541, 64'hdc3ca41c1b89434c },
+        '{ 64'hf316f75d571a1c3d, 64'h9ff72dfcf1f19c82, 64'hdb22f60d76178545, 64'hb5eda4aa73c6a402, 64'he9c32c45ac1719e9 },
+        '{ 64'h14c308e0d110970c, 64'hdc4f7f4d639b20b1, 64'hdef5c768c55407e6, 64'h282523117a8c8206, 64'h3fcbed9e14450cde }
+    },
+    '{
+        '{ 64'h749804acd3b6427c, 64'h9a0d905cb45c2635, 64'h9efc732e05562542, 64'h13b24dc5fc290e4f, 64'hf5e44e52012bbed0 },
+        '{ 64'hed33854a6fa43631, 64'hd93faf90934ac17c, 64'h53e287416f78777b, 64'h010829f6f4a29642, 64'he5a4ec105e6e32fd },
+        '{ 64'h06204b936d683c14, 64'hb630f28d5a4b5b2a, 64'h3cd5ece510e8524c, 64'hdd481141b184a3af, 64'h7df694d27362bdcc },
+        '{ 64'hbeacf6cda13dfb3d, 64'h8d1642af85969300, 64'ha7456a082e97ec43, 64'h495534b4aadff862, 64'hccb5f0a87c49654d },
+        '{ 64'h48670a97c12ce4f6, 64'h712a37738ab07292, 64'h452bb40627221961, 64'h1ec5feb41693b6aa, 64'hd4f7e9682473b958 }
+    },
+    '{
+        '{ 64'h1ce02f77630abcd0, 64'he851087f00317d94, 64'h64bdb8f258e4c396, 64'h7ab9675e44f80b31, 64'h363405d4b45c3e50 },
+        '{ 64'h7e6343921ebcf3f6, 64'hcb1dc26c59b229ca, 64'h2bc46d32fe6dcfe1, 64'hdc7578e47494b2b2, 64'haf4d7cfe9c7373c6 },
+        '{ 64'h0d8b08f805453fa8, 64'hac66e5302df8faff, 64'hf902d2b3ce1f1fff, 64'h86afa8bf2487d274, 64'hb3f202785663bc6b },
+        '{ 64'h9bef63714797a30f, 64'h8097bdf52340882a, 64'h330ff3f1cffba434, 64'h2b87f6f2874aaa1f, 64'h24bd71e2038bbfd9 },
+        '{ 64'hc19240b6af7effba, 64'h36e7b315bcc22910, 64'h1c9e3c5318e5133d, 64'h359877823861b222, 64'h849f5b3b0a32876c }
+    }
+};
+
+int resultp_index = 0;
+wire[63:0] resultp[5][5] = '{ rowpa, rowpb, rowpc, rowpd, rowpe };
+
+always @(posedge clk) if(samplep) begin
+  for (int loop = 0; loop < 5; loop++) begin
+      for (int comp = 0; comp < 5; comp++) begin
+          if (resultp[loop][comp] != expected_resultp[resultp_index][loop][comp]) begin
+            $display("ResultP[%d][%d][%d] !! FAILED !! (expected %h, found %h)",
+                     resultp_index, loop, comp, expected_resultp[resultp_index][loop][comp], resultp[loop][comp]);
+            $fatal;
+            $finish;
+          end
+      end
+  end
+  $display("ResultP[%d] %t", resultp_index, $realtime);
+  resultp_index++;
+  if(resultp_index == $size(expected_resultp, 1)) begin
+    $display("%s GOOD (PROPER)", TESTBENCH_NAME);
+  end
+end
+
 bit tests_done = 1'b0;
 always_ff @(posedge clk) begin
-    tests_done <= qresult_index == $size(qexpected_result, 1);
+    tests_done <= qresult_index == $size(qexpected_result, 1) & resultp_index == $size(expected_resultp, 1);
 end
 
 always @(posedge clk) if(tests_done) begin
