@@ -11,7 +11,8 @@ wire clk;
 wire sample;
 wire[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5];
 sha_round_dispatch_logic #(
-    .TESTBENCH_NAME(IMPL_NAME)
+    .TESTBENCH_NAME(IMPL_NAME),
+    .TESTS_EACH_BURST(1)
 ) driver(
     .clock(clk), .hasher_can_take(1'b1),
     .sample(sample), .rowa(rowa), .rowb(rowb), .rowc(rowc), .rowd(rowd), .rowe(rowe)
@@ -48,7 +49,8 @@ sha3 #(
 
 
 sha3_1600_results_checker #(
-    .TESTBENCH_NAME(IMPL_NAME)
+    .TESTBENCH_NAME(IMPL_NAME),
+    .TESTS_EACH_BURST(1)
 ) result_checker (
     .clk(clk),
     .qsample(qresgood), .qrowa(qresa), .qrowb(qresb), .qrowc(qresc), .qrowd(qresd), .qrowe(qrese),

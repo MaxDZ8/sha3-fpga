@@ -6,7 +6,8 @@
 // C- each clock sample is hi, provide a matrix to churn (gimme will go low when no more can be accepted).
 // D- Wait until good becomes high. Results will come in bursts.
 module sha3_iterating_pipe6 #(
-    FEEDBACK_MUX_STYLE = "fabric"
+    FEEDBACK_MUX_STYLE = "fabric",
+    LAST_ROUND_IS_PROPER = 1
 ) (
     input clk, 
     input sample,
@@ -98,7 +99,8 @@ mux1600 #(
 wire rndo_good;
 wire[63:0] rndoa[5], rndob[5], rndoc[5], rndod[5], rndoe[5];
 sha3_iterating_semipack #(
-    .ROUND_COUNT(6)
+    .ROUND_COUNT(6),
+    .LAST_ROUND_IS_PROPER(LAST_ROUND_IS_PROPER)
 ) crunchy (
     .clk(clk),
     .isa(muxoa), .isb(muxob), .isc(muxoc), .isd(muxod), .ise(muxoe),
@@ -118,7 +120,7 @@ end
 
 
 bit[1:0] result_iteration = 2'b0;
-bit[5:0] result_divide = 6'b0;
+bit[3:0] result_divide = 4'b0;
 always_ff @(posedge clk) if(rndo_good) begin
     if (result_divide != burst_len_and_delay) result_divide <= result_divide + 1'b1;
     else begin
@@ -136,25 +138,43 @@ always_ff @(posedge clk) into_adjuster <= rndo_good & result_iteration != 2'h3;
 localparam bit[4:0] result_rounds[4] = '{ 5'd5, 5'd11, 5'd17, 5'd23 };
 wire[4:0] last_result_round = result_rounds[was_result_iteration];
 
-sha3_generic_round_second_half adjust (
-    .clk(clk),
-    .round_index(last_result_round),
-    .sample(into_adjuster),
-    .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(tomuxa), .osb(tomuxb), .osc(tomuxc), .osd(tomuxd), .ose(tomuxe)
-);
-
-bit into_finalizer = 1'b0;
-always_ff @(posedge clk) into_finalizer <= rndo_good & result_iteration == 2'h3;
-
-sha3_finalizer #(
-    .OUTPUT_BUFFER(0),
-    .VALUE(64'h8000000080008008) // rc[23]
-) finalizer(
-    .clk(clk), .sample(into_finalizer),
-    .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
-    .ogood(ogood)
-);
+if (LAST_ROUND_IS_PROPER) begin : properly
+    assign tomuxa = '{ buffa[0], buffa[1], buffa[2], buffa[3],buffa[4] };
+    assign tomuxb = '{ buffb[0], buffb[1], buffb[2], buffb[3],buffb[4] };
+    assign tomuxc = '{ buffc[0], buffc[1], buffc[2], buffc[3],buffc[4] };
+    assign tomuxd = '{ buffd[0], buffd[1], buffd[2], buffd[3],buffd[4] };
+    assign tomuxe = '{ buffe[0], buffe[1], buffe[2], buffe[3],buffe[4] };
+    assign oa = tomuxa;
+    assign ob = tomuxb;
+    assign oc = tomuxc;
+    assign od = tomuxd;
+    assign oe = tomuxe;
+    
+    bit was_rndo_good = 1'b0;
+    always_ff @(posedge clk) was_rndo_good <= rndo_good;
+    assign ogood = was_rndo_good & was_result_iteration == 2'h3;
+end
+else begin : quirky
+    sha3_generic_round_second_half adjust (
+        .clk(clk),
+        .round_index(last_result_round),
+        .sample(into_adjuster),
+        .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
+        .osa(tomuxa), .osb(tomuxb), .osc(tomuxc), .osd(tomuxd), .ose(tomuxe)
+    );
+    
+    bit into_finalizer = 1'b0;
+    always_ff @(posedge clk) into_finalizer <= rndo_good & result_iteration == 2'h3;
+    
+    sha3_finalizer #(
+        .OUTPUT_BUFFER(0),
+        .VALUE(64'h8000000080008008) // rc[23]
+    ) finalizer(
+        .clk(clk), .sample(into_finalizer),
+        .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
+        .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
+        .ogood(ogood)
+    );
+end
 
 endmodule

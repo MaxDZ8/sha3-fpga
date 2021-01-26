@@ -9,7 +9,8 @@
 // Using a 12-rounds deep pipeline means each hash must be adjusted and fed back only once,
 // this has some minor advantages and it's still pretty small. 
 module sha3_iterating_pipe12 #(
-    FEEDBACK_MUX_STYLE = "fabric"
+    FEEDBACK_MUX_STYLE = "fabric",
+    LAST_ROUND_IS_PROPER = 1
 ) (
     input clk, 
     input sample,
@@ -49,9 +50,9 @@ always_ff @(posedge clk)  begin
         if (input_divide != burst_len_and_delay) input_divide <= input_divide + 1'b1;
         else begin
             input_divide <= 5'b0;
-			consume_iterated <= 1'b0;
-			buff_gimme <= 1'b1;
-			waiting_input <= 1'b1;
+            consume_iterated <= 1'b0;
+            buff_gimme <= 1'b1;
+            waiting_input <= 1'b1;
         end
     end
 end
@@ -98,7 +99,8 @@ mux1600 #(
 wire rndo_good;
 wire[63:0] rndoa[5], rndob[5], rndoc[5], rndod[5], rndoe[5];
 sha3_iterating_semipack #(
-    .ROUND_COUNT(12)
+    .ROUND_COUNT(12),
+    .LAST_ROUND_IS_PROPER(LAST_ROUND_IS_PROPER)
 ) crunchy (
     .clk(clk),
     .isa(muxoa), .isb(muxob), .isc(muxoc), .isd(muxod), .ise(muxoe),
@@ -133,39 +135,57 @@ always_ff @(posedge clk) was_result_iteration <= result_iteration;
 bit into_adjuster = 1'b0;
 always_ff @(posedge clk) into_adjuster <= rndo_good & ~result_iteration;
 
-// Adjusting the feed-back value. ------------------------------------------------------------------------
-wire[63:0] toiotaa[5], toiotab[5], toiotac[5], toiotad[5], toiotae[5];
-wire fetch_iota;
-sha3_chi #(
-    .STYLE("basic"),
-    .OUTPUT_BUFFER(0),
-    .INPUT_BUFFER(0) // it is critical CHI+IOTA have latency 0 or the last round will go awry
-) chi (
-    .clk(clk),
-    .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe), .sample(into_adjuster),
-    .osa(toiotaa), .osb(toiotab), .osc(toiotac), .osd(toiotad), .ose(toiotae), .ogood(fetch_iota)
-);
+if (LAST_ROUND_IS_PROPER) begin : properly
+    assign tomuxa = '{ buffa[0], buffa[1], buffa[2], buffa[3],buffa[4] };
+    assign tomuxb = '{ buffb[0], buffb[1], buffb[2], buffb[3],buffb[4] };
+    assign tomuxc = '{ buffc[0], buffc[1], buffc[2], buffc[3],buffc[4] };
+    assign tomuxd = '{ buffd[0], buffd[1], buffd[2], buffd[3],buffd[4] };
+    assign tomuxe = '{ buffe[0], buffe[1], buffe[2], buffe[3],buffe[4] };
+    assign oa = tomuxa;
+    assign ob = tomuxb;
+    assign oc = tomuxc;
+    assign od = tomuxd;
+    assign oe = tomuxe;
     
-sha3_iota #(
-   .VALUE(64'h000000008000000a), // rc[11]
-   .OUTPUT_BUFFER(0)
-) iota (
-   .clk(clk),
-   .isa(toiotaa), .isb(toiotab), .isc(toiotac), .isd(toiotad), .ise(toiotae), .sample(fetch_iota),
-   .osa(tomuxa), .osb(tomuxb), .osc(tomuxc), .osd(tomuxd), .ose(tomuxe) /* .ogood unused - no latency*/
-);
-
-bit into_finalizer = 1'b0;
-always_ff @(posedge clk) into_finalizer <= rndo_good & result_iteration;
-
-sha3_finalizer #(
-    .OUTPUT_BUFFER(0),
-    .VALUE(64'h8000000080008008) // rc[23]
-) finalizer(
-    .clk(clk), .sample(into_finalizer),
-    .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
-    .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
-    .ogood(ogood)
-);
+    bit was_rndo_good = 1'b0;
+    always_ff @(posedge clk) was_rndo_good <= rndo_good;
+    assign ogood = was_rndo_good & was_result_iteration == 1'b1;
+end
+else begin : quirky
+    // Adjusting the feed-back value. ------------------------------------------------------------------------
+    wire[63:0] toiotaa[5], toiotab[5], toiotac[5], toiotad[5], toiotae[5];
+    wire fetch_iota;
+    sha3_chi #(
+        .STYLE("basic"),
+        .OUTPUT_BUFFER(0),
+        .INPUT_BUFFER(0) // it is critical CHI+IOTA have latency 0 or the last round will go awry
+    ) chi (
+        .clk(clk),
+        .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe), .sample(into_adjuster),
+        .osa(toiotaa), .osb(toiotab), .osc(toiotac), .osd(toiotad), .ose(toiotae), .ogood(fetch_iota)
+    );
+        
+    sha3_iota #(
+       .VALUE(64'h000000008000000a), // rc[11]
+       .OUTPUT_BUFFER(0)
+    ) iota (
+       .clk(clk),
+       .isa(toiotaa), .isb(toiotab), .isc(toiotac), .isd(toiotad), .ise(toiotae), .sample(fetch_iota),
+       .osa(tomuxa), .osb(tomuxb), .osc(tomuxc), .osd(tomuxd), .ose(tomuxe) /* .ogood unused - no latency*/
+    );
+    
+    bit into_finalizer = 1'b0;
+    always_ff @(posedge clk) into_finalizer <= rndo_good & result_iteration;
+    
+    sha3_finalizer #(
+        .OUTPUT_BUFFER(0),
+        .VALUE(64'h8000000080008008) // rc[23]
+    ) finalizer(
+        .clk(clk), .sample(into_finalizer),
+        .isa(buffa), .isb(buffb), .isc(buffc), .isd(buffd), .ise(buffe),
+        .osa(oa), .osb(ob), .osc(oc), .osd(od), .ose(oe),
+        .ogood(ogood)
+    );
+end
 
 endmodule

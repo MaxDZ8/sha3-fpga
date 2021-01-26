@@ -2,7 +2,9 @@
 
 // Spiritual companion of sha3_round_dispatch_logic, check the corresponding results.
 module sha3_1600_results_checker #(
-    TESTBENCH_NAME = "<FORGOT TO SET ME>"
+    TESTBENCH_NAME = "<FORGOT TO SET ME>",
+    // See the dispatch logic for this one!
+    TESTS_EACH_BURST = 0
 ) (
     input clk,
     input qsample,
@@ -11,8 +13,15 @@ module sha3_1600_results_checker #(
     input[63:0] rowpa[5], rowpb[5], rowpc[5], rowpd[5], rowpe[5]
 );
 
+if (TESTS_EACH_BURST <= 0) begin
+  initial begin
+    $display("You forgot to set burst");
+    $finish();
+  end
+end
 
-localparam longint unsigned qexpected_result[24][5][5] = '{
+
+localparam longint unsigned qexpected_result[29][5][5] = '{
     '{
         '{ 64'h30ce10fab53edc10, 64'h79eae51020809c25, 64'h14304698fc873745, 64'h9e7b50fc25013fb8, 64'h0a1483c12b5b5961 },
         '{ 64'hd8e7f6d215d229d3, 64'h92a2f9afcb663415, 64'hf036c837dacda4bb, 64'hcc2632255c7d22fa, 64'h022f6573a5529bef },
@@ -180,8 +189,54 @@ localparam longint unsigned qexpected_result[24][5][5] = '{
         '{ 64'h4d9b183b95423ea8, 64'haec2c53c0c783aff, 64'he81295f3944733f7, 64'hcaa6b0bca587d0f4, 64'h11b2c77c5e5bbc3c },
         '{ 64'haccf21718bad92db, 64'h0057b9f723448223, 64'h3727faf5ef7ab1d4, 64'ha3c5f6e30f6eaa1d, 64'h24ade96423cbbff9 },
         '{ 64'h498a44dcad4be9db, 64'h56e7f01139cae190, 64'h9efcb46b1a771671, 64'h7c9873469d28dab1, 64'h92faeb3a1ab2876c }
+    },
+    '{
+        '{ 64'h345254b94e0911fd, 64'heb77d056bf6062df, 64'hbd96717741fca0f2, 64'hc7d2bd9bd8694fec, 64'he09399731e922029 },
+        '{ 64'h3be82c4d3205e64e, 64'h4f9b90bb09cc5cd3, 64'hc8973003514be3f1, 64'hc8bfb598a8268144, 64'h3de0531e4b814c53 },
+        '{ 64'h90d725a56530ce2a, 64'h5dec2a06b608bc59, 64'h16eb1d2f6eaa2a4a, 64'h65f28cbf072a4c07, 64'h10527e310a8b6cc9 },
+        '{ 64'h2d2aee12da3cbcde, 64'h54f4be97aa5f8b1e, 64'h46ff634fc14fd1cb, 64'h424c0bb98c3df59f, 64'haa37ca48c741661b },
+        '{ 64'h1d8b9bee4912cd7f, 64'h6aa640562e98ddde, 64'h3021608954bd4277, 64'h49be4a860ab795e7, 64'h4ea0a9b9de2f91e0 }
+    },
+    '{
+        '{ 64'hc8526205dbfc3e39, 64'hb8abb03d5bbad619, 64'h85a7f58ecd3c9cd4, 64'hfafc6ea8c0074a47, 64'h4802ca9cebddad62 },
+        '{ 64'h42a152da8559c032, 64'h935c2336aaa912ed, 64'h595fbacea080e521, 64'he344c9f75f0a06e3, 64'hcce3de8929a3c988 },
+        '{ 64'hdd02ed807cc569a2, 64'h26adbaf457d43765, 64'h75feb3d37a06d68d, 64'h41548a37d1809ea0, 64'hd342244b44a44dd9 },
+        '{ 64'hf74159a111231572, 64'h46fd167308cd289b, 64'hafb35d58a0f52678, 64'h9a985f3429c75832, 64'h7996ad96e5a2bcc3 },
+        '{ 64'h834bc44ec14fbaec, 64'h4e3f6812a53b7d06, 64'hed9120a9ce8ff505, 64'h41b9f64d60511602, 64'h7e1097fc5415e2f4 }
+    },
+    '{
+        '{ 64'h57d46d862b185873, 64'hcf156a294b36cd28, 64'ha50dd1a3275b8846, 64'h0c71988334f2b3c6, 64'hb9a1e8ba48f106de },
+        '{ 64'h63fb49f472020d24, 64'h67c97ad385508de4, 64'h64e58973a79b9361, 64'hb6f8e2b134e3417e, 64'he10077727c1acead },
+        '{ 64'h276b04d28b5f58c5, 64'h82f2d5f1c12d9434, 64'h6a2172a82daebbb3, 64'h1aeac46cd8d81133, 64'h2659c50ca465d6c3 },
+        '{ 64'h851315fcb3898c6c, 64'hbf2f7e696b3452e3, 64'h98b58dd4cada27ab, 64'h4f902feafce33f53, 64'hecd7541a17d715d6 },
+        '{ 64'hdf631cdf23baabf4, 64'hf3c209232ab23f02, 64'h15f72c55d88ecd4e, 64'h695e8f01067f08d7, 64'h28c9369a6e2d3266 }
+    },
+    '{
+        '{ 64'h6240102d6df6af02, 64'h08a93dc06bd1e9b1, 64'h018b0a9f086f7e0d, 64'h6e088eb3fef8a399, 64'h7b7f25de172c7b7a },
+        '{ 64'h20f3b529502da6af, 64'h305f5904655dc36d, 64'hb144d0f277e810b6, 64'hcae6c3087d44aec7, 64'h8e34c01c47e25311 },
+        '{ 64'h3d1aca78ba6fd68e, 64'he3dcc311e1002f50, 64'h61338aab5f9974d9, 64'h23cc019f16e5ff19, 64'h12d5730ebd7dcc3d },
+        '{ 64'h23a57384e84a9dc8, 64'ha7d9a06a9caabcc7, 64'h75d1ec6899dea570, 64'hc551c5caeb96f11d, 64'h4249441e9953a2d7 },
+        '{ 64'h659c8e407c9272b2, 64'hdf175c0993a1a3cd, 64'ha5bd316a0eed5729, 64'hf851ed655a7db997, 64'he597ba2e3cf0713e }
+    },
+    '{
+        '{ 64'h4ee6c8f5e773bac3, 64'h4423e39e784de064, 64'hbfa9104fec02b1ab, 64'h88bdcee660ee1296, 64'h51d154e013a1eee3 },
+        '{ 64'h80a6b2e65480b23c, 64'h6fc504874713d495, 64'hb5a71b11511130ce, 64'he8cd2e521c4f3538, 64'h125d06494f02a680 },
+        '{ 64'he062db86f4f8505f, 64'h4f1206860d467712, 64'h4ea5dba63b1bb1ac, 64'hc59b11a86447555a, 64'h3baedbe42f739c9c },
+        '{ 64'h08f3b8d812d65e52, 64'h7f2cd33324889ebb, 64'h2d7edcaa7f8875b2, 64'h9b9741e0fc7bccc0, 64'h4b429eebc0e0bed1 },
+        '{ 64'hfc1ab144efe07c17, 64'h4bcd116222644129, 64'h7a18db7b98f415f1, 64'hac2903fd1d7aa5ed, 64'h018f00ab03e2c8c0 }
     }
 };
+
+// Note: in line of theory we have the same inputs so quirk test count is as proper test count... but we don't know so I just double the check.
+localparam QNUM_BURSTS = TESTS_EACH_BURST >= 1 ? $size(qexpected_result, 1) / TESTS_EACH_BURST : 0;
+localparam QVALID_TEST_COUNT = QNUM_BURSTS * TESTS_EACH_BURST;
+
+if (QNUM_BURSTS < 1) begin
+  initial begin
+    $display("Not enough quirky tests values to make even a single burst!");
+    $finish();
+  end
+end
 
 int qresult_index = 0;
 wire[63:0] qresult[5][5] = '{ qrowa, qrowb, qrowc, qrowd, qrowe };
@@ -199,12 +254,12 @@ always @(posedge clk) if(qsample) begin
   end
   $display("ResultQ[%d] %t", qresult_index, $realtime);
   qresult_index++;
-  if(qresult_index == $size(qexpected_result, 1)) begin
+  if(qresult_index == QVALID_TEST_COUNT) begin
     $display("%s GOOD (QUIRKY)", TESTBENCH_NAME);
   end
 end
 
-localparam longint unsigned expected_resultp[24][5][5] = '{
+localparam longint unsigned expected_resultp[29][5][5] = '{
     '{
         '{ 64'h30ce10fab53edc10, 64'h79eae51020809c25, 64'h1434c599f6dd7704, 64'h2ab140cee52119a0, 64'h493566c52bdbd9e4 },
         '{ 64'hb8f3f6c2055ba979, 64'h9ea2cbafcf563655, 64'hf23f8d657bcf3dbe, 64'h14e6a0a54cfd02ea, 64'h002f6c5e6f768feb },
@@ -226,7 +281,7 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'h1d4d512fea371a88, 64'h3936b8d3cfbe10c6, 64'ha47f111f4d4066c3, 64'h1c4e92d7964ae9c9, 64'h0372e2252ece62fb },
         '{ 64'h11ec4b428133d6f7, 64'hbf7cfd8043ffe741, 64'hfeb27b1a3dc7095e, 64'hc296ff994cb45afd, 64'h0cacea4a3d708052 }
     },
-    '{
+    '{ // 3
         '{ 64'h00e414a80c2bebc8, 64'h5417bd2253870ed7, 64'hacb8d2f680d429b4, 64'hea37faf2894406c9, 64'hca7db89a780f9e3b },
         '{ 64'h24addd032d5961a2, 64'h8f8e5a3b06a352b6, 64'h7011272d41d980eb, 64'hc80b1ff8dc585465, 64'hbd90a0836a9dd0d2 },
         '{ 64'hd217b9774ec89576, 64'hb3e9b90eabd312ea, 64'h158b0de4415f3118, 64'h93f3f36afefa9373, 64'h1dd3b033bed0dbec },
@@ -254,7 +309,7 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'hc213a605b5c05d96, 64'he80cd77bee0bbad4, 64'hf89b2836bf904bae, 64'hf3b283fcdf520fc8, 64'h8ce03436c067f81d },
         '{ 64'hc3a19601eca12d4a, 64'h7573fddb1f3a4d78, 64'he766198a8ec73b6c, 64'h27fd2f28fd735c59, 64'h7b0b3e59681a862e }
     },
-    '{
+    '{ // 7
         '{ 64'h3b09a563c2ab0ebc, 64'h51fd52e0d60efa3b, 64'h95e344f785173ceb, 64'h73bf16056b59d5cb, 64'h430bf0fb40693fa2 },
         '{ 64'ha56d9d48f6a6eb92, 64'h1548b0818fccdf58, 64'habc8957fa68def94, 64'he09dcf4d80ec280e, 64'hb7efde7e11081c5e },
         '{ 64'hde55c9b60fc40fa1, 64'ha301b18905c5ac9d, 64'h64c3212e75e25898, 64'h1318243e0b0a9311, 64'h3872f672dc478dde },
@@ -282,7 +337,7 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'h65bf77d2cf97ea4a, 64'h390004e88969f68f, 64'heabe3d07c9e1c87b, 64'hf6991421b97f283b, 64'h625582531651dd8e },
         '{ 64'hd67ab2f6867b180a, 64'h9c7c3dab91cc83dd, 64'h205542d179831548, 64'h476db89a401cca59, 64'h0c3c165633bc3de6 }
     },
-    '{
+    '{ // 11
         '{ 64'hae911c424fd9fa28, 64'h0ce47a41eb0b73ea, 64'hd2e2725b7a78c43f, 64'h1d2610d84fc6c6ea, 64'h7466effc7a43cedf },
         '{ 64'h5a20e0deeaee8008, 64'ha0bda034e89a98c2, 64'ha411f324f23706a9, 64'h6e022ce95c97886c, 64'h3b8d0fa41b18562b },
         '{ 64'hb550c112215083b3, 64'h1b2e075db4ec9e73, 64'h9da0d60eba61c191, 64'h06515c01783bb599, 64'haef2ffc9178a9465 },
@@ -310,7 +365,7 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'h2ca4ab8526d6af56, 64'h4de65c0a5651d160, 64'ha1ee50533a7c063c, 64'haaa9de3865565895, 64'h1cfd9b6cf860df2b },
         '{ 64'h1b132523116b2754, 64'hf73f57fdea10ce56, 64'h8f3a4dd1e07183f8, 64'hc02799f84876cbe4, 64'h07422b2f6284e0c1 }
     },
-    '{
+    '{ // 15
         '{ 64'ha26cfbd8e397ea9f, 64'h6c6320046543a636, 64'h7407888160877a21, 64'h43fc285bb0345f4a, 64'h417ea520d58565be },
         '{ 64'hb20438647673f342, 64'h665afae9212e41a5, 64'hcf74c98b7a39bdc3, 64'h2ed3d447f12b5f84, 64'h728073fade3e432a },
         '{ 64'h8307e40efe554c46, 64'h9cfde5dde6b8cc1e, 64'h5731a4880af71e14, 64'h64c1603c760c5845, 64'hba5a14e6b559a04c },
@@ -338,7 +393,7 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'h3623c75374c462f2, 64'h9f8c1ad5b5aca771, 64'hd530c149d1570602, 64'h6fc895853e832f0b, 64'h4ba64056fca5a300 },
         '{ 64'hb34694271432a8f5, 64'he4b57b607eb4390b, 64'hdc860029c91998ac, 64'haa23b226a3dab480, 64'h975926642cc06bc5 }
     },
-    '{
+    '{ // 19
         '{ 64'he9408f435a3b8caf, 64'h850c2288432ea91e, 64'h91b17a4e236baa9d, 64'h4306cbadaf8a4083, 64'hfbfcb774a3264686 },
         '{ 64'heb7467e71d9543f1, 64'hb14acd45156a0405, 64'h208dccf0f471b772, 64'h4acd1266b78effad, 64'he01bd014bb78786e },
         '{ 64'h755156dfc7eacb14, 64'h7ce0fde31f7ec079, 64'h2411aa6a3ae32eba, 64'hfdd9e7f8c9a32bdc, 64'h790b3c676d196290 },
@@ -366,14 +421,60 @@ localparam longint unsigned expected_resultp[24][5][5] = '{
         '{ 64'hbeacf6cda13dfb3d, 64'h8d1642af85969300, 64'ha7456a082e97ec43, 64'h495534b4aadff862, 64'hccb5f0a87c49654d },
         '{ 64'h48670a97c12ce4f6, 64'h712a37738ab07292, 64'h452bb40627221961, 64'h1ec5feb41693b6aa, 64'hd4f7e9682473b958 }
     },
-    '{
+    '{ // 23
         '{ 64'h1ce02f77630abcd0, 64'he851087f00317d94, 64'h64bdb8f258e4c396, 64'h7ab9675e44f80b31, 64'h363405d4b45c3e50 },
         '{ 64'h7e6343921ebcf3f6, 64'hcb1dc26c59b229ca, 64'h2bc46d32fe6dcfe1, 64'hdc7578e47494b2b2, 64'haf4d7cfe9c7373c6 },
         '{ 64'h0d8b08f805453fa8, 64'hac66e5302df8faff, 64'hf902d2b3ce1f1fff, 64'h86afa8bf2487d274, 64'hb3f202785663bc6b },
         '{ 64'h9bef63714797a30f, 64'h8097bdf52340882a, 64'h330ff3f1cffba434, 64'h2b87f6f2874aaa1f, 64'h24bd71e2038bbfd9 },
         '{ 64'hc19240b6af7effba, 64'h36e7b315bcc22910, 64'h1c9e3c5318e5133d, 64'h359877823861b222, 64'h849f5b3b0a32876c }
+    },
+        '{
+        '{ 64'h345254b94e0911fd, 64'heb77d056bf6062df, 64'h9d977117476e80f3, 64'hc792d913586c5e38, 64'he9b691353ff20c2b },
+        '{ 64'hbbec0c4d6206456e, 64'h4fb31523a1e85cd7, 64'hfdd7720512caafe2, 64'hcab799d998222348, 64'h79f3c3ac424954c2 },
+        '{ 64'h92d4308c2d92cc28, 64'h3cfcaa96b708f85c, 64'h06eb6f2f662b0a82, 64'he5778d3b621ace25, 64'h5d7a743398835c98 },
+        '{ 64'h2f21af5a9b3cec1f, 64'h54f4b627a66faf0a, 64'heecca30f820fd3cb, 64'h47442fab94016d5b, 64'hfae3dacde702651b },
+        '{ 64'h0d8abb671937cf5e, 64'h23384a50249a485e, 64'h3621c1b080b54277, 64'h58b558c00ba7d9f8, 64'h2c84e9a9f8a78160 }
+    },                                                                                                 
+    '{                                                                                                 
+        '{ 64'hc8526205dbfc3e39, 64'hb8abb03d5bbad619, 64'h85a5759ae6e439f4, 64'hffa84babd42758d2, 64'hcaa35284ebdcad68 },
+        '{ 64'h0aa2ca1285592532, 64'h315c6207f5a3102f, 64'h55fcacc680212c29, 64'he144c9a5db5206d1, 64'h5dbfffad0303db45 },
+        '{ 64'h8c50ec8354c7a92a, 64'h26adb2d0d6543f45, 64'he7fc979b7e2297d4, 64'h4d5443b7e9c1be82, 64'hf1ef363f47b45b9c },
+        '{ 64'h5e4310a9b1131312, 64'h56f5145701cf7099, 64'hceb5fdda64d582b9, 64'h1cd90f1539c65902, 64'h792aabc4ed6e944a },
+        '{ 64'h22cbc4e78bcb3aed, 64'h4e17be56856b7f04, 64'hd3912119da8b15f1, 64'hc0f2b64fe11b0e0a, 64'h3224bfec7025a7f6 }
+    },
+    '{
+        '{ 64'h57d46d862b185873, 64'hcf156a294b36cd28, 64'h148db19b6f5a8c5e, 64'h4a2d8c87b3f26be7, 64'hb980ea931877205e },
+        '{ 64'h63dfc8d450891f25, 64'hf5d118539530cdfa, 64'h25e59c31ef831de0, 64'hb403ea3536e3407e, 64'he5004571f94a4e6d },
+        '{ 64'h4f6a26daa7dd7346, 64'h923851b5117d9434, 64'h4e3073a8098b7d73, 64'h1bc8c4bed3c21937, 64'ha6c9142de44552f3 },
+        '{ 64'h858394683343a964, 64'hf82f5c435f154ab3, 64'h38f2ddc4c9ce272f, 64'h4e902e0e5cebb77b, 64'hd6fb3e1b5fe34755 },
+        '{ 64'hdb56388bf3b66bb8, 64'h9bca8a232cc33f93, 64'h15761ccfb08eff6e, 64'hbe7c874407ed8147, 64'h084937ba662d2664 }
+    },
+    '{ // 27
+        '{ 64'h6240102d6df6af02, 64'h08a93dc06bd1e9b1, 64'h10fc2bd3096b266f, 64'hee089c931628a39d, 64'h7fd68c1e072d3b5b },
+        '{ 64'ha1f335db428db63d, 64'h7afd5a0c6d596d2c, 64'hb554d0e6754a41a6, 64'hea25f6296d490a69, 64'h9e38881862b21251 },
+        '{ 64'h3d39c2d2a4f68607, 64'he110c205e164a450, 64'h7122f8abf68174fd, 64'h0ec689ef14e7ed9b, 64'hd011720ffc7de56d },
+        '{ 64'h73a53f84e91e9cf8, 64'h27d9a1e8feaaecca, 64'h77d9ec7c899fa7b2, 64'he4f5f64a8b9eec15, 64'hc611c4748df382d0 },
+        '{ 64'h4534af2270de2692, 64'h8757900cc3b10b5b, 64'ha03b23602a6d1701, 64'hf859e9251a7fbb17, 64'h7f94ea27bfd1f073 }
+    },
+    '{              
+        '{ 64'h4ee6c8f5e773bac3, 64'h4423e39e784de064, 64'heee9004fff035dca, 64'hac9346f280be1396, 64'h51c071ea0b212ed3 },
+        '{ 64'h1084a9f644809276, 64'h278d20c54b5dd1a5, 64'ha7b71b181211b24e, 64'h686f9ef40ccf2504, 64'h7d1c02484c11e201 },
+        '{ 64'he0c702a6c6e1d0f3, 64'hce08068e49023340, 64'h748111e2302b3928, 64'h05db11aab4cf1519, 64'h34bedfe42675bb9c },
+        '{ 64'h08a1b45049d63f52, 64'hedadd273a4fb16fb, 64'h6d3e42a17f0847a3, 64'h9b2661f0ee6d8cc2, 64'h3c4eddc8e4e83e78 },
+        '{ 64'hcc0a7b5d777068c7, 64'hcfec11e6276ee125, 64'h7b9edb799a745df1, 64'h5039b2b9f17a91fa, 64'h024a008903e6c9e8 }
     }
 };
+
+// As the quirkies!
+localparam NUM_BURSTSP = TESTS_EACH_BURST >= 1 ? $size(expected_resultp, 1) / TESTS_EACH_BURST : 0;
+localparam VALID_TEST_COUNTP = NUM_BURSTSP * TESTS_EACH_BURST;
+
+if (NUM_BURSTSP < 1) begin
+  initial begin
+    $display("Not enough proper tests values to make even a single burst!");
+    $finish();
+  end
+end
 
 int resultp_index = 0;
 wire[63:0] resultp[5][5] = '{ rowpa, rowpb, rowpc, rowpd, rowpe };
@@ -391,14 +492,14 @@ always @(posedge clk) if(samplep) begin
   end
   $display("ResultP[%d] %t", resultp_index, $realtime);
   resultp_index++;
-  if(resultp_index == $size(expected_resultp, 1)) begin
+  if(resultp_index == VALID_TEST_COUNTP) begin
     $display("%s GOOD (PROPER)", TESTBENCH_NAME);
   end
 end
 
 bit tests_done = 1'b0;
 always_ff @(posedge clk) begin
-    tests_done <= qresult_index == $size(qexpected_result, 1) & resultp_index == $size(expected_resultp, 1);
+    tests_done <= qresult_index == QVALID_TEST_COUNT & resultp_index == VALID_TEST_COUNTP;
 end
 
 always @(posedge clk) if(tests_done) begin

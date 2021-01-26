@@ -10,7 +10,8 @@
 // Latency is ROUND_COUNT * LATENCY_EACH_ROUND, the fact last round is only partial is of little matter
 // as latency of the CHI+IOTA is typically 0.
 module sha3_iterating_semipack #(
-    ROUND_COUNT = 6
+    ROUND_COUNT = 6,
+    LAST_ROUND_IS_PROPER = 1
 ) (
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
@@ -72,12 +73,22 @@ sha3_iterable_round r6n4(
 );
 
 if (ROUND_COUNT == 6) begin : sixth
-    sha3_iterable_semiround r6n5(
-        .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
-        .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
-        .ogood(ogood), .oround(oround),
-        .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
-    );
+    if (LAST_ROUND_IS_PROPER) begin
+        sha3_iterable_round r6n5_proper(
+            .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
+            .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
+            .ogood(ogood), .oround(oround),
+            .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+        );
+    end
+    else begin
+        sha3_iterable_semiround r6n5_quirky(
+            .clk(clk), .round_index(n4round + 1'b1), .sample(n4good),
+            .isa(n4osa), .isb(n4osb), .isc(n4osc), .isd(n4osd), .ise(n4ose),
+            .ogood(ogood), .oround(oround),
+            .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+        );
+    end
 end
 else if (ROUND_COUNT == 12) begin : twelve // those could also be generated but for what it takes, they are not.
     wire[63:0] n5osa[5], n5osb[5], n5osc[5], n5osd[5], n5ose[5];
@@ -140,12 +151,22 @@ else if (ROUND_COUNT == 12) begin : twelve // those could also be generated but 
         .osa(nAosa), .osb(nAosb), .osc(nAosc), .osd(nAosd), .ose(nAose)
     );
 	
-    sha3_iterable_semiround r6nB(
-        .clk(clk), .round_index(nAround + 1'b1), .sample(nAgood),
-        .isa(nAosa), .isb(nAosb), .isc(nAosc), .isd(nAosd), .ise(nAose),
-        .ogood(ogood), .oround(oround),
-        .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
-    );
+	  if (LAST_ROUND_IS_PROPER) begin
+        sha3_iterable_round r6nB_proper(
+            .clk(clk), .round_index(nAround + 1'b1), .sample(nAgood),
+            .isa(nAosa), .isb(nAosb), .isc(nAosc), .isd(nAosd), .ise(nAose),
+            .ogood(ogood), .oround(oround),
+            .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+        );
+	  end
+	  else begin
+        sha3_iterable_semiround r6nB_quirky(
+            .clk(clk), .round_index(nAround + 1'b1), .sample(nAgood),
+            .isa(nAosa), .isb(nAosb), .isc(nAosc), .isd(nAosd), .ise(nAose),
+            .ogood(ogood), .oround(oround),
+            .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+        );
+	  end
 end
 else begin
     initial begin

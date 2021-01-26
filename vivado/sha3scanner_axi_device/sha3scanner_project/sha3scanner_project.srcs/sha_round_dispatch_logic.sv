@@ -3,13 +3,29 @@
 // As long as your SHA takes 25ulongs per clock maybe you can drive it using this common logic!
 // I could use a SV Header to pack some of the test data but I bundle everything together.
 module sha_round_dispatch_logic #(
-    TESTBENCH_NAME = "<FORGOT TO SET ME>"
+    TESTBENCH_NAME = "<FORGOT TO SET ME>",
+    // There is a major issue with the iterative hashers!
+    // To use them, you need to wait till their .gimme goes hi, then keep giving them inputs
+    // till their .gimme goes low. That happens because they start on the first clock and assume
+    // you will provide the number of consecutive inputs they expect. That is to slightly simplify
+    // logic. I could do something magic and figure out the count but for documentation reasons
+    // I want you to give the burst length explicitly. I will give only full "bursts".
+    // The fully unrolled hasher has no such issue and its burst is effectively 1.
+    TESTS_EACH_BURST = 0
 ) (
     output clock, rst, 
     output sample,
     output[63:0] rowa[5], rowb[5], rowc[5], rowd[5], rowe[5],
     input hasher_can_take
 );
+
+if (TESTS_EACH_BURST <= 0) begin
+  initial begin
+    $display("You forgot to set burst");
+    $finish();
+  end
+end
+
 
 localparam CLOCK_RATE = 100_000_000;
 localparam PERIOD = 1_000_000_000.0 / CLOCK_RATE;
@@ -31,7 +47,7 @@ initial begin
   end
 end
 
-localparam longint unsigned give[24][5][5] = '{
+localparam longint unsigned give[29][5][5] = '{
     '{
         '{ 64'hed349f06686d8027, 64'h5fe39318706f6195, 64'h3c9888ad4a48c9f1, 64'h38fa73ea4c9f9798, 64'h577448dae745d880 },
         '{ 64'h49792b67cac2f946, 64'hcd1a3fc1b41acdca, 64'hae2cd84fdb59063e, 64'h8c0234bf0c1ed004, 64'h1dafb8edafddfbeb },
@@ -53,7 +69,7 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'hccb4fe352e592924, 64'h93739e3a194fc875, 64'ha3d77419da5cbd01, 64'hb7693a190f8dd0aa, 64'h3532030c1f8bf186 },
         '{ 64'hde87ebdafe491143, 64'ha390021e6b3edef4, 64'h7a36a8e2522bb9bf, 64'h91d5dc017a64cacc, 64'hfdab3ccf6d1fa1e0 }
     },
-    '{
+    '{ // 3
         '{ 64'h0eaca5b7a796285e, 64'h271b0a52caa92b46, 64'h4c61cfa9f74fe788, 64'h2d506ec04b180d27, 64'hddd8806a187ac74b },
         '{ 64'ha2a3bcf110aab683, 64'h25516c9f66a2d9be, 64'h50f08dfea4845751, 64'ha511eba3426f03ac, 64'h30a80c5c65fe8c4f },
         '{ 64'h2e720933a0b9f102, 64'hc2edb8682756ad3f, 64'h633c63d1291568fc, 64'h5f7eefa35c3d3b2d, 64'h5a446ab2030dfd67 },
@@ -81,7 +97,7 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'hd48c982ae11f505a, 64'h9aec0701c9447ec3, 64'h2b0b097def771930, 64'h8700b4dc5222741d, 64'he23369c969a2758f },
         '{ 64'h2325d017f83d36f5, 64'h4af54cbe4c93e09b, 64'h08dc8757e7baa8e1, 64'h68e8b5f656216312, 64'h512513e770f9fcf1 }
     },
-    '{
+    '{ // 7
         '{ 64'h07da797d68c77506, 64'h60b7ef678a3b3f72, 64'h05df8b9ca207ef06, 64'ha1cfa1ee8a56fc0d, 64'haaa01228e31662c0 },
         '{ 64'h46f91f4d6d57cb4a, 64'h6ef98a0eea6aa6ed, 64'h9d62963c935db5ab, 64'h7d0c2fe42e29c7a9, 64'h4d84e4c918fbc3b8 },
         '{ 64'hc40156de5ae6f382, 64'h9f8e528ab28300f2, 64'h5258bb43d2cb89ba, 64'hd266939c93624514, 64'h06c56acdc690bd19 },
@@ -109,7 +125,7 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'hbc9a82a3f36bf05c, 64'hdb5488e7174acc1f, 64'h9a8282caa68e2d1d, 64'h0cef167da891e63e, 64'hdc07d2a9b1c0bb99 },
         '{ 64'h7023ecc5205fbe66, 64'h2feec333db480c36, 64'hf08e39f9a489f68d, 64'he4ccfe1925dcb8b1, 64'ha5cd485052616006 }
     },
-    '{
+    '{ // 11
         '{ 64'hafa7ebff763ef067, 64'hf8e87ee9d7ee0dbd, 64'h61ba714b9bbf725c, 64'h49655fa28ca3b152, 64'hd5886a6a08b90601 },
         '{ 64'h888f4a2c62b3a9c5, 64'hff3b471910a647b7, 64'hcc255699c74a2258, 64'h5cd37b46874d697a, 64'h12fe91ac71fc0c62 },
         '{ 64'h02dafcfdc3962c4e, 64'h8d597c06e7fb4ef2, 64'hb58277fefea90dfb, 64'h5fe75f636e4b90ab, 64'h148cf4b0421c600e },
@@ -137,7 +153,7 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'haec68c93cba40f02, 64'hb4f42df172c7ffe7, 64'ha29207cb262eb809, 64'h4256300e9a9ae197, 64'hd61da3c8c8c232d8 },
         '{ 64'had0c545e5f80f63f, 64'h6b5e33ce0364410d, 64'h37ec97c3135eb177, 64'h0f8c7b156f366540, 64'hd46c08fd3c85e5f1 }
     },
-    '{
+    '{ // 15
         '{ 64'h97b2b6d35c49b843, 64'h94cef6fc175719f1, 64'h52736115b1a1ffb4, 64'hcc505050ef233321, 64'h4c2c290e8a3551a2 },
         '{ 64'h59367e76d2da525e, 64'hdef4c234eeb636dc, 64'h49d71c6d79446001, 64'h285dea563889726f, 64'haf0166a1f8553851 },
         '{ 64'h708aeb20e5b0fe3f, 64'h9574df10c534da0f, 64'ha14e128a1fe57d3d, 64'hc6236de1154564c1, 64'hbf3c6edf8b209038 },
@@ -165,7 +181,7 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'h3d6c45fe5747789d, 64'h527a12f8102e21ae, 64'h423950234bb24d53, 64'h7ef64c2a6d2123b3, 64'h5a087598412e35c9 },
         '{ 64'h7b5504495194126f, 64'h7218571e1bfc31bc, 64'h42e159f530212a90, 64'h16dd07d97932666d, 64'h70575d7536784789 }
     },
-    '{
+    '{ // 19
         '{ 64'h087f4fcf67387521, 64'h3a6a1b332ddb420f, 64'h1f5b7e6c6e4c619f, 64'h4041363b2ba25e9f, 64'h00804d0168ff08b5 },
         '{ 64'h25f412bf11b74bf6, 64'h223351402cb526b3, 64'h011310955f1b3196, 64'h206d7fc202296dee, 64'h152055b750604e48 },
         '{ 64'h61583e826de72d3f, 64'h601028c2502d2695, 64'h09d5075f48d00682, 64'h76cd5b7837be434b, 64'h41f91a9d289a3517 },
@@ -193,14 +209,60 @@ localparam longint unsigned give[24][5][5] = '{
         '{ 64'h1bed78f10e4d322e, 64'h1f18016407553735, 64'h49ed34702fd36415, 64'h0e7d4a6d730e7a0e, 64'h5fdb05b877427e74 },
         '{ 64'h05dc47602f8e1503, 64'h5e1a5c22450d5473, 64'h2e3f15981b44494c, 64'h6b8003ad73bc1afc, 64'h1b67625474ef0726 }
     },
-    '{
+    '{ // 23
         '{ 64'h31d60f7a1869273e, 64'h10491d3844273453, 64'h0a5b544e13433d2b, 64'h138c3acd11d30295, 64'h7a417313700e6dfb },
         '{ 64'h540c06fc70b05637, 64'h7f2e735716a006a7, 64'h5d5a079755d03c84, 64'h2bbc6dcb4b650e6f, 64'h1c3a6ed14119724d },
         '{ 64'h13fa46c67fdd5555, 64'h33241dc035c27a67, 64'h09e978c0731912a0, 64'h1ec436e202d9442b, 64'h29ff6ed72242135a },
         '{ 64'h2a7a40955bc061f5, 64'h37a86f4d091278d2, 64'h34da579e40ab4fa5, 64'h49c016083259071a, 64'h442c71a337244921 },
         '{ 64'h471a5f1118790389, 64'h6aee2fb1528830d1, 64'h32fc411555ea233b, 64'h7c4d40b70c870621, 64'h49a057e725b7098c }
+    },
+    '{
+        '{ 64'h57c257356e34dcc2, 64'hd264544a03c85997, 64'h5dd10d1bf83bba4d, 64'hb8cdb4de869db4eb, 64'h5299e547f7c5e30b },
+        '{ 64'h38c2f02bc5d260a6, 64'h565f4d213efd8682, 64'hf8c08b1bae2847ea, 64'hb95a6f920e41dcef, 64'h2a144efc4c5dc0cf },
+        '{ 64'h6debd32740aeb103, 64'hbaea67a8d4404ea8, 64'h5445c3dbc6cdf5eb, 64'h7663fb850f730bb4, 64'hf2867513f8df10f4 },
+        '{ 64'hc050ec1ada472d68, 64'h7ed6d143e9db13b1, 64'h6139686510cf97c5, 64'h006cf2442659c24e, 64'h9a80b9734bec13fb },
+        '{ 64'haba415406699316e, 64'h86547f19e954d2c1, 64'h813d4600570c86b7, 64'h7c3454b2a3079c87, 64'h7ce4b36d3a6dacdd }
+    },
+    '{
+        '{ 64'h035197042dc68a50, 64'hd56db727ba9b5015, 64'h921c523fa32c640e, 64'h7938a38034b25387, 64'hed80461e03f9bf80 },
+        '{ 64'h9f487e4f5f877b44, 64'h5743b0d5020f4de5, 64'hefa1df8003d3dd15, 64'headbd6d12bfffad5, 64'h26aaee600ea03545 },
+        '{ 64'h14d933a9eabb0734, 64'hd2c502fe20524c85, 64'hbf03997845350ac4, 64'hf3c49c28fa829198, 64'h5dd94f179c6e8d9b },
+        '{ 64'h122d67c4f2be929e, 64'h56d73da88423d138, 64'ha5b9d0b46e4b89e7, 64'hd0c752baa4ef5470, 64'h500d3257a76fa6cb },
+        '{ 64'habb7b19323d626c0, 64'h5e73e2d6ee2c54f9, 64'ha2df2a9d4083cb57, 64'hd11bed746dc096ea, 64'h2400a2f5d3e32158 }
+    },
+    '{
+        '{ 64'h35a0681428f5db6f, 64'h2775ae6564fee7d2, 64'h1db01ee5cff2b12a, 64'h668ad3f9b2ccc67b, 64'hb58597916582936f },
+        '{ 64'h79190509b1db50e5, 64'hce287a49f3b9c98a, 64'h84b64925489cdefa, 64'hffc5ca3379b651bb, 64'h0f7d08569e616971 },
+        '{ 64'h199833e50dc8435f, 64'hd282535c21147e22, 64'h395991235b9d3bac, 64'ha912fa10d9bd923f, 64'h641fb90362c7ac08 },
+        '{ 64'h25e7d8fbcdd37f63, 64'h5abca9d9aecf338e, 64'h360ae3cf08c37543, 64'h85fafe76fe7a5f29, 64'haea712eeb7bc04b2 },
+        '{ 64'h7bfe9aca8faf34f9, 64'h978cf2c0a2206045, 64'hb06e0ec276618c0b, 64'h7ad1a3c28a98258e, 64'h2f7c05da4ff80f05 }
+    },
+    '{ // 27
+        '{ 64'haa1e82aba2351fd2, 64'h662e26e45bcc4772, 64'h0deefaba75ebe56d, 64'hf255f6618cd2de62, 64'h4aada952df8a1f39 },
+        '{ 64'h06b37aaebe443096, 64'hedaaa7d157a5773b, 64'hae39d8eb76207b0a, 64'hb2bc38b2c172d6f3, 64'h10fd9e232bb9a54b },
+        '{ 64'he026548a8ac03856, 64'h360783809093ce0f, 64'h3de0affdca0e16f5, 64'h7946d95a69a70404, 64'h926cbf558339b6ee },
+        '{ 64'hcccca1038f5dca43, 64'hfa45ebf37b3b7a54, 64'ha4acd1e220a5f72c, 64'h532e80a58a926c4d, 64'h4389ca2af2e2add7 },
+        '{ 64'hf6d2ccc18fe7143d, 64'hf359c9e0674cef16, 64'he38b8119ed23dc0b, 64'h1670a3db48386192, 64'h17c6ee54ee610ae0 }
+    },
+    '{
+        '{ 64'h4c96181581db50fd, 64'h2c9d7d92729f5390, 64'h800dbffd319591d9, 64'h86ef3860a7c1e808, 64'h4216cb18013237db },
+        '{ 64'h314c3724282ec1f8, 64'h3142815b7caadffc, 64'h11a0cc78a3bbfbb1, 64'h1017d3218d43a3b8, 64'h52c802fbc5f27178 },
+        '{ 64'hfd3a55112dcd5714, 64'h3603524b47c9aa1f, 64'h9cccfe9b55ccf551, 64'h041425ad1caa07a6, 64'hfba858cffee5f72a },
+        '{ 64'hcecbb810a9e69fc6, 64'h4ed1befdd817fc21, 64'h6d4ac095e194a03b, 64'h7b82522e6c92091e, 64'hcd6ea9b49e73a0bf },
+        '{ 64'hdcdab1e6b10d946f, 64'h36e111ce3d989cfc, 64'h593bbb83fec9aff2, 64'h17227b8b728849f6, 64'h677fff60bc658fc8 }
     }
 };
+
+
+localparam NUM_BURSTS = TESTS_EACH_BURST >= 1 ? $size(give, 1) / TESTS_EACH_BURST : 0;
+localparam VALID_TEST_COUNT = NUM_BURSTS * TESTS_EACH_BURST;
+
+if (NUM_BURSTS < 1) begin
+  initial begin
+    $display("Not enough test values to make even a single burst!");
+    $finish();
+  end
+end
 
 bit start = 1'b0, done = 1'b0;
 assign sample = start & hasher_can_take & ~done;
@@ -216,7 +278,8 @@ end
 
 initial begin
   $timeformat(-9,2," ns",14);
-  $display("testbench start %s round", TESTBENCH_NAME);
+  $display("testbench start %s round, burst is %d so dispatching %d/%d",
+           TESTBENCH_NAME, TESTS_EACH_BURST, VALID_TEST_COUNT, $size(give, 1));
   #150 // wait for GSR and other nonsense.
   reset = 0;
   #50
@@ -227,7 +290,7 @@ always @(posedge clk) if(dispatching & hasher_can_take) begin
     if(~done) begin
         if (start) begin // 1 clock sample pulse
             dispatch_index <= dispatch_index + 1;
-            done <= dispatch_index + 1 == $size(give, 1);
+            done <= dispatch_index + 1 == VALID_TEST_COUNT;
         end
         else start <= 1'b1;
     end
