@@ -27,54 +27,61 @@ module sha3_scanner #(
 );
 
 wire capture = start & ready;
-longint unsigned rowa[5], rowb[5]; // those are captured from blobby input, completely defined.
-longint unsigned rowc[2]; // only two entries in the third row are defined by block input, the others are magic or constants
+wire[31:0] scan_start;
+longint unsigned rowa[5]; // always completely captured in both formulations
 always_ff @(posedge clk) if(capture) begin
     rowa[0] <= { blobby[ 1], blobby[ 0] };
     rowa[1] <= { blobby[ 3], blobby[ 2] };
     rowa[2] <= { blobby[ 5], blobby[ 4] };
     rowa[3] <= { blobby[ 7], blobby[ 6] };
     rowa[4] <= { blobby[ 9], blobby[ 8] };
-    rowb[0] <= { blobby[11], blobby[10] };
-    rowb[1] <= { blobby[13], blobby[12] };
-    rowb[2] <= { blobby[15], blobby[14] };
-    rowb[3] <= { blobby[17], blobby[16] };
-    rowb[4] <= { blobby[19], blobby[18] };
-    rowc[0] <= { blobby[21], blobby[20] };
-    rowc[1] <= { blobby[23], blobby[22] };
 end
 
-wire[31:0] scan_start = rowc[0][63:32];
-int unsigned dispatch_iterator = 32'b0, next_nonce = 32'b0;
+int unsigned dispatch_iterator = 32'b0;
 bit buff_dispatching = 1'b0;
 always_ff @(posedge clk) if(rst) begin
     buff_dispatching <= 1'b0;
     dispatch_iterator <= 32'b0;
-    next_nonce <= 32'b0;
 end
 else begin
     if (buff_dispatching) begin
-        buff_dispatching <= dispatch_iterator < 32'hFFFFFFFF & ~found;
+        buff_dispatching <= ~dispatch_iterator[31] & ~found;
         dispatch_iterator <= dispatch_iterator + 1'b1;
-        next_nonce <= next_nonce + 1;
     end
     else begin
         buff_dispatching <= capture;
         dispatch_iterator <= 32'b0;
-        next_nonce <= scan_start;
     end
 end
 assign dispatching = buff_dispatching;
 
+int unsigned nonce_base = 32'b0;
+always_ff @(posedge clk) if(capture) nonce_base <= scan_start;
+wire[31:0] testing_nonce = nonce_base + dispatch_iterator;
 
-wire[63:0] rowc2 = {
-    32'h00000006, // this is block finalization from SHA3, it should be the whole ulong ^ 64'h00000006_00000000 but I cut it easy 
-    next_nonce
-};
+wire[63:0] rowb[5], rowc[5], rowd[5], rowe[5];
 
-localparam longint unsigned rowc_final[2] = '{ 64'h0, 64'h0 };
-localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
-localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
+if (PROPER) begin : proper
+    initial $finish();
+end
+else begin : quirky
+    assign scan_start = blobby[21];
+    longint unsigned buff_rowb[5], buff_rowc[2]; // only two entries in the third row are defined by block input, the others are magic or constants
+    always_ff @(posedge clk) if(capture) begin
+        buff_rowb[0] <= { blobby[11], blobby[10] };
+        buff_rowb[1] <= { blobby[13], blobby[12] };
+        buff_rowb[2] <= { blobby[15], blobby[14] };
+        buff_rowb[3] <= { blobby[17], blobby[16] };
+        buff_rowb[4] <= { blobby[19], blobby[18] };
+        buff_rowc[0] <= { scan_start, blobby[20] };
+        buff_rowc[1] <= { blobby[23], blobby[22] };
+    end
+    wire[63:0] rowc2 = { 32'h06, testing_nonce };
+    assign rowb = '{ buff_rowb[0], buff_rowb[1],          buff_rowb[2], buff_rowb[3], buff_rowb[4] };
+    assign rowc = '{ buff_rowc[0], buff_rowc[1],          rowc2,        64'h0,        64'h0 };
+    assign rowd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
+    assign rowe = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
+end
 
 wire resgood;
 wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
@@ -85,10 +92,7 @@ sha3 #(
 ) hasher(
     .clk(clk),
     .sample(buff_dispatching),
-    .rowa(rowa), .rowb(rowb),
-    .rowc('{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] }),
-    .rowd('{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] }),
-    .rowe('{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] }),
+    .rowa(rowa), .rowb(rowb), .rowc(rowc), .rowd(rowd), .rowe(rowe),
     .ogood(resgood),
     .oa(resa), .ob(resb), .oc(resc), .od(resd), .oe(rese)
 );
