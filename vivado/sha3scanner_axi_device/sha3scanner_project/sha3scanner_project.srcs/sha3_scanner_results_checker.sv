@@ -62,7 +62,7 @@ always @(posedge clk) if(found) begin
       end
   end
   if (nonce != expected_nonce()) begin
-        $display("Nonce differs !! FAILED !! (expected %h, found %h)", expected_nonce(), nonce);
+        $display("Iteration count differs !! FAILED !! (expected %h, found %h)", expected_nonce(), nonce);
         $fatal;
         $finish;
   end

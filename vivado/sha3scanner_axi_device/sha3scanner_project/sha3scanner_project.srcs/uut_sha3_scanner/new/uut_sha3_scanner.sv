@@ -7,7 +7,7 @@ localparam TEST_MODE = "short";
 localparam ALGO_IS_PROPER = 0;
 
 wire start;
-wire[31:0] blockTemplate[24];
+wire[31:0] blockTemplate[ALGO_IS_PROPER ? 20 : 24];
 wire[63:0] threshold;
 sha3_scanner_dispatch_logic #(
     .TESTBENCH_NAME(IMPL_NAME),

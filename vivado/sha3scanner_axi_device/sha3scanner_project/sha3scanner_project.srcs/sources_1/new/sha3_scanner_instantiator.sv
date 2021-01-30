@@ -9,7 +9,7 @@ module sha3_scanner_instantiator #(
 
     input start,
     input[63:0] threshold,
-    input[31:0] blobby[24],
+    input[31:0] blobby[PROPER ? 20 : 24],
     
     output dispatching, evaluating, ready,
     output found,
@@ -42,7 +42,8 @@ else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : small
     localparam ROUND_DEPTH = STYLE == "iterate-twice" ? 12 : 6; 
     sha3_packed_pipeline_scanner #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
-        .PIPE_ROUNDS(ROUND_DEPTH)
+        .PIPE_ROUNDS(ROUND_DEPTH),
+        .PROPER(PROPER)
     ) nice_deal (
         .clk(clk),
         .start(start), .threshold(threshold), .blockTemplate(blobby),

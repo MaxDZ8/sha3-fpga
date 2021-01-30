@@ -7,12 +7,14 @@
 //
 // No need to be performant here, the scan operation is supposed to be long-term taking over 500ms
 // so there's no point of optimizing multi-flush or all the things.
-module sha3_scanner_control(
+module sha3_scanner_control #(
+    PROPER = 1
+) (
     input clk,
     // Scan request
     input start,
     input[63:0] threshold,
-    input[31:0] blockTemplate[24],
+    input[31:0] blockTemplate[PROPER ? 20 : 24],
     
     // Results
     output ofound,
@@ -46,24 +48,28 @@ int unsigned dispatch_iterator = 32'b0, next_nonce = 32'b0;
 localparam int unsigned SCAN_LIMIT = 32'hFFFFFFFF;
 wire exhausted = dispatch_iterator == SCAN_LIMIT;
 
-longint unsigned rowa[5], rowb[5]; // those are captured from blobby input, completely defined.
-longint unsigned rowc[2]; // only two entries in the third row are defined by block input, the others are magic or constants
-wire[31:0] scan_start = rowc[0][63:32];
+longint unsigned rowa[5], rowb[5], rowc[5], rowd[5], rowe[5];
+wire[31:0] scan_start;
 
 wire[63:0] rowc2 = {
     32'h00000006, // this is block finalization from SHA3, it should be the whole ulong ^ 64'h00000006_00000000 but I cut it easy 
     next_nonce
 };
 
-localparam longint unsigned rowc_final[2] = '{ 64'h0, 64'h0 };
-localparam longint unsigned rowd_final[5] = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
-localparam longint unsigned rowe_final[5] = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
+if (PROPER) begin : proper
+    initial begin
+        $display("not implemented");
+        $finish();
+    end
+end
+else begin : quirky
+end
 
 assign feeda = '{ rowa[0], rowa[1], rowa[2], rowa[3], rowa[4] };
 assign feedb = '{ rowb[0], rowb[1], rowb[2], rowb[3], rowb[4] };
-assign feedc = '{ rowc[0], rowc[1], rowc2, rowc_final[0], rowc_final[1] };
-assign feedd = '{ rowd_final[0], rowd_final[1], rowd_final[2], rowd_final[3], rowd_final[4] };
-assign feede = '{ rowe_final[0], rowe_final[1], rowe_final[2], rowe_final[3], rowe_final[4] };
+assign feedc = '{ rowc[0], rowc[1], rowc2, 64'h0, 64'h0 };
+assign feedd = '{ 64'h0, 64'h80000000_00000000, 64'h0, 64'h0, 64'h0 };
+assign feede = '{ 64'h0, 64'h0, 64'h0, 64'h0, 64'h0 };
 
 bit buff_found = 1'b0;
 int unsigned good_scan = 32'b0;
@@ -89,7 +95,7 @@ always_ff @(posedge clk) case(state)
         rowb[4] <= { blockTemplate[19], blockTemplate[18] };
         rowc[0] <= { blockTemplate[21], blockTemplate[20] };
         rowc[1] <= { blockTemplate[23], blockTemplate[22] };
-        next_nonce <= scan_start;
+        next_nonce <= rowc[0][63:32]; // scan_start
         dispatch_iterator <= 1'b0;
         state <= s_dispatching;
     end
