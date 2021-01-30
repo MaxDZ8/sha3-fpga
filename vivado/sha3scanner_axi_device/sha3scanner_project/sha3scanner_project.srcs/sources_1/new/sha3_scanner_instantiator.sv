@@ -2,7 +2,8 @@
 
 module sha3_scanner_instantiator #(
     STYLE = "fully-unrolled-fully-parallel",
-    FEEDBACK_MUX_STYLE = "fabric"
+    FEEDBACK_MUX_STYLE = "fabric",
+    PROPER = 1
 ) (
     input clk, rst,
 
@@ -22,7 +23,8 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
       .CHI_MODIFY_STYLE("basic"),
       .IOTA_STYLE("basic"),
-      .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
+      .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011),
+      .PROPER(PROPER)
     ) scanner(
       .clk(clk), .rst(rst),
       .ready(ready),

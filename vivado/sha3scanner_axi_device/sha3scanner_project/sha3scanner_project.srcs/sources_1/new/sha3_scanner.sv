@@ -4,17 +4,22 @@ module sha3_scanner #(
     THETA_UPDATE_BY_DSP = 24'b0010_0010_0010_0010_0010_0010,
     CHI_MODIFY_STYLE = "basic",
     IOTA_STYLE = "basic",
-    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111
+    ROUND_OUTPUT_BUFFERED = 24'b1111_1111_1111_1111_1111_1111,
+    PROPER = 1,
+    localparam ULONG_COUNT = PROPER ? 10 : 12
 )(
     input clk, rst,
     input start,
     
     // "Difficulty"
     input[63:0] threshold,
-    // Builds 12 ulongs where the i-th ulong is { blobby[i*2 + 1], blobby[i * 2] }
-    // blobby[20] is special: start nonce
-    // Only a part of the inital state is to be provided, the other bits are built internally (and most are constant anyway)
-	  input[31:0] blobby[24],
+    /*
+    When PROPER: 20 uints, last one being the nonce to start testing.
+    When NOT proper (see cpu miner) the nonce goes in ulong[12] instead, blobby[20] is the start nonce (would need to be further tested).
+    In both cases = ul the i-th ulong is { blobby[i*2 + 1], blobby[i * 2] }.
+    Only a part of the inital state is to be provided, the other bits are built internally (and most are constant anyway)
+    */
+	  input[31:0] blobby[ULONG_COUNT * 2],
 	  
 	  output dispatching, evaluating, found, ready,
 	  output[31:0] nonce,
@@ -75,7 +80,8 @@ wire resgood;
 wire[63:0] resa[5], resb[5], resc[5], resd[5], rese[5];
 sha3 #(
     .THETA_UPDATE_BY_DSP(THETA_UPDATE_BY_DSP),
-    .ROUND_OUTPUT_BUFFERED(ROUND_OUTPUT_BUFFERED)
+    .ROUND_OUTPUT_BUFFERED(ROUND_OUTPUT_BUFFERED),
+    .LAST_ROUND_IS_PROPER(PROPER)
 ) hasher(
     .clk(clk),
     .sample(buff_dispatching),
