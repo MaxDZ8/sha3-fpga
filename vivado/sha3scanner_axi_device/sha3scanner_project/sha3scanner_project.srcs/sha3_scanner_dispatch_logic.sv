@@ -41,16 +41,15 @@ else begin : quirky
     assign blockTemplate = '{
         32'h00100000, 32'h00100001, 32'h00100002, 32'h00100003, 32'h00100004, 32'h00100005, 32'h00100006, 32'h00100007,
         32'h00100008, 32'h00100009, 32'h0010000a, 32'h0010000b, 32'h0010000c, 32'h0010000d, 32'h0010000e, 32'h0010000f,
-        32'h00100010, 32'h00100011, 32'h00100012, 32'h00100013, 32'h00100014, 32'h00000000, 32'h00100016, 32'h00100017
+        32'h00100010, 32'h00100011, 32'h00100012, 32'h00100013, 32'h00100014, 32'hAABBCCDD, 32'h00100016, 32'h00100017
     };
     
     // In legacy miners this is usually work->target[6,7]. They are two uints, loaded as an ulong.
     // Now if each uint is assigned 64*1024*1024 + 1024+i you get those magic values.
-    // This will find a nonce in 56 scans.
     localparam longint unsigned short_threshold = 64'h0400040704000406;
     
-    // A lower difficulty results in less nonces found. Here you will need to scan the above block template
-    // until testing nonce 61855. It's quite excessive for behavioural simulation.
+    // A lower difficulty results in less nonces found.
+    // This one is quite excessive for behavioural simulation.
     localparam longint unsigned long_threshold = 64'h0005000000060000;
     
     assign threshold = TEST_MODE == "short" ? short_threshold : long_threshold;
