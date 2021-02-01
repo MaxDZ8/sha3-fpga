@@ -27,10 +27,20 @@ end
 assign clk = buff_clk;
 
 if (ALGO_IS_PROPER) begin : proper
-    initial begin
-        $display("TODO");
-        $finish();
-    end
+    localparam nonce_start = TEST_MODE == "short" ? 32'h1e10d000 : 32'h1e10C000;
+
+    // If you go look at the GPU kernel, it only fetches 19+1 uints where the last one is the nonce start.
+    assign blockTemplate = '{
+        32'h00000070, 32'h4d5c94fa, 32'hf2dc3b6e, 32'h57069e42,
+        32'he7b48c73, 32'h6c2471da, 32'hd69e779d, 32'h00032e97,
+        32'h00000000, 32'h23adc802, 32'ha558645e, 32'h13a7dcac,
+        32'h737b1f25, 32'h79d0fe95, 32'hbe43f179, 32'hf2a4b940,
+        32'h46a96d71, 32'h600c4a1e, 32'h1b061d8d, nonce_start // note: legacy find nonce f7d2101e
+    };
+    
+    // Note GPU kernel works at fixed difficulty instead and then discards host-side.
+    // Fixed difficulty is quite sensible for fixed hardware, which GPUs are not.
+    assign threshold = 64'h0000007f_ff800000;
 end
 else begin : quirky
     // This represents a work->data from legacy miners, where it is usually uint[48].

@@ -62,7 +62,21 @@ wire[31:0] testing_nonce = nonce_base + dispatch_iterator;
 wire[63:0] rowb[5], rowc[5], rowd[5], rowe[5];
 
 if (PROPER) begin : proper
-    initial $finish();
+    assign scan_start = blobby[19];
+    longint unsigned buff_rowb[4]; // the last entry is magic
+    int unsigned lorowblast = 32'b0;
+    always_ff @(posedge clk) if(capture) begin
+        buff_rowb[0] <= { blobby[11], blobby[10] };
+        buff_rowb[1] <= { blobby[13], blobby[12] };
+        buff_rowb[2] <= { blobby[15], blobby[14] };
+        buff_rowb[3] <= { blobby[17], blobby[16] };
+        lorowblast   <=               blobby[18];
+    end
+    wire[63:0] rowb4 = { testing_nonce, lorowblast };
+    assign rowb = '{ buff_rowb[0], buff_rowb[1],         buff_rowb[2], buff_rowb[3], rowb4 };
+    assign rowc = '{ 64'h1,        64'h0,                64'h0,        64'h0,        64'h0 };
+    assign rowd = '{ 64'h0,        64'h8000000000000000, 64'h0,        64'h0,        64'h0 };
+    assign rowe = '{ 64'h0,        64'h0,                64'h0,        64'h0,        64'h0 };
 end
 else begin : quirky
     assign scan_start = blobby[21];
@@ -98,11 +112,15 @@ sha3 #(
 );
 
 assign evaluating = resgood;
-wire[63:0] hash_diff = {
-    resa[0][7:0], resa[0][15:8], resa[0][23:16], resa[0][31:24], resa[0][39:32],
-    resa[0][47:40], resa[0][55:48], resa[0][63:56]
+
+
+wire[63:0] hash_diff;
+if (PROPER) assign hash_diff = resa[3];
+else assign hash_diff = {
+    resa[0][ 7: 0], resa[0][15: 8], resa[0][23:16], resa[0][31:24],
+    resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:56]
 };
-wire good_enough = evaluating & $unsigned(hash_diff) < $unsigned(threshold);
+wire good_enough = evaluating & ($unsigned(hash_diff) <= $unsigned(threshold));
 
 int unsigned result_iterator = 32'b0;
 bit buff_found = 1'b0;

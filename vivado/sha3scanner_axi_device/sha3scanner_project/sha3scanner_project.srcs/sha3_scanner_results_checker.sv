@@ -15,10 +15,17 @@ module sha3_scanner_results_checker #(
 wire[63:0] short_hash[25], long_hash[25];
 wire[63:0] short_nonce, long_nonce;
 if (ALGO_IS_PROPER) begin : proper
-    initial begin
-        $display("TODO");
-        $finish();
-    end
+    assign long_hash = short_hash;
+    assign short_hash = '{
+        64'haf663c81a9f64ac3, 64'h4c737583a552e7f8, 64'he3241e44a23df27d, 64'h0000000f455464ff, 64'h2b2d678b4ebdb872,
+        64'h11e761d6f3168a33, 64'h0dd111cd88c8bbb2, 64'h75042e9f10334d08, 64'h55c1c0e59aa16039, 64'hc9a8409441eaf85c,
+        64'h7d9c9d9ee3944f71, 64'h4c9ae0e4108e7ec7, 64'hc0e35fcffe758785, 64'h7a62180ce43b0816, 64'h6e410469e92fd8d0,
+        64'h8bd129598c7c888e, 64'hee9b2eb17ecc6716, 64'h2e4a90cc95107595, 64'h0817edbb38700206, 64'hc20e3131066556cd,
+        64'h76f6d7d0bee67ae8, 64'hfd56c054fbde825b, 64'hf1447e15b5e39a6b, 64'hbd81ace034fe57bc, 64'h75d361750387009b
+    };
+    
+    assign short_nonce = 32'h02f7;
+    assign long_nonce = 32'h12f7;
 end
 else begin : quirky
     assign short_hash = '{

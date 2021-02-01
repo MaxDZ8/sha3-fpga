@@ -4,7 +4,7 @@ module uut_sha3_scanner();
 
 localparam IMPL_NAME = "SHA3 scanner (fully pipelined and parallel)";
 localparam TEST_MODE = "short";
-localparam ALGO_IS_PROPER = 0;
+localparam ALGO_IS_PROPER = 1;
 
 wire start;
 wire[31:0] blockTemplate[ALGO_IS_PROPER ? 20 : 24];
