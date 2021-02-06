@@ -5,7 +5,7 @@ module uut_sha3_packed12_scanner();
 localparam IMPL_NAME = "SHA3 scanner (packed by 12)";
 localparam TEST_MODE = "short";
 localparam FEEDBACK_MUX_STYLE = "fabric";
-localparam ALGO_IS_PROPER = 0;
+localparam ALGO_IS_PROPER = 1;
 
 wire start;
 wire[31:0] blockTemplate[ALGO_IS_PROPER ? 20 : 24];
