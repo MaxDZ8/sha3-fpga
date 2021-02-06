@@ -5,6 +5,7 @@
 		// Users to add parameters here
 		parameter STYLE = "fully-unrolled-fully-parallel",
 		parameter FEEDBACK_MUX_STYLE = "fabric",
+		parameter PROPER_SHA3 = 1,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -712,16 +713,38 @@
 	wire start = idle & writing_control;
 	wire[63:0] wide_hash[25];
 	
+	wire[31:0] into_scanner[PROPER_SHA3 ? 20 : 24];
+	if (PROPER_SHA3) begin : proper 
+	    assign into_scanner = '{
+	        blktemplate[ 0], blktemplate[ 1], blktemplate[ 2], blktemplate[ 3],
+	        blktemplate[ 4], blktemplate[ 5], blktemplate[ 6], blktemplate[ 7],
+	        blktemplate[ 8], blktemplate[ 9], blktemplate[10], blktemplate[11],
+	        blktemplate[12], blktemplate[13], blktemplate[14], blktemplate[15],
+	        blktemplate[16], blktemplate[17], blktemplate[18], blktemplate[19]
+	    };
+	end
+	else begin : quirky
+	    assign into_scanner = '{
+          blktemplate[ 0], blktemplate[ 1], blktemplate[ 2], blktemplate[ 3],
+          blktemplate[ 4], blktemplate[ 5], blktemplate[ 6], blktemplate[ 7],
+          blktemplate[ 8], blktemplate[ 9], blktemplate[10], blktemplate[11],
+          blktemplate[12], blktemplate[13], blktemplate[14], blktemplate[15],
+          blktemplate[16], blktemplate[17], blktemplate[18], blktemplate[19],
+          blktemplate[20], blktemplate[21], blktemplate[22], blktemplate[23]
+      };
+  end
+	
 	sha3_scanner_instantiator #(
 	    .STYLE(STYLE),
-	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
+	    .PROPER(PROPER_SHA3)
 	) thing (
       .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
       .ready(idle),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
       .threshold(threshold),
       
-      .blobby(blktemplate),  .nonce(promising_nonce),
+      .blobby(into_scanner),  .nonce(promising_nonce),
       .hash(wide_hash)
 	);
 	
