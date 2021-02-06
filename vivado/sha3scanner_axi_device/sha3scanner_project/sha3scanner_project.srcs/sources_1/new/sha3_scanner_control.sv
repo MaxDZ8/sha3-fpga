@@ -81,10 +81,19 @@ always_ff @(posedge clk) if(capture) nonce_base <= scan_start;
 wire[31:0] testing_nonce = nonce_base + dispatch_iterator;
 
 if (PROPER) begin : proper
-    initial begin
-        $display("not implemented");
-        $finish();
+    assign scan_start = blockTemplate[19];
+    longint unsigned buff_rowb[4]; // the last entry is magic
+    int unsigned lorowblast = 32'b0;
+    always_ff @(posedge clk) if(capture) begin
+        buff_rowb[0] <= { blockTemplate[11], blockTemplate[10] };
+        buff_rowb[1] <= { blockTemplate[13], blockTemplate[12] };
+        buff_rowb[2] <= { blockTemplate[15], blockTemplate[14] };
+        buff_rowb[3] <= { blockTemplate[17], blockTemplate[16] };
+        lorowblast   <=                      blockTemplate[18];
     end
+    wire[63:0] rowb4 = { testing_nonce, lorowblast };
+    assign feedb = '{ buff_rowb[0], buff_rowb[1],         buff_rowb[2], buff_rowb[3], rowb4 };
+    assign feedc = '{ 64'h1,        64'h0,                64'h0,        64'h0,        64'h0 };
 end
 else begin : quirky
     assign scan_start = blockTemplate[21];
@@ -101,9 +110,9 @@ else begin : quirky
     wire[63:0] rowc2 = { 32'h06, testing_nonce };
     assign feedb = '{ buff_rowb[0], buff_rowb[1],          buff_rowb[2], buff_rowb[3], buff_rowb[4] };
     assign feedc = '{ buff_rowc[0], buff_rowc[1],          rowc2,        64'h0,        64'h0 };
-    assign feedd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
-    assign feede = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
 end
+assign feedd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
+assign feede = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
 
 bit buff_found = 1'b0;
 int unsigned good_scan = 32'b0;
@@ -121,13 +130,13 @@ always_ff @(posedge clk) begin
     else if(~hash_observed) hash_observed <= hashgood;
 end
 
-// The real deal. Mangle the results and select a good hash.
-// Takes some extra care as we must reboot on need!
-wire[63:0] hash_diff = {
+wire[63:0] hash_diff;
+if (PROPER) assign hash_diff = hasha[3];
+else assign hash_diff = {
     hasha[0][ 7: 0], hasha[0][15: 8], hasha[0][23:16], hasha[0][31:24],
     hasha[0][39:32], hasha[0][47:40], hasha[0][55:48], hasha[0][63:56]
 };
-wire good_enough = hashgood & ($unsigned(hash_diff) < $unsigned(threshold));
+wire good_enough = hashgood & ($unsigned(hash_diff) <= $unsigned(threshold));
 
 int unsigned result_iter = 32'b0;
 
