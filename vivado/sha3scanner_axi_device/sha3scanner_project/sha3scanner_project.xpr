@@ -93,217 +93,217 @@
       <File Path="$PPRDIR/../sha3scanner_0.1/component.xml">
         <FileInfo SFType="IPXACT"/>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_round_function.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_round_function.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_theta.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_theta.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_iota.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_iota.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_chi.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_chi.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_rho_pi.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_rho_pi.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_theta_elts.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_theta_elts.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_state_delayer.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_state_delayer.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_theta_updater.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_theta_updater.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_state_capture.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_state_capture.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_finalizer.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_finalizer.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_scanner.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_scanner.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_state_slice_to_48.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_state_slice_to_48.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_state_merge_from_48.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_state_merge_from_48.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/inferred_dsp48_xor.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/inferred_dsp48_xor.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_elts_slice_to_48.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_elts_slice_to_48.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/instantiated_dsp48_xor.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/instantiated_dsp48_xor.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterable_iota.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterable_iota.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterable_round.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterable_round.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterating_pipe6.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterating_pipe6.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/mux1600.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/mux1600.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterable_semiround.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterable_semiround.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_generic_round_second_half.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_generic_round_second_half.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_packed_pipeline_scanner.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_packed_pipeline_scanner.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_scanner_control.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_scanner_control.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_scanner_instantiator.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_scanner_instantiator.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/mux1600_by_dsp48.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/mux1600_by_dsp48.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_state_vector_to_48.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_state_vector_to_48.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/sha3_merge_48x34_into_64x25.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/sha3_merge_48x34_into_64x25.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterating_pipe12.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterating_pipe12.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
           <Attr Name="UsedIn" Val="simulation"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/new/iterable/sha3_iterative_semipack.sv">
+      <File Path="$PPRDIR/../sha3scanner_0.1/hdl/iterable/sha3_iterative_semipack.sv">
         <FileInfo>
           <Attr Name="UsedIn" Val="synthesis"/>
           <Attr Name="UsedIn" Val="implementation"/>
