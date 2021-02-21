@@ -3,7 +3,7 @@
   <spirit:vendor>Maxdz8</spirit:vendor>
   <spirit:library>crypto</spirit:library>
   <spirit:name>sha3scanner</spirit:name>
-  <spirit:version>0.7</spirit:version>
+  <spirit:version>0.10</spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
       <spirit:name>S00_AXI</spirit:name>
@@ -255,38 +255,6 @@
   <spirit:model>
     <spirit:views>
       <spirit:view>
-        <spirit:name>xilinx_verilogsynthesis</spirit:name>
-        <spirit:displayName>Verilog Synthesis</spirit:displayName>
-        <spirit:envIdentifier>verilogSource:vivado.xilinx.com:synthesis</spirit:envIdentifier>
-        <spirit:language>verilog</spirit:language>
-        <spirit:modelName>sha3scanner_v0_1</spirit:modelName>
-        <spirit:fileSetRef>
-          <spirit:localName>xilinx_verilogsynthesis_view_fileset</spirit:localName>
-        </spirit:fileSetRef>
-        <spirit:parameters>
-          <spirit:parameter>
-            <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>482ff740</spirit:value>
-          </spirit:parameter>
-        </spirit:parameters>
-      </spirit:view>
-      <spirit:view>
-        <spirit:name>xilinx_verilogbehavioralsimulation</spirit:name>
-        <spirit:displayName>Verilog Simulation</spirit:displayName>
-        <spirit:envIdentifier>verilogSource:vivado.xilinx.com:simulation</spirit:envIdentifier>
-        <spirit:language>verilog</spirit:language>
-        <spirit:modelName>sha3scanner_v0_1</spirit:modelName>
-        <spirit:fileSetRef>
-          <spirit:localName>xilinx_verilogbehavioralsimulation_view_fileset</spirit:localName>
-        </spirit:fileSetRef>
-        <spirit:parameters>
-          <spirit:parameter>
-            <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>482ff740</spirit:value>
-          </spirit:parameter>
-        </spirit:parameters>
-      </spirit:view>
-      <spirit:view>
         <spirit:name>xilinx_softwaredriver</spirit:name>
         <spirit:displayName>Software Driver</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:sw.driver</spirit:envIdentifier>
@@ -310,7 +278,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>57940030</spirit:value>
+            <spirit:value>3170189f</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -329,17 +297,32 @@
         </spirit:parameters>
       </spirit:view>
       <spirit:view>
+        <spirit:name>xilinx_verilogsynthesis</spirit:name>
+        <spirit:displayName>Verilog Synthesis</spirit:displayName>
+        <spirit:envIdentifier>verilogSource:vivado.xilinx.com:synthesis</spirit:envIdentifier>
+        <spirit:language>verilog</spirit:language>
+        <spirit:modelName>sha3scanner_v0_1</spirit:modelName>
+        <spirit:fileSetRef>
+          <spirit:localName>xilinx_verilogsynthesis_view_fileset</spirit:localName>
+        </spirit:fileSetRef>
+        <spirit:parameters>
+          <spirit:parameter>
+            <spirit:name>viewChecksum</spirit:name>
+            <spirit:value>fd2313a8</spirit:value>
+          </spirit:parameter>
+        </spirit:parameters>
+      </spirit:view>
+      <spirit:view>
         <spirit:name>xilinx_testbench</spirit:name>
         <spirit:displayName>Test Bench</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:simulation.testbench</spirit:envIdentifier>
-        <spirit:modelName>uut_sha3_packed12_scanner</spirit:modelName>
         <spirit:fileSetRef>
           <spirit:localName>xilinx_testbench_view_fileset</spirit:localName>
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>f0cdb18d</spirit:value>
+            <spirit:value>27bd5f41</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -353,7 +336,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -366,7 +348,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -379,7 +360,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -392,7 +372,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -405,7 +384,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -418,7 +396,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -435,7 +412,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -452,7 +428,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -465,7 +440,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -478,7 +452,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -495,7 +468,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -512,7 +484,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -525,7 +496,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -538,7 +508,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -555,7 +524,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -568,7 +536,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -581,7 +548,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -598,7 +564,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -615,7 +580,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -628,7 +592,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -641,7 +604,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -658,7 +620,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -675,7 +636,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -688,7 +648,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -701,7 +660,6 @@
             <spirit:wireTypeDef>
               <spirit:typeName>wire</spirit:typeName>
               <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
-              <spirit:viewNameRef>xilinx_verilogbehavioralsimulation</spirit:viewNameRef>
             </spirit:wireTypeDef>
           </spirit:wireTypeDefs>
         </spirit:wire>
@@ -730,6 +688,11 @@
         <spirit:displayName>Feedback Mux Style</spirit:displayName>
         <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.FEEDBACK_MUX_STYLE">fabric</spirit:value>
       </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>PROPER_SHA3</spirit:name>
+        <spirit:displayName>Proper Sha3</spirit:displayName>
+        <spirit:value spirit:format="long" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.PROPER_SHA3">1</spirit:value>
+      </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
   <spirit:choices>
@@ -738,10 +701,9 @@
       <spirit:enumeration>32</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
-      <spirit:name>choice_list_9c9b60ee</spirit:name>
-      <spirit:enumeration>fully-unrolled-fully-parallel</spirit:enumeration>
-      <spirit:enumeration>iterate-four-times</spirit:enumeration>
-      <spirit:enumeration>iterate-twice</spirit:enumeration>
+      <spirit:name>choice_list_8af5a703</spirit:name>
+      <spirit:enumeration>0</spirit:enumeration>
+      <spirit:enumeration>1</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
       <spirit:name>choice_list_9d8b0d81</spirit:name>
@@ -754,283 +716,18 @@
       <spirit:enumeration>DSP</spirit:enumeration>
     </spirit:choice>
     <spirit:choice>
+      <spirit:name>choice_list_eb23cdf6</spirit:name>
+      <spirit:enumeration>fully-unrolled-fully-parallel</spirit:enumeration>
+      <spirit:enumeration>iterate-four-times</spirit:enumeration>
+      <spirit:enumeration>iterate-twice</spirit:enumeration>
+    </spirit:choice>
+    <spirit:choice>
       <spirit:name>choice_pairs_ce1226b1</spirit:name>
       <spirit:enumeration spirit:text="true">1</spirit:enumeration>
       <spirit:enumeration spirit:text="false">0</spirit:enumeration>
     </spirit:choice>
   </spirit:choices>
   <spirit:fileSets>
-    <spirit:fileSet>
-      <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>hdl/sha3scanner_v0_1_S00_AXI.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/sha3scanner_v0_1.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_round_function.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_iota.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_chi.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_rho_pi.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_elts.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_delayer.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_updater.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_capture.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_finalizer.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_slice_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_merge_from_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/inferred_dsp48_xor.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_elts_slice_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/instantiated_dsp48_xor.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_iota.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_round.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe6.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_semiround.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_generic_round_second_half.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_packed_pipeline_scanner.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_control.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_instantiator.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600_by_dsp48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_vector_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_merge_48x34_into_64x25.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe12.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterative_semipack.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_d95b6f1a</spirit:userFileType>
-      </spirit:file>
-    </spirit:fileSet>
-    <spirit:fileSet>
-      <spirit:name>xilinx_verilogbehavioralsimulation_view_fileset</spirit:name>
-      <spirit:file>
-        <spirit:name>hdl/sha3scanner_v0_1_S00_AXI.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>hdl/sha3scanner_v0_1.v</spirit:name>
-        <spirit:fileType>verilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_round_function.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_iota.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_chi.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_rho_pi.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_elts.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_delayer.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_theta_updater.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_capture.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_finalizer.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_slice_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_merge_from_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/inferred_dsp48_xor.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_elts_slice_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/instantiated_dsp48_xor.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_iota.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_round.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe6.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterable_semiround.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_generic_round_second_half.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_packed_pipeline_scanner.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_control.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_scanner_instantiator.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/mux1600_by_dsp48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_state_vector_to_48.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/sha3_merge_48x34_into_64x25.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterating_pipe12.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-      <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/sources_1/new/iterable/sha3_iterative_semipack.sv</spirit:name>
-        <spirit:fileType>systemVerilogSource</spirit:fileType>
-      </spirit:file>
-    </spirit:fileSet>
     <spirit:fileSet>
       <spirit:name>xilinx_softwaredriver_view_fileset</spirit:name>
       <spirit:file>
@@ -1066,9 +763,9 @@
     <spirit:fileSet>
       <spirit:name>xilinx_xpgui_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>xgui/sha3scanner_v0_7.tcl</spirit:name>
+        <spirit:name>xgui/sha3scanner_v0_10.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_57940030</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_3170189f</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -1080,9 +777,145 @@
       </spirit:file>
     </spirit:fileSet>
     <spirit:fileSet>
+      <spirit:name>xilinx_verilogsynthesis_view_fileset</spirit:name>
+      <spirit:file>
+        <spirit:name>hdl/sha3scanner_v0_1.v</spirit:name>
+        <spirit:fileType>verilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/instantiated_dsp48_xor.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterable_iota.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_state_delayer.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterative_semipack.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_state_merge_from_48.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_theta.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_theta_elts.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3scanner_v0_1_S00_AXI.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_scanner.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterating_pipe6.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterable_semiround.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_chi.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_round_function.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_finalizer.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_rho_pi.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_merge_48x34_into_64x25.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/mux1600_by_dsp48.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_iota.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_theta_updater.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_scanner_instantiator.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_scanner_control.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/mux1600.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterating_pipe12.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_generic_round_second_half.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_state_capture.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/inferred_dsp48_xor.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/iterable/sha3_iterable_round.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_state_slice_to_48.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_state_vector_to_48.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_packed_pipeline_scanner.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>hdl/sha3_elts_slice_to_48.sv</spirit:name>
+        <spirit:fileType>systemVerilogSource</spirit:fileType>
+        <spirit:userFileType>CHECKSUM_001ccf75</spirit:userFileType>
+      </spirit:file>
+    </spirit:fileSet>
+    <spirit:fileSet>
       <spirit:name>xilinx_testbench_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/uut_sha3_packed12_scanner/new/uut_sha3_packed12_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/uut_sha3_packed6_scanner/new/uut_sha3_packed6_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
@@ -1102,9 +935,14 @@
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
         <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
       </spirit:file>
+      <spirit:file>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed6_scanner_behav.wcfg</spirit:name>
+        <spirit:fileType>unknown</spirit:fileType>
+        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
+      </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
-  <spirit:description>Give me a block template (24 uints, last being start nonce) and a difficulty (64 bit) I will look for something good enough!</spirit:description>
+  <spirit:description>Give me a block template (20 or 24 uints, last being start nonce) and a difficulty (64 bit) I will look for something good enough!</spirit:description>
   <spirit:parameters>
     <spirit:parameter>
       <spirit:name>C_S00_AXI_DATA_WIDTH</spirit:name>
@@ -1163,12 +1001,17 @@
     <spirit:parameter>
       <spirit:name>STYLE</spirit:name>
       <spirit:displayName>Style</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.STYLE" spirit:choiceRef="choice_list_9c9b60ee">fully-unrolled-fully-parallel</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.STYLE" spirit:choiceRef="choice_list_eb23cdf6">fully-unrolled-fully-parallel</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>FEEDBACK_MUX_STYLE</spirit:name>
       <spirit:displayName>Feedback Mux Style</spirit:displayName>
       <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.FEEDBACK_MUX_STYLE" spirit:choiceRef="choice_list_d7a88b39">fabric</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>PROPER_SHA3</spirit:name>
+      <spirit:displayName>Proper Sha3</spirit:displayName>
+      <spirit:value spirit:format="long" spirit:resolve="user" spirit:id="PARAM_VALUE.PROPER_SHA3" spirit:choiceRef="choice_list_8af5a703">1</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -1180,8 +1023,11 @@
         <xilinx:taxonomy>AXI_Peripheral</xilinx:taxonomy>
       </xilinx:taxonomies>
       <xilinx:displayName>sha3scanner</xilinx:displayName>
-      <xilinx:coreRevision>11</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2020-12-24T18:46:55Z</xilinx:coreCreationDateTime>
+      <xilinx:xpmLibraries>
+        <xilinx:xpmLibrary>XPM_FIFO</xilinx:xpmLibrary>
+      </xilinx:xpmLibraries>
+      <xilinx:coreRevision>15</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2021-02-20T11:42:50Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@68853ec7_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@c4c11c5_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
@@ -1309,16 +1155,117 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@6acfb8d3_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@145eefe0_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@229283c9_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d7d268e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a6eb132_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7657a7bc_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@65687caf_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@363946a7_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@275b7c29_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3508d87b_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1abd8467_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e247518_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@301b0037_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2dd87354_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4e8c8c6_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1afe4e82_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7a30d2fc_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2745744f_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b3f04d1_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@18c00bda_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5cf1c85a_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@11016a90_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5045f9b7_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@dee125a_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@195651ca_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@43dab34e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@cc62716_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@50f15db9_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6995c52b_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37033a61_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4fa41c65_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7e3f31f0_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2ad12920_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37467bb_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@152b3815_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@47ede374_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@19f24e4f_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@697f5d2a_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c967e8e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3fbbc0a1_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f36b9c4_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37d14165_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@52470ba4_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5b0b42e8_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@73b3de22_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3ea1a47b_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4ad8266f_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1dc73eef_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6896218b_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@901af49_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@b3a3176_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@410f430e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@67139a2_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@764af229_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1e08af41_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5443499d_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ab0464e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6716e866_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@634b9344_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c70bc50_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5d9562b0_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@e095ee8_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2cb30945_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@21739042_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a4dc7c3_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6b3f50c5_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7f83e7f7_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@30037218_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@44b037d6_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@11cc72ec_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c24f252_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3deb71a3_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@414d0838_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2056dd43_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@79a3485a_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@28d4ce71_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@170327f6_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@614587bb_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@375ccdec_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46b85ac6_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7157cbfc_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7afce5d4_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@404f11fe_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@61f228c8_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3f395a7e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2f4b6f7e_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@8eb3a31_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@46646586_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1025ec5_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5ca4c878_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@741b7645_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c999141_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@1406a9b9_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7ca03bab_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@aa91e56_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2acf0e2c_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6a609552_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2a50d106_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4a449710_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37008e96_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@413e702c_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49504abd_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7d8ac56f_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@24cbff0_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
-      <xilinx:xilinxVersion>2019.2</xilinx:xilinxVersion>
+      <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="dff63b1d"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="b9130b9b"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="931ee0ca"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="e5a48efe"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="30e24b7a"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="236e1ed3"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="74791006"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="d03b57bf"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="8e4abd73"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

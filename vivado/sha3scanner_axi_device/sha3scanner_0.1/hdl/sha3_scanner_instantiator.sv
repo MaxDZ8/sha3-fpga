@@ -2,13 +2,14 @@
 
 module sha3_scanner_instantiator #(
     STYLE = "fully-unrolled-fully-parallel",
-    FEEDBACK_MUX_STYLE = "fabric"
+    FEEDBACK_MUX_STYLE = "fabric",
+    PROPER = 1
 ) (
     input clk, rst,
 
     input start,
     input[63:0] threshold,
-    input[31:0] blobby[24],
+    input[31:0] blobby[PROPER ? 20 : 24],
     
     output dispatching, evaluating, ready,
     output found,
@@ -22,7 +23,8 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .THETA_UPDATE_BY_DSP(24'b0000_1000_0001_0000_0001_0000),
       .CHI_MODIFY_STYLE("basic"),
       .IOTA_STYLE("basic"),
-      .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011)
+      .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011),
+      .PROPER(PROPER)
     ) scanner(
       .clk(clk), .rst(rst),
       .ready(ready),
@@ -40,7 +42,8 @@ else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : small
     localparam ROUND_DEPTH = STYLE == "iterate-twice" ? 12 : 6; 
     sha3_packed_pipeline_scanner #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
-        .PIPE_ROUNDS(ROUND_DEPTH)
+        .PIPE_ROUNDS(ROUND_DEPTH),
+        .PROPER(PROPER)
     ) nice_deal (
         .clk(clk),
         .start(start), .threshold(threshold), .blockTemplate(blobby),

@@ -7,6 +7,7 @@
 
 		parameter STYLE = "fully-unrolled-fully-parallel",
 		parameter FEEDBACK_MUX_STYLE = "fabric",
+		parameter PROPER_SHA3 = 1,
 
 		// User parameters ends
 		// Do not modify the parameters beyond this line
@@ -62,6 +63,8 @@
 	sha3scanner_v0_1_S00_AXI # (
 	  .STYLE(STYLE),
 	  .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
+	  .PROPER_SHA3(PROPER_SHA3),
+	  
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) sha3scanner_v0_1_S00_AXI_inst (

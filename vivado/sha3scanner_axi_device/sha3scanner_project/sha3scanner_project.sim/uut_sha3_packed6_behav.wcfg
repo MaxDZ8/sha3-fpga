@@ -11,15 +11,15 @@
       </db_ref>
    </db_ref_list>
    <zoom_setting>
-      <ZoomStartTime time="1153627fs"></ZoomStartTime>
-      <ZoomEndTime time="1383275fs"></ZoomEndTime>
-      <Cursor1Time time="1345000fs"></Cursor1Time>
+      <ZoomStartTime time="977956fs"></ZoomStartTime>
+      <ZoomEndTime time="1097357fs"></ZoomEndTime>
+      <Cursor1Time time="765000fs"></Cursor1Time>
    </zoom_setting>
    <column_width_setting>
       <NameColumnWidth column_width="169"></NameColumnWidth>
-      <ValueColumnWidth column_width="281"></ValueColumnWidth>
+      <ValueColumnWidth column_width="273"></ValueColumnWidth>
    </column_width_setting>
-   <WVObjectSize size="5" />
+   <WVObjectSize size="4" />
    <wvobject fp_name="/uut_sha3_packed6/clk" type="logic">
       <obj_property name="ElementShortName">clk</obj_property>
       <obj_property name="ObjectShortName">clk</obj_property>
@@ -28,224 +28,171 @@
       <obj_property name="ElementShortName">hasher_ready</obj_property>
       <obj_property name="ObjectShortName">hasher_ready</obj_property>
    </wvobject>
-   <wvobject fp_name="group67" type="group">
-      <obj_property name="label">hasher_input</obj_property>
+   <wvobject fp_name="group278" type="group">
+      <obj_property name="label">quirky</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/sample" type="logic">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/gimme" type="logic">
+         <obj_property name="ElementShortName">gimme</obj_property>
+         <obj_property name="ObjectShortName">gimme</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/rowa" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rowa" type="array">
          <obj_property name="ElementShortName">rowa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/rowb" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rowb" type="array">
          <obj_property name="ElementShortName">rowb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/rowc" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rowc" type="array">
          <obj_property name="ElementShortName">rowc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/rowd" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rowd" type="array">
          <obj_property name="ElementShortName">rowd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/busin/rowe" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rowe" type="array">
          <obj_property name="ElementShortName">rowe[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowe[0:4][63:0]</obj_property>
       </wvobject>
-   </wvobject>
-   <wvobject fp_name="group21" type="group">
-      <obj_property name="label">iterate4</obj_property>
-      <obj_property name="DisplayName">label</obj_property>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/input_iteration" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/input_iteration" type="array">
          <obj_property name="ElementShortName">input_iteration[1:0]</obj_property>
          <obj_property name="ObjectShortName">input_iteration[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/input_divide" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/input_divide" type="array">
          <obj_property name="ElementShortName">input_divide[3:0]</obj_property>
          <obj_property name="ObjectShortName">input_divide[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/consume_iterated" type="logic">
-         <obj_property name="ElementShortName">consume_iterated</obj_property>
-         <obj_property name="ObjectShortName">consume_iterated</obj_property>
-      </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/round_base" type="array">
-         <obj_property name="ElementShortName">round_base[4:0]</obj_property>
-         <obj_property name="ObjectShortName">round_base[4:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="group25" type="group">
-         <obj_property name="label">crunchy6</obj_property>
-         <obj_property name="DisplayName">label</obj_property>
-         <obj_property name="isExpanded"></obj_property>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/sample" type="logic">
-            <obj_property name="ElementShortName">sample</obj_property>
-            <obj_property name="ObjectShortName">sample</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/isa" type="array">
-            <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/isb" type="array">
-            <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/isc" type="array">
-            <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/isd" type="array">
-            <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/ise" type="array">
-            <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/base_round" type="array">
-            <obj_property name="ElementShortName">base_round[4:0]</obj_property>
-            <obj_property name="ObjectShortName">base_round[4:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="group125" type="group">
-            <obj_property name="label">round5</obj_property>
-            <obj_property name="DisplayName">label</obj_property>
-            <obj_property name="isExpanded"></obj_property>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/sample" type="logic">
-               <obj_property name="ElementShortName">sample</obj_property>
-               <obj_property name="ObjectShortName">sample</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/round_index" type="array">
-               <obj_property name="ElementShortName">round_index[4:0]</obj_property>
-               <obj_property name="ObjectShortName">round_index[4:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/isa" type="array">
-               <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/isb" type="array">
-               <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/isc" type="array">
-               <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/isd" type="array">
-               <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/ise" type="array">
-               <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/ogood" type="logic">
-               <obj_property name="ElementShortName">ogood</obj_property>
-               <obj_property name="ObjectShortName">ogood</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/osa" type="array">
-               <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/osb" type="array">
-               <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/osc" type="array">
-               <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/osd" type="array">
-               <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
-            </wvobject>
-            <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/r6n5/ose" type="array">
-               <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
-               <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
-            </wvobject>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/ogood" type="logic">
-            <obj_property name="ElementShortName">ogood</obj_property>
-            <obj_property name="ObjectShortName">ogood</obj_property>
-            <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-            <obj_property name="UseCustomSignalColor">true</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/osa" type="array">
-            <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/osb" type="array">
-            <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/osc" type="array">
-            <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/osd" type="array">
-            <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
-         </wvobject>
-         <wvobject fp_name="/uut_sha3_packed6/hasher/crunchy/ose" type="array">
-            <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
-            <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
-         </wvobject>
-      </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/rndo_good" type="logic">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/rndo_good" type="logic">
          <obj_property name="ElementShortName">rndo_good</obj_property>
          <obj_property name="ObjectShortName">rndo_good</obj_property>
-         <obj_property name="CustomSignalColor">#00FFFF</obj_property>
-         <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/into_adjuster" type="logic">
-         <obj_property name="ElementShortName">into_adjuster</obj_property>
-         <obj_property name="ObjectShortName">into_adjuster</obj_property>
-      </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/into_finalizer" type="logic">
-         <obj_property name="ElementShortName">into_finalizer</obj_property>
-         <obj_property name="ObjectShortName">into_finalizer</obj_property>
-      </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/last_result_round" type="array">
-         <obj_property name="ElementShortName">last_result_round[4:0]</obj_property>
-         <obj_property name="ObjectShortName">last_result_round[4:0]</obj_property>
-      </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/result_iteration" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/quirky/result_iteration" type="array">
          <obj_property name="ElementShortName">result_iteration[1:0]</obj_property>
          <obj_property name="ObjectShortName">result_iteration[1:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/hasher/result_divide" type="array">
-         <obj_property name="ElementShortName">result_divide[5:0]</obj_property>
-         <obj_property name="ObjectShortName">result_divide[5:0]</obj_property>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/result_divide" type="array">
+         <obj_property name="ElementShortName">result_divide[3:0]</obj_property>
+         <obj_property name="ObjectShortName">result_divide[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/ogood" type="logic">
+         <obj_property name="ElementShortName">ogood</obj_property>
+         <obj_property name="ObjectShortName">ogood</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/oa" type="array">
+         <obj_property name="ElementShortName">oa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/ob" type="array">
+         <obj_property name="ElementShortName">ob[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ob[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/oc" type="array">
+         <obj_property name="ElementShortName">oc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/od" type="array">
+         <obj_property name="ElementShortName">od[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">od[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/quirky/oe" type="array">
+         <obj_property name="ElementShortName">oe[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oe[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/result_checker/qresult_index" type="array">
+         <obj_property name="ElementShortName">qresult_index[31:0]</obj_property>
+         <obj_property name="ObjectShortName">qresult_index[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
-   <wvobject fp_name="group242" type="group">
-      <obj_property name="label">hasher_output</obj_property>
+   <wvobject fp_name="group291" type="group">
+      <obj_property name="label">proper</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/sample" type="logic">
+      <wvobject fp_name="/uut_sha3_packed6/proper/gimme" type="logic">
+         <obj_property name="ElementShortName">gimme</obj_property>
+         <obj_property name="ObjectShortName">gimme</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/rowa" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/proper/rowa" type="array">
          <obj_property name="ElementShortName">rowa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/rowb" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/proper/rowb" type="array">
          <obj_property name="ElementShortName">rowb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/rowc" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/proper/rowc" type="array">
          <obj_property name="ElementShortName">rowc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/rowd" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/proper/rowd" type="array">
          <obj_property name="ElementShortName">rowd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3_packed6/resbus/rowe" type="array">
+      <wvobject fp_name="/uut_sha3_packed6/proper/rowe" type="array">
          <obj_property name="ElementShortName">rowe[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rowe[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/input_iteration" type="array">
+         <obj_property name="ElementShortName">input_iteration[1:0]</obj_property>
+         <obj_property name="ObjectShortName">input_iteration[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/input_divide" type="array">
+         <obj_property name="ElementShortName">input_divide[3:0]</obj_property>
+         <obj_property name="ObjectShortName">input_divide[3:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/rndo_good" type="logic">
+         <obj_property name="ElementShortName">rndo_good</obj_property>
+         <obj_property name="ObjectShortName">rndo_good</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/result_iteration" type="array">
+         <obj_property name="ElementShortName">result_iteration[1:0]</obj_property>
+         <obj_property name="ObjectShortName">result_iteration[1:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/result_divide" type="array">
+         <obj_property name="ElementShortName">result_divide[3:0]</obj_property>
+         <obj_property name="ObjectShortName">result_divide[3:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/ogood" type="logic">
+         <obj_property name="ElementShortName">ogood</obj_property>
+         <obj_property name="ObjectShortName">ogood</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/oa" type="array">
+         <obj_property name="ElementShortName">oa[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oa[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/ob" type="array">
+         <obj_property name="ElementShortName">ob[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">ob[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/oc" type="array">
+         <obj_property name="ElementShortName">oc[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oc[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/od" type="array">
+         <obj_property name="ElementShortName">od[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">od[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/proper/oe" type="array">
+         <obj_property name="ElementShortName">oe[0:4][63:0]</obj_property>
+         <obj_property name="ObjectShortName">oe[0:4][63:0]</obj_property>
+      </wvobject>
+      <wvobject fp_name="/uut_sha3_packed6/result_checker/resultp_index" type="array">
+         <obj_property name="ElementShortName">resultp_index[31:0]</obj_property>
+         <obj_property name="ObjectShortName">resultp_index[31:0]</obj_property>
+         <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
       </wvobject>
    </wvobject>
 </wave_config>

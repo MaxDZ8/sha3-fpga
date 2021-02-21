@@ -3,7 +3,8 @@
 // Check the result from the scan is nice!
 module sha3_scanner_results_checker #(
     TESTBENCH_NAME = "<forgot to set>",
-    TEST_MODE = "short"
+    TEST_MODE = "short",
+    ALGO_IS_PROPER = 1
 )(
     input clk,
     input found,
@@ -11,25 +12,41 @@ module sha3_scanner_results_checker #(
     input[31:0] nonce
 );
 
-
-localparam longint unsigned short_hash[25] = '{
-    64'hd1a8bd39a62c7301, 64'h0c27714aa1d395c4, 64'hbb1c1c5c70f6246a, 64'h33c1bd22d85e31dc, 64'h2687dc79a0864a5f,
-    64'hd841d964ba7aeb5e, 64'h3f3cd2e460a055f4, 64'h272ee53c700af7a4, 64'h52b9090fd15778b6, 64'hb38235c32d28d9c3,
-    64'h9816ea680c109ebe, 64'h24fa8d19b3b32462, 64'hd1b0d2ac6cee1e22, 64'ha4abd968b969d2b9, 64'hff329e31d83cda62,
-    64'h325b8d98168382a5, 64'h96a8aed4a23e081a, 64'h30934e6194879742, 64'hee9538aa987e326c, 64'h2ae78d38d38203dc,
-    64'h7e4710a4891383f6, 64'h72c6aa131bd18fd6, 64'h67cb52177f28e29a, 64'h90971806cef30b2a, 64'hf94ed2f472ea6f59
-};
-localparam longint unsigned short_nonce = 55; // NOTE: scan_hash in legacy miners would return 56
-
-
-localparam longint unsigned long_hash[25] = '{
-    64'ha05c614d02110400, 64'h4ad565d35b796818, 64'hd5047964213164b2, 64'hc71db42361703d68, 64'hd93819a3c8a2de5d,
-    64'hce4199f33c2e703b, 64'h76e73458248e23f9, 64'h5d22b12a85dacb7d, 64'hf3476db037c28b0f, 64'hbad3ea429e0a34a8,
-    64'hcd54ca9be7fea14d, 64'hb6619224b88aa4bd, 64'h55513b675b00a282, 64'h45a6f08b54eb14cc, 64'hc2214ca9082e4c2e,
-    64'h1754758408491211, 64'hb12fa77789e6baa3, 64'hf61ca1980788d79c, 64'h86e853bd93da3e70, 64'h1f89bf63af0c3f51,
-    64'h42b388df80fe3c76, 64'h787858f32ab2f323, 64'he19e24e99b695fb0, 64'h823ced538edb8f0a, 64'h153f38c09a81684a
-};
-localparam longint unsigned long_nonce = 161639; // remember scan_hash in legacy returns count of hashes done so +1
+wire[63:0] short_hash[25], long_hash[25];
+wire[63:0] short_nonce, long_nonce;
+if (ALGO_IS_PROPER) begin : proper
+    assign long_hash = short_hash;
+    assign short_hash = '{
+        64'haf663c81a9f64ac3, 64'h4c737583a552e7f8, 64'he3241e44a23df27d, 64'h0000000f455464ff, 64'h2b2d678b4ebdb872,
+        64'h11e761d6f3168a33, 64'h0dd111cd88c8bbb2, 64'h75042e9f10334d08, 64'h55c1c0e59aa16039, 64'hc9a8409441eaf85c,
+        64'h7d9c9d9ee3944f71, 64'h4c9ae0e4108e7ec7, 64'hc0e35fcffe758785, 64'h7a62180ce43b0816, 64'h6e410469e92fd8d0,
+        64'h8bd129598c7c888e, 64'hee9b2eb17ecc6716, 64'h2e4a90cc95107595, 64'h0817edbb38700206, 64'hc20e3131066556cd,
+        64'h76f6d7d0bee67ae8, 64'hfd56c054fbde825b, 64'hf1447e15b5e39a6b, 64'hbd81ace034fe57bc, 64'h75d361750387009b
+    };
+    
+    assign short_nonce = 32'h02f7;
+    assign long_nonce = 32'h12f7;
+end
+else begin : quirky
+    assign short_hash = '{
+        64'hb319dc707b8f2201, 64'h4fb59867f9b9083f, 64'hde52c0ad68ecbc9b, 64'h30672bf6dc8de8fa, 64'h032a8c1b7d177282,
+        64'h94e7991e8c180cb6, 64'hb0f071d458870b2c, 64'h215b9f5c71767a9b, 64'hc45a22850ae3479a, 64'hdd71c69fd64b790d,
+        64'h60bf2838a75eaaba, 64'h423e8d95c57139d9, 64'h1d61b705cc06da38, 64'h3cdb6837e0771716, 64'h4fb10f99f2ba6eac,
+        64'h6f13ec4619144b09, 64'h8d5b272e40c7e0f8, 64'h6d17f10957e93166, 64'h70d9c050187189ae, 64'hc7354da06a9e9960,
+        64'h65ba5184b70f9627, 64'ha02723ec6bc3e8f3, 64'h14babc6c14deb190, 64'h27a9109c781732f6, 64'h2d04a997ad22222a
+    };
+    assign short_nonce = 234; // NOTE: scan_hash in legacy miners would return 235
+    
+    
+    assign long_hash = '{
+        64'h6a4e218fc8a10000, 64'ha99c2f4c5c17f865, 64'h3ef0b70e32cbab15, 64'ha799551a987f59ef, 64'h2be1aeaf67c21f9d,
+        64'h30f154dff3907e5f, 64'hc1fb321a97bdcafe, 64'h25c6fce84e8ca737, 64'h87c300dc93d3ad3d, 64'h1de478d1e6d77335,
+        64'h25cdde2c8246619a, 64'hb4426015fbeae22b, 64'he3a288675c1f0e75, 64'hb5c5d7a4a55f1a5e, 64'h3f9b670a6d418780,
+        64'hf0cae5cc32f1e3e0, 64'h494a9810b0bb0000, 64'h6b9058a97d081735, 64'hb06cccdf08572775, 64'h752de3cc7aee6c0a,
+        64'h524c190f0d6d7b76, 64'hf85626e278e33590, 64'h4b4e64b3556d524b, 64'hb203ba745d1514dd, 64'hf19aa1eb27a7bd38
+    };
+    assign long_nonce = 16855; // remember scan_hash in legacy returns count of hashes done so +1
+end
 
 
 function longint unsigned expected_hash(input int index);
@@ -52,7 +69,7 @@ always @(posedge clk) if(found) begin
       end
   end
   if (nonce != expected_nonce()) begin
-        $display("Nonce differs !! FAILED !! (expected %h, found %h)", expected_nonce(), nonce);
+        $display("Iteration count differs !! FAILED !! (expected %h, found %h)", expected_nonce(), nonce);
         $fatal;
         $finish;
   end

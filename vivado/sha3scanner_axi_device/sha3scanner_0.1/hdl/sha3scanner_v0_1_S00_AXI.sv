@@ -5,6 +5,7 @@
 		// Users to add parameters here
 		parameter STYLE = "fully-unrolled-fully-parallel",
 		parameter FEEDBACK_MUX_STYLE = "fabric",
+		parameter PROPER_SHA3 = 1,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -631,58 +632,58 @@
 	        7'h19   : reg_data_out <= threshold[63:32];
 	        
 	        7'h1A   : reg_data_out <= promising_nonce;
-	        7'h1C   : reg_data_out <= interesting_hash[ 0];
-	        7'h1D   : reg_data_out <= interesting_hash[ 1];
-	        7'h1E   : reg_data_out <= interesting_hash[ 2];
-	        7'h1F   : reg_data_out <= interesting_hash[ 3];
-	        7'h20   : reg_data_out <= interesting_hash[ 4];
-	        7'h21   : reg_data_out <= interesting_hash[ 5];
-	        7'h22   : reg_data_out <= interesting_hash[ 6];
-	        7'h23   : reg_data_out <= interesting_hash[ 7];
-	        7'h24   : reg_data_out <= interesting_hash[ 8];
-	        7'h25   : reg_data_out <= interesting_hash[ 9];
-	        7'h26   : reg_data_out <= interesting_hash[10];
-	        7'h27   : reg_data_out <= interesting_hash[11];
-	        7'h28   : reg_data_out <= interesting_hash[12];
-	        7'h29   : reg_data_out <= interesting_hash[13];
-	        7'h2A   : reg_data_out <= interesting_hash[14];
-	        7'h2B   : reg_data_out <= interesting_hash[15];
-	        7'h2C   : reg_data_out <= interesting_hash[16];
-	        7'h2D   : reg_data_out <= interesting_hash[17];
-	        7'h2E   : reg_data_out <= interesting_hash[18];
-	        7'h2F   : reg_data_out <= interesting_hash[19];
-	        7'h30   : reg_data_out <= interesting_hash[20];
-	        7'h31   : reg_data_out <= interesting_hash[21];
-	        7'h32   : reg_data_out <= interesting_hash[22];
-	        7'h33   : reg_data_out <= interesting_hash[23];
-	        7'h34   : reg_data_out <= interesting_hash[24];
-	        7'h35   : reg_data_out <= interesting_hash[25];
-	        7'h36   : reg_data_out <= interesting_hash[26];
-	        7'h37   : reg_data_out <= interesting_hash[27];
-	        7'h38   : reg_data_out <= interesting_hash[28];
-	        7'h39   : reg_data_out <= interesting_hash[29];
-	        7'h3A   : reg_data_out <= interesting_hash[30];
-	        7'h3B   : reg_data_out <= interesting_hash[31];
-	        7'h3C   : reg_data_out <= interesting_hash[32];
-	        7'h3D   : reg_data_out <= interesting_hash[33];
-	        7'h3E   : reg_data_out <= interesting_hash[34];
-	        7'h3F   : reg_data_out <= interesting_hash[35];
-	        7'h40   : reg_data_out <= interesting_hash[36];
-	        7'h41   : reg_data_out <= interesting_hash[37];
-	        7'h42   : reg_data_out <= interesting_hash[38];
-	        7'h43   : reg_data_out <= interesting_hash[39];
-	        7'h44   : reg_data_out <= interesting_hash[40];
-	        7'h45   : reg_data_out <= interesting_hash[41];
-	        7'h46   : reg_data_out <= interesting_hash[42];
-	        7'h47   : reg_data_out <= interesting_hash[43];
-	        7'h48   : reg_data_out <= interesting_hash[44];
-	        7'h49   : reg_data_out <= interesting_hash[45];
-	        7'h4A   : reg_data_out <= interesting_hash[46];
-	        7'h4B   : reg_data_out <= interesting_hash[47];
-	        7'h4C   : reg_data_out <= interesting_hash[48];
-	        7'h4D   : reg_data_out <= interesting_hash[49];
+	        7'h1B   : reg_data_out <= interesting_hash[ 0];
+	        7'h1C   : reg_data_out <= interesting_hash[ 1];
+	        7'h1D   : reg_data_out <= interesting_hash[ 2];
+	        7'h1E   : reg_data_out <= interesting_hash[ 3];
+	        7'h1F   : reg_data_out <= interesting_hash[ 4];
+	        7'h20   : reg_data_out <= interesting_hash[ 5];
+	        7'h21   : reg_data_out <= interesting_hash[ 6];
+	        7'h22   : reg_data_out <= interesting_hash[ 7];
+	        7'h23   : reg_data_out <= interesting_hash[ 8];
+	        7'h24   : reg_data_out <= interesting_hash[ 9];
+	        7'h25   : reg_data_out <= interesting_hash[10];
+	        7'h26   : reg_data_out <= interesting_hash[11];
+	        7'h27   : reg_data_out <= interesting_hash[12];
+	        7'h28   : reg_data_out <= interesting_hash[13];
+	        7'h29   : reg_data_out <= interesting_hash[14];
+	        7'h2A   : reg_data_out <= interesting_hash[15];
+	        7'h2B   : reg_data_out <= interesting_hash[16];
+	        7'h2C   : reg_data_out <= interesting_hash[17];
+	        7'h2D   : reg_data_out <= interesting_hash[18];
+	        7'h2E   : reg_data_out <= interesting_hash[19];
+	        7'h2F   : reg_data_out <= interesting_hash[20];
+	        7'h30   : reg_data_out <= interesting_hash[21];
+	        7'h31   : reg_data_out <= interesting_hash[22];
+	        7'h32   : reg_data_out <= interesting_hash[23];
+	        7'h33   : reg_data_out <= interesting_hash[24];
+	        7'h34   : reg_data_out <= interesting_hash[25];
+	        7'h35   : reg_data_out <= interesting_hash[26];
+	        7'h36   : reg_data_out <= interesting_hash[27];
+	        7'h37   : reg_data_out <= interesting_hash[28];
+	        7'h38   : reg_data_out <= interesting_hash[29];
+	        7'h39   : reg_data_out <= interesting_hash[30];
+	        7'h3A   : reg_data_out <= interesting_hash[31];
+	        7'h3B   : reg_data_out <= interesting_hash[32];
+	        7'h3C   : reg_data_out <= interesting_hash[33];
+	        7'h3D   : reg_data_out <= interesting_hash[34];
+	        7'h3E   : reg_data_out <= interesting_hash[35];
+	        7'h3F   : reg_data_out <= interesting_hash[36];
+	        7'h40   : reg_data_out <= interesting_hash[37];
+	        7'h41   : reg_data_out <= interesting_hash[38];
+	        7'h42   : reg_data_out <= interesting_hash[39];
+	        7'h43   : reg_data_out <= interesting_hash[40];
+	        7'h44   : reg_data_out <= interesting_hash[41];
+	        7'h45   : reg_data_out <= interesting_hash[42];
+	        7'h46   : reg_data_out <= interesting_hash[43];
+	        7'h47   : reg_data_out <= interesting_hash[44];
+	        7'h48   : reg_data_out <= interesting_hash[45];
+	        7'h49   : reg_data_out <= interesting_hash[46];
+	        7'h4A   : reg_data_out <= interesting_hash[47];
+	        7'h4B   : reg_data_out <= interesting_hash[48];
+	        7'h4C   : reg_data_out <= interesting_hash[49];
 	        
-	        7'h7F   : reg_data_out <= { 28'b0, found, idle, evaluating, dispatching };
+	        7'h7F   : reg_data_out <= { (PROPER_SHA3 ? 1'b1 : 1'b0), 27'b0, found, idle, evaluating, dispatching };
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -712,16 +713,38 @@
 	wire start = idle & writing_control;
 	wire[63:0] wide_hash[25];
 	
+	wire[31:0] into_scanner[PROPER_SHA3 ? 20 : 24];
+	if (PROPER_SHA3) begin : proper 
+	    assign into_scanner = '{
+	        blktemplate[ 0], blktemplate[ 1], blktemplate[ 2], blktemplate[ 3],
+	        blktemplate[ 4], blktemplate[ 5], blktemplate[ 6], blktemplate[ 7],
+	        blktemplate[ 8], blktemplate[ 9], blktemplate[10], blktemplate[11],
+	        blktemplate[12], blktemplate[13], blktemplate[14], blktemplate[15],
+	        blktemplate[16], blktemplate[17], blktemplate[18], blktemplate[19]
+	    };
+	end
+	else begin : quirky
+	    assign into_scanner = '{
+          blktemplate[ 0], blktemplate[ 1], blktemplate[ 2], blktemplate[ 3],
+          blktemplate[ 4], blktemplate[ 5], blktemplate[ 6], blktemplate[ 7],
+          blktemplate[ 8], blktemplate[ 9], blktemplate[10], blktemplate[11],
+          blktemplate[12], blktemplate[13], blktemplate[14], blktemplate[15],
+          blktemplate[16], blktemplate[17], blktemplate[18], blktemplate[19],
+          blktemplate[20], blktemplate[21], blktemplate[22], blktemplate[23]
+      };
+  end
+	
 	sha3_scanner_instantiator #(
 	    .STYLE(STYLE),
-	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
+	    .PROPER(PROPER_SHA3)
 	) thing (
       .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
       .ready(idle),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
       .threshold(threshold),
       
-      .blobby(blktemplate),  .nonce(promising_nonce),
+      .blobby(into_scanner),  .nonce(promising_nonce),
       .hash(wide_hash)
 	);
 	

@@ -4,13 +4,14 @@
 // like there's no tomorrow.
 module sha3_packed_pipeline_scanner #(
     FEEDBACK_MUX_STYLE = "fabric",
-    PIPE_ROUNDS = 6
+    PIPE_ROUNDS = 6,
+    PROPER = 1
 ) (
     input clk,
     // Scan request
     input start,
     input[63:0] threshold,
-    input[31:0] blockTemplate[24],
+    input[31:0] blockTemplate[PROPER ? 20 : 24],
 
     output ofound,
     output[63:0] ohash[25],
@@ -22,7 +23,9 @@ module sha3_packed_pipeline_scanner #(
 wire feedgood, hasher_can_take, hashgood;
 wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5];
 wire[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5];
-sha3_scanner_control fsm (
+sha3_scanner_control #(
+    .PROPER(PROPER)
+) fsm (
     .clk(clk),
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
     .ofound(ofound), .ohash(ohash), .ononce(ononce),
@@ -38,7 +41,8 @@ sha3_scanner_control fsm (
 
 if (PIPE_ROUNDS == 6) begin : tiny
     sha3_iterating_pipe6 #(
-        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
+        .LAST_ROUND_IS_PROPER(PROPER)
     ) hasher (
         .clk(clk),
         .sample(feedgood),
@@ -50,7 +54,8 @@ if (PIPE_ROUNDS == 6) begin : tiny
 end
 else if(PIPE_ROUNDS == 12) begin : nice
     sha3_iterating_pipe12 #(
-        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE)
+        .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
+        .LAST_ROUND_IS_PROPER(PROPER)
     ) hasher (
         .clk(clk),
         .sample(feedgood),

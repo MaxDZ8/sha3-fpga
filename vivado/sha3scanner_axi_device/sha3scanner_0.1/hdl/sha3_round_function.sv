@@ -27,7 +27,17 @@ module sha3_round_function #(
     IOTA_STYLE = "basic",
     ROUND_INDEX = 0, // 0..23 integer
     // If true-ish my final theta will also buffer, otherwise flow right away to next round.
-    OUTPUT_BUFFERED = 1'b1
+    OUTPUT_BUFFERED = 1'b1,
+    // It turns out the GPU kernel I am examining now doesn't implement the same algorithm as the CPU
+    // function keccakf I've considered, the main difference being the CPU algorithm does only 23 rounds
+    // followed by a "semi-round" where it does only THETA and RHO-PI. The final state update CHI+IOTA
+    // only updates two ulongs instead of the whole state.
+    // The GPU kernel seems to implement Keccak properly (in the sense it mangles 24 full rounds) and
+    // it seems to me this matches Keccak definition and SPH implementation.
+    // 
+    // If you define this to be 0 you will be preferring the partial, non-standard, "semiround" thing.  
+    // Only relevant for round 23.
+    LAST_ROUND_IS_PROPER = 1
 )(
     input clk,
     input[63:0] isa[5],
@@ -84,7 +94,7 @@ end
 localparam longint unsigned IOTA_VALUE = rc[ROUND_INDEX];
 
 
-if (ROUND_INDEX < 23) begin : std_round
+if (ROUND_INDEX < 23 || LAST_ROUND_IS_PROPER) begin : std_round
     wire[63:0] ioina[0:4], ioinb[0:4], ioinc[0:4], ioind[0:4], ioine[0:4];
     wire io_fetch;
     sha3_chi #(

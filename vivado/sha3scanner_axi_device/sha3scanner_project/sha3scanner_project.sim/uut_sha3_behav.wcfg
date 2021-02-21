@@ -34,51 +34,51 @@
       <obj_property name="label">first_round</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/sample" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/isa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/isa" type="array">
          <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/isb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/isb" type="array">
          <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/isc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/isc" type="array">
          <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/isd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/isd" type="array">
          <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/ise" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/ise" type="array">
          <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/ogood" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/ogood" type="logic">
          <obj_property name="ElementShortName">ogood</obj_property>
          <obj_property name="ObjectShortName">ogood</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/osa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/osa" type="array">
          <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/osb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/osb" type="array">
          <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/osc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/osc" type="array">
          <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/osd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/osd" type="array">
          <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/first_round/ose" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/first_round/ose" type="array">
          <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
       </wvobject>
@@ -87,51 +87,51 @@
       <obj_property name="label">round_5</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /sample" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /isa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /isa" type="array">
          <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /isb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /isb" type="array">
          <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /isc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /isc" type="array">
          <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /isd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /isd" type="array">
          <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /ise" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /ise" type="array">
          <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /ogood" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /ogood" type="logic">
          <obj_property name="ElementShortName">ogood</obj_property>
          <obj_property name="ObjectShortName">ogood</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /osa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /osa" type="array">
          <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /osb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /osb" type="array">
          <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /osc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /osc" type="array">
          <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /osd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /osd" type="array">
          <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[5].cruncher /ose" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[5].cruncher /ose" type="array">
          <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
       </wvobject>
@@ -140,51 +140,51 @@
       <obj_property name="label">round_11</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /sample" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /isa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /isa" type="array">
          <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /isb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /isb" type="array">
          <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /isc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /isc" type="array">
          <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /isd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /isd" type="array">
          <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /ise" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /ise" type="array">
          <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /ogood" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /ogood" type="logic">
          <obj_property name="ElementShortName">ogood</obj_property>
          <obj_property name="ObjectShortName">ogood</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /rina" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /rina" type="array">
          <obj_property name="ElementShortName">rina[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rina[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /rinb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /rinb" type="array">
          <obj_property name="ElementShortName">rinb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rinb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /rinc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /rinc" type="array">
          <obj_property name="ElementShortName">rinc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rinc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /rind" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /rind" type="array">
          <obj_property name="ElementShortName">rind[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rind[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[11].cruncher /rine" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[11].cruncher /rine" type="array">
          <obj_property name="ElementShortName">rine[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">rine[0:4][63:0]</obj_property>
       </wvobject>
@@ -193,51 +193,51 @@
       <obj_property name="label">round_17</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /sample" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /isa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /isa" type="array">
          <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /isb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /isb" type="array">
          <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /isc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /isc" type="array">
          <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /isd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /isd" type="array">
          <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /ise" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /ise" type="array">
          <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /ogood" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /ogood" type="logic">
          <obj_property name="ElementShortName">ogood</obj_property>
          <obj_property name="ObjectShortName">ogood</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /osa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /osa" type="array">
          <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /osb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /osb" type="array">
          <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /osc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /osc" type="array">
          <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /osd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /osd" type="array">
          <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/\similarly[17].cruncher /ose" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/\similarly[17].cruncher /ose" type="array">
          <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
       </wvobject>
@@ -246,53 +246,53 @@
       <obj_property name="label">last_round</obj_property>
       <obj_property name="DisplayName">label</obj_property>
       <obj_property name="isExpanded"></obj_property>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/sample" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/sample" type="logic">
          <obj_property name="ElementShortName">sample</obj_property>
          <obj_property name="ObjectShortName">sample</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/isa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/isa" type="array">
          <obj_property name="ElementShortName">isa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/isb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/isb" type="array">
          <obj_property name="ElementShortName">isb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/isc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/isc" type="array">
          <obj_property name="ElementShortName">isc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/isd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/isd" type="array">
          <obj_property name="ElementShortName">isd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">isd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/ise" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/ise" type="array">
          <obj_property name="ElementShortName">ise[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ise[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/ogood" type="logic">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/ogood" type="logic">
          <obj_property name="ElementShortName">ogood</obj_property>
          <obj_property name="ObjectShortName">ogood</obj_property>
          <obj_property name="CustomSignalColor">#FF00FF</obj_property>
          <obj_property name="UseCustomSignalColor">true</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/osa" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/osa" type="array">
          <obj_property name="ElementShortName">osa[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osa[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/osb" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/osb" type="array">
          <obj_property name="ElementShortName">osb[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osb[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/osc" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/osc" type="array">
          <obj_property name="ElementShortName">osc[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osc[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/osd" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/osd" type="array">
          <obj_property name="ElementShortName">osd[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">osd[0:4][63:0]</obj_property>
       </wvobject>
-      <wvobject fp_name="/uut_sha3/hasher/last_round/ose" type="array">
+      <wvobject fp_name="/uut_sha3/quirky/last_round/ose" type="array">
          <obj_property name="ElementShortName">ose[0:4][63:0]</obj_property>
          <obj_property name="ObjectShortName">ose[0:4][63:0]</obj_property>
       </wvobject>
