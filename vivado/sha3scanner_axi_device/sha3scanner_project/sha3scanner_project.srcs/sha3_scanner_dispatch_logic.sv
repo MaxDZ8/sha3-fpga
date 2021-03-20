@@ -6,6 +6,8 @@ module sha3_scanner_dispatch_logic #(
     ALGO_IS_PROPER = 1,
     localparam ULONG_COUNT = ALGO_IS_PROPER ? 10 : 12
 )(
+    input[31:0] scan_count,
+    
     output clk,
     // Scan request
     output start,
@@ -70,7 +72,7 @@ bit dispatching = 1'b0;
 
 initial begin
   $timeformat(-9,2," ns",14);
-  $display("scanner start %s", TESTBENCH_NAME);
+  $display("scanner start %s, scan count=%d", TESTBENCH_NAME, $unsigned(scan_count));
   #150 // wait for GSR and other nonsense.
   reset = 0;
   #50

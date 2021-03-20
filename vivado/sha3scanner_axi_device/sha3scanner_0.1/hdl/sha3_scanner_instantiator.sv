@@ -14,7 +14,14 @@ module sha3_scanner_instantiator #(
     output dispatching, evaluating, ready,
     output found,
     output[63:0] hash[25],
-    output[31:0] nonce
+    output[31:0] nonce,
+    
+	  /*
+	  This is a constant signal to let you better evaluate the amount of work to ask.
+	  How many nonces does this crunch before asking for more? It will test at most this amount
+	  but will usually stop much before, as you get to match the threshold.
+	  */
+	  output[31:0] scan_count
 );
 	
 if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
@@ -32,7 +39,9 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .threshold(threshold),
       
       .blobby(blobby),  .nonce(nonce),
-      .hash(hash)
+      .hash(hash),
+      
+      .scan_count(scan_count)
     );
 end
 else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : smallish
@@ -48,7 +57,9 @@ else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : small
         .clk(clk),
         .start(start), .threshold(threshold), .blockTemplate(blobby),
         .ofound(found), .ohash(hash), .ononce(nonce),
-        .oready(ready), .odispatching(dispatching), .oevaluating(evaluating)
+        .oready(ready), .odispatching(dispatching), .oevaluating(evaluating),
+      
+        .scan_count(scan_count)
     );
 end
 else begin

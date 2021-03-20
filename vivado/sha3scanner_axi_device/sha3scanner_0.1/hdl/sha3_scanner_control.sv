@@ -8,7 +8,8 @@
 // No need to be performant here, the scan operation is supposed to be long-term taking over 500ms
 // so there's no point of optimizing multi-flush or all the things.
 module sha3_scanner_control #(
-    PROPER = 1
+    PROPER = 1,
+    PIPE_PERF_LEVEL = 6
 ) (
     input clk,
     // Scan request
@@ -28,7 +29,13 @@ module sha3_scanner_control #(
     output feedgood,
     output[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5],
     input hashgood,
-    input[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5]
+    input[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5],
+    
+	  /*
+	  Tell the outer program how many nonces I test at most
+	  (if I don't get a good enough nonce first)
+	  */
+	  output[31:0] scan_count
 );
 
 
@@ -56,9 +63,11 @@ always_ff @(posedge clk) if(capture) begin
 end
 assign feeda = '{ rowa[0], rowa[1], rowa[2], rowa[3], rowa[4] };
 
-int unsigned dispatch_iterator = 32'b0;
-localparam int unsigned SCAN_LIMIT = 32'hFFFFFFFF;
-wire exhausted = dispatch_iterator == SCAN_LIMIT;
+localparam EXHAUST_BIT = PIPE_PERF_LEVEL == 12 ? 30 : 29;
+assign scan_count = (32'b1 <<< EXHAUST_BIT); 
+
+int unsigned dispatch_iterator = 32'b0; // I allocate full 32 bit for easiness anyway
+wire exhausted = dispatch_iterator[EXHAUST_BIT];
 bit hash_observed = 1'b0;
 always_ff @(posedge clk) case(state)
     s_waiting: if(start) begin

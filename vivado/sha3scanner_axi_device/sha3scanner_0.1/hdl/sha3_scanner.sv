@@ -23,7 +23,9 @@ module sha3_scanner #(
 	  
 	  output dispatching, evaluating, found, ready,
 	  output[31:0] nonce,
-	  output[63:0] hash[25]
+	  output[63:0] hash[25],
+	  
+	  output[31:0] scan_count
 );
 
 wire capture = start & ready;
@@ -37,6 +39,7 @@ always_ff @(posedge clk) if(capture) begin
     rowa[4] <= { blobby[ 9], blobby[ 8] };
 end
 
+assign scan_count = 32'h8000_0000; // exit on 31st bit high...
 int unsigned dispatch_iterator = 32'b0;
 bit buff_dispatching = 1'b0;
 always_ff @(posedge clk) if(rst) begin
@@ -45,7 +48,7 @@ always_ff @(posedge clk) if(rst) begin
 end
 else begin
     if (buff_dispatching) begin
-        buff_dispatching <= ~dispatch_iterator[31] & ~found;
+        buff_dispatching <= ~dispatch_iterator[31] & ~found; // ... 31st bit high
         dispatch_iterator <= dispatch_iterator + 1'b1;
     end
     else begin

@@ -10,13 +10,16 @@ localparam ALGO_IS_PROPER = 1;
 wire start;
 wire[31:0] blockTemplate[ALGO_IS_PROPER ? 20 : 24];
 wire[63:0] threshold;
+wire[31:0] scan_count;
 sha3_scanner_dispatch_logic #(
     .TESTBENCH_NAME(IMPL_NAME),
     .TEST_MODE(TEST_MODE),
     .ALGO_IS_PROPER(ALGO_IS_PROPER)
 ) driver (
     .clk(clk),
-    .start(start), .threshold(threshold), .blockTemplate(blockTemplate)
+    .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
+    
+    .scan_count(scan_count)
 );
 
 
@@ -32,7 +35,9 @@ sha3_scanner_instantiator #(
     .clk(clk), .rst(1'b0),
     .start(start), .threshold(threshold), .blobby(blockTemplate),
     .found(found), .nonce(nonce), .hash(hash),
-    .dispatching(dispatching), .evaluating(evaluating), .ready(ready)
+    .dispatching(dispatching), .evaluating(evaluating), .ready(ready),
+    
+    .scan_count(scan_count)
 );
 
 sha3_scanner_results_checker #(

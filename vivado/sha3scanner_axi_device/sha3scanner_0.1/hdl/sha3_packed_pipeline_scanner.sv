@@ -17,14 +17,17 @@ module sha3_packed_pipeline_scanner #(
     output[63:0] ohash[25],
     output[31:0] ononce,
     // Status
-    output odispatching, oevaluating, oready
+    output odispatching, oevaluating, oready,
+    
+    output[31:0] scan_count
 );
 
 wire feedgood, hasher_can_take, hashgood;
 wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5];
 wire[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5];
 sha3_scanner_control #(
-    .PROPER(PROPER)
+    .PROPER(PROPER),
+    .PIPE_PERF_LEVEL(PIPE_ROUNDS)
 ) fsm (
     .clk(clk),
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
@@ -35,7 +38,9 @@ sha3_scanner_control #(
     .feedgood(feedgood),
     .feeda(feeda), .feedb(feedb), .feedc(feedc), .feedd(feedd), .feede(feede),
     .hashgood(hashgood),
-    .hasha(hasha), .hashb(hashb), .hashc(hashc), .hashd(hashd), .hashe(hashe)
+    .hasha(hasha), .hashb(hashb), .hashc(hashc), .hashd(hashd), .hashe(hashe),
+    
+    .scan_count(scan_count)
 );
 
 
