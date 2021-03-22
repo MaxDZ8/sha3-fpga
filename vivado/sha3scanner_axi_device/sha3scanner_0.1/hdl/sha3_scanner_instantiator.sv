@@ -3,9 +3,15 @@
 module sha3_scanner_instantiator #(
     STYLE = "fully-unrolled-fully-parallel",
     FEEDBACK_MUX_STYLE = "fabric",
-    PROPER = 1
+    PROPER = 1,
+    ENABLE_FSTCLK = 0
 ) (
     input clk, rst,
+    
+    // The port is always present so you can (and should always) tie it to something.
+    // It is suggested to tie it to clk unless you have another synchronous clock to feed me.
+    // Only used if ENABLE_FSTCLK, otherwise aliased to clk.
+    input fstclk,
 
     input start,
     input[63:0] threshold,
@@ -23,6 +29,8 @@ module sha3_scanner_instantiator #(
 	  */
 	  output[31:0] scan_count
 );
+
+wire crunch_clock = ENABLE_FSTCLK ? fstclk : clk;
 	
 if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
     // Lowest overhead, maximum resource utilization and performance. 1 result/clock.
@@ -33,7 +41,7 @@ if (STYLE == "fully-unrolled-fully-parallel") begin : hiperf
       .ROUND_OUTPUT_BUFFERED(24'b1110_1010_1010_1010_1010_1011),
       .PROPER(PROPER)
     ) scanner(
-      .clk(clk), .rst(rst),
+      .clk(crunch_clock), .rst(rst),
       .ready(ready),
       .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
       .threshold(threshold),
@@ -54,7 +62,7 @@ else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : small
         .PIPE_ROUNDS(ROUND_DEPTH),
         .PROPER(PROPER)
     ) nice_deal (
-        .clk(clk),
+        .clk(crunch_clock),
         .start(start), .threshold(threshold), .blockTemplate(blobby),
         .ofound(found), .ohash(hash), .ononce(nonce),
         .oready(ready), .odispatching(dispatching), .oevaluating(evaluating),

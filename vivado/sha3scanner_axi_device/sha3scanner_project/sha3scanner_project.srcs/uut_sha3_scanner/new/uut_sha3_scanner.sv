@@ -3,19 +3,22 @@
 module uut_sha3_scanner();
 
 localparam IMPL_NAME = "SHA3 scanner (fully pipelined and parallel)";
-localparam TEST_MODE = "short";
-localparam ALGO_IS_PROPER = 1;
+localparam TEST_MODE = "long";
 
-wire start;
+localparam ALGO_IS_PROPER = 1;
+localparam FASTER_CRUNCHING = 1;
+
+wire start, clk, fstclk;
 wire[31:0] blockTemplate[ALGO_IS_PROPER ? 20 : 24];
 wire[63:0] threshold;
 wire[31:0] scan_count;
 sha3_scanner_dispatch_logic #(
     .TESTBENCH_NAME(IMPL_NAME),
     .TEST_MODE(TEST_MODE),
-    .ALGO_IS_PROPER(ALGO_IS_PROPER)
+    .ALGO_IS_PROPER(ALGO_IS_PROPER),
+    .FASTER_CRUNCHING(FASTER_CRUNCHING)
 ) driver (
-    .clk(clk),
+    .clk(clk), .fstclk(fstclk),
     .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
     
     .scan_count(scan_count)
@@ -28,9 +31,11 @@ wire[63:0] hash[25];
 wire[31:0] nonce;
 sha3_scanner_instantiator #(
     .STYLE("fully-unrolled-fully-parallel"),
-    .PROPER(ALGO_IS_PROPER)
+    
+    .PROPER(ALGO_IS_PROPER),
+    .ENABLE_FSTCLK(FASTER_CRUNCHING)
 ) thing (
-    .clk(clk), .rst(1'b0),
+    .clk(clk), .fstclk(fstclk), .rst(1'b0),
     .start(start), .threshold(threshold), .blobby(blockTemplate),
     .found(found), .nonce(nonce), .hash(hash),
     .dispatching(dispatching), .evaluating(evaluating), .ready(ready),
