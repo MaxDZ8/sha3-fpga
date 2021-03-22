@@ -150,6 +150,13 @@
 	// AXI logical addressing: 27..76
 	wire [31:0]	interesting_hash[50];
 	
+	// The hardware suggests you a scan count to keep it busy enough.
+	// OFC the hardware doesn't know how much you clock it for now so that's a wild guess;
+	// it is suggested you reserve this amount of nonces to orchestrator, for each scan operation,
+	// the hardware will test this amount of nonces.
+	// AXI logical addressing: 77
+	wire [31:0] scan_count; 
+	
 	//----------------------------------------------
 	//-- Special registers. Writing them might cause special things to happen.
 	//------------------------------------------------
@@ -683,6 +690,8 @@
 	        7'h4B   : reg_data_out <= interesting_hash[48];
 	        7'h4C   : reg_data_out <= interesting_hash[49];
 	        
+	        7'h4D   : reg_data_out <= scan_count;
+	        
 	        7'h7F   : reg_data_out <= { (PROPER_SHA3 ? 1'b1 : 1'b0), 27'b0, found, idle, evaluating, dispatching };
 	        default : reg_data_out <= 0;
 	      endcase
@@ -745,7 +754,9 @@
       .threshold(threshold),
       
       .blobby(into_scanner),  .nonce(promising_nonce),
-      .hash(wide_hash)
+      .hash(wide_hash),
+      
+      .scan_count(scan_count)
 	);
 	
 	for (genvar loop = 0; loop < 25; loop++) begin : cp
