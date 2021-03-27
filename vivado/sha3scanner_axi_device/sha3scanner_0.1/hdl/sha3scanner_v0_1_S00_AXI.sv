@@ -6,6 +6,7 @@
 		parameter STYLE = "fully-unrolled-fully-parallel",
 		parameter FEEDBACK_MUX_STYLE = "fabric",
 		parameter PROPER_SHA3 = 1,
+		parameter ENABLE_FSTCLK = 0,
 		// User parameters ends
 		// Do not modify the parameters beyond this line
 
@@ -17,18 +18,13 @@
 	(
 		// Users to add ports here
 		
-    // While we produce results we might be multi-cycle and waiting for them to pour out.
-    // In that case, we would evaluate only once every few cycles.
-    // When we are not dispatching and not waiting for any result we are idle.
-    // Idle also means "ready to start a new scan".
     output wire idle,
-		// True if we are actively scanning. 
-    output wire dispatching,
-    // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
+		output wire dispatching,
     output wire evaluating,
-    // True if at least one resulting hash is good enough.
     output wire found,
-
+    
+    input wire fstclk,
+    
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -746,7 +742,8 @@
 	sha3_scanner_instantiator #(
 	    .STYLE(STYLE),
 	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
-	    .PROPER(PROPER_SHA3)
+	    .PROPER(PROPER_SHA3),
+	    .ENABLE_FSTCLK(ENABLE_FSTCLK)
 	) thing (
       .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
       .ready(idle),
@@ -756,7 +753,9 @@
       .blobby(into_scanner),  .nonce(promising_nonce),
       .hash(wide_hash),
       
-      .scan_count(scan_count)
+      .scan_count(scan_count),
+      
+      .fstclk(fstclk)
 	);
 	
 	for (genvar loop = 0; loop < 25; loop++) begin : cp

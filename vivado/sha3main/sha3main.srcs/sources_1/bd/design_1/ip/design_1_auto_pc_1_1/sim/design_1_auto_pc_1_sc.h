@@ -1,3 +1,6 @@
+#ifndef IP_DESIGN_1_AUTO_PC_1_SC_H_
+#define IP_DESIGN_1_AUTO_PC_1_SC_H_
+
 // (c) Copyright 1995-2021 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
@@ -47,43 +50,49 @@
 // DO NOT MODIFY THIS FILE.
 
 
-// IP VLNV: xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0
-// IP Revision: 1
+#ifndef XTLM
+#include "xtlm.h"
+#endif
+#ifndef SYSTEMC_INCLUDED
+#include <systemc>
+#endif
 
-`timescale 1ns/1ps
+#if defined(_MSC_VER)
+#define DllExport __declspec(dllexport)
+#elif defined(__GNUC__)
+#define DllExport __attribute__ ((visibility("default")))
+#else
+#define DllExport
+#endif
 
-(* IP_DEFINITION_SOURCE = "module_ref" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module design_1_artyz7_hasher_led_dr_0_2 (
-  clk,
-  dispatching,
-  evaluating,
-  idle,
-  found,
-  omono,
-  orgb4,
-  orgb5
-);
+class axi_protocol_converter;
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 1e+08, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
-input wire clk;
-input wire dispatching;
-input wire evaluating;
-input wire idle;
-input wire found;
-output wire [3 : 0] omono;
-output wire [2 : 0] orgb4;
-output wire [2 : 0] orgb5;
+class DllExport design_1_auto_pc_1_sc : public sc_core::sc_module
+{
+public:
 
-  artyz7_hasher_led_driver_wrap inst (
-    .clk(clk),
-    .dispatching(dispatching),
-    .evaluating(evaluating),
-    .idle(idle),
-    .found(found),
-    .omono(omono),
-    .orgb4(orgb4),
-    .orgb5(orgb5)
-  );
-endmodule
+  design_1_auto_pc_1_sc(const sc_core::sc_module_name& nm);
+  virtual ~design_1_auto_pc_1_sc();
+
+  // module socket-to-socket AXI TLM interfaces
+
+  xtlm::xtlm_aximm_target_socket* target_rd_socket;
+  xtlm::xtlm_aximm_target_socket* target_wr_socket;
+  xtlm::xtlm_aximm_initiator_socket* initiator_rd_socket;
+  xtlm::xtlm_aximm_initiator_socket* initiator_wr_socket;
+
+  // module socket-to-socket TLM interfaces
+
+
+protected:
+
+  axi_protocol_converter* mp_impl;
+
+private:
+
+  design_1_auto_pc_1_sc(const design_1_auto_pc_1_sc&);
+  const design_1_auto_pc_1_sc& operator=(const design_1_auto_pc_1_sc&);
+
+};
+
+#endif // IP_DESIGN_1_AUTO_PC_1_SC_H_

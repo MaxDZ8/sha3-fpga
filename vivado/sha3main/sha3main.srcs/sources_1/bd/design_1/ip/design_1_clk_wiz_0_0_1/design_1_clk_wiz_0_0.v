@@ -1,4 +1,7 @@
-// (c) Copyright 1995-2021 Xilinx, Inc. All rights reserved.
+
+// file: design_1_clk_wiz_0_0.v
+// 
+// (c) Copyright 2008 - 2013 Xilinx, Inc. All rights reserved.
 // 
 // This file contains confidential and proprietary information
 // of Xilinx, Inc. and is protected under U.S. and
@@ -44,46 +47,44 @@
 // THIS COPYRIGHT NOTICE AND DISCLAIMER MUST BE RETAINED AS
 // PART OF THIS FILE AT ALL TIMES.
 // 
-// DO NOT MODIFY THIS FILE.
+//----------------------------------------------------------------------------
+// User entered comments
+//----------------------------------------------------------------------------
+// None
+//
+//----------------------------------------------------------------------------
+//  Output     Output      Phase    Duty Cycle   Pk-to-Pk     Phase
+//   Clock     Freq (MHz)  (degrees)    (%)     Jitter (ps)  Error (ps)
+//----------------------------------------------------------------------------
+// clk_out1__200.00000______0.000______50.0______114.829_____98.575
+//
+//----------------------------------------------------------------------------
+// Input Clock   Freq (MHz)    Input Jitter (UI)
+//----------------------------------------------------------------------------
+// __primary_________100.000____________0.010
 
+`timescale 1ps/1ps
 
-// IP VLNV: xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0
-// IP Revision: 1
+(* CORE_GENERATION_INFO = "design_1_clk_wiz_0_0,clk_wiz_v6_0_6_0_0,{component_name=design_1_clk_wiz_0_0,use_phase_alignment=true,use_min_o_jitter=false,use_max_i_jitter=false,use_dyn_phase_shift=false,use_inclk_switchover=false,use_dyn_reconfig=false,enable_axi=0,feedback_source=FDBK_AUTO,PRIMITIVE=PLL,num_out_clk=1,clkin1_period=10.000,clkin2_period=10.000,use_power_down=false,use_reset=true,use_locked=false,use_inclk_stopped=false,feedback_type=SINGLE,CLOCK_MGR_TYPE=NA,manual_override=false}" *)
 
-`timescale 1ns/1ps
+module design_1_clk_wiz_0_0 
+ (
+  // Clock out ports
+  output        clk_out1,
+  // Status and control signals
+  input         resetn,
+ // Clock in ports
+  input         clk_in1
+ );
 
-(* IP_DEFINITION_SOURCE = "module_ref" *)
-(* DowngradeIPIdentifiedWarnings = "yes" *)
-module design_1_artyz7_hasher_led_dr_0_2 (
-  clk,
-  dispatching,
-  evaluating,
-  idle,
-  found,
-  omono,
-  orgb4,
-  orgb5
-);
-
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 1e+08, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
-(* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
-input wire clk;
-input wire dispatching;
-input wire evaluating;
-input wire idle;
-input wire found;
-output wire [3 : 0] omono;
-output wire [2 : 0] orgb4;
-output wire [2 : 0] orgb5;
-
-  artyz7_hasher_led_driver_wrap inst (
-    .clk(clk),
-    .dispatching(dispatching),
-    .evaluating(evaluating),
-    .idle(idle),
-    .found(found),
-    .omono(omono),
-    .orgb4(orgb4),
-    .orgb5(orgb5)
+  design_1_clk_wiz_0_0_clk_wiz inst
+  (
+  // Clock out ports  
+  .clk_out1(clk_out1),
+  // Status and control signals               
+  .resetn(resetn), 
+ // Clock in ports
+  .clk_in1(clk_in1)
   );
+
 endmodule

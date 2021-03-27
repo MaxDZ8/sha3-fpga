@@ -8,6 +8,7 @@
 		parameter STYLE = "fully-unrolled-fully-parallel",
 		parameter FEEDBACK_MUX_STYLE = "fabric",
 		parameter PROPER_SHA3 = 1,
+		parameter ENABLE_FSTCLK = 0,
 
 		// User parameters ends
 		// Do not modify the parameters beyond this line
@@ -31,6 +32,11 @@
     output wire idle,
     // True if at least one resulting hash is good enough.
     output wire found,
+    
+    // Clock provided to the internal performance cruncher.
+    // Assumed to be synchronous with s00_axi_aclk.
+    // Used only when ENABLE_FSTCLK is nonzero.
+    input wire fstclk,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -64,6 +70,7 @@
 	  .STYLE(STYLE),
 	  .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
 	  .PROPER_SHA3(PROPER_SHA3),
+	  .ENABLE_FSTCLK(ENABLE_FSTCLK),
 	  
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
@@ -93,7 +100,9 @@
 		.idle(idle),
 		.dispatching(dispatching),
 		.evaluating(evaluating),
-		.found(found)
+		.found(found),
+		
+		.fstclk(fstclk)
 	);
 
 	// Add user logic here
