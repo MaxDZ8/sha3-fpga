@@ -26,20 +26,19 @@ always @(posedge clk) if(buff_evaluating) begin
 end
 
 // Green "scan" leds. //////////////////////////////////////////////////////
-bit[1:0] led_on = 1'b0;
-bit fullbrigth = 1'b0;
+bit[1:0] brigthness = 2'h0;
+bit[1:0] which = 2'b0;
+
 always_ff @(posedge clk) if(buff_evaluating & count[23]) begin
-    if (fullbrigth) begin
-        led_on <= led_on + 1'b1;
-        fullbrigth <= 1'b0; 
-    end
-    else fullbrigth <= 1'b1;
+    brigthness <= brigthness + 1'b1;
+    if (brigthness == 2'h3) which <= which + 1'b1;
 end
 
-wire[1:0] led0 = led_on != 2'h3 ? 2'b0 : { fullbrigth, 1'b1 }; 
-wire[1:0] led1 = led_on != 2'h2 ? 2'b0 : { fullbrigth, 1'b1 }; 
-wire[1:0] led2 = led_on != 2'h1 ? 2'b0 : { fullbrigth, 1'b1 }; 
-wire[1:0] led3 = led_on != 2'h0 ? 2'b0 : { fullbrigth, 1'b1 }; // leds are in reverse order physically
+wire[1:0] led0 = which == 2'h3 ? brigthness : 2'h0; // leds are physically in reverse order
+wire[1:0] led1 = which == 2'h2 ? brigthness : 2'h0;
+wire[1:0] led2 = which == 2'h1 ? brigthness : 2'h0;
+wire[1:0] led3 = which == 2'h0 ? brigthness : 2'h0; 
+
 
 // RGB4, status led ///////////////////////////////////////////////////////////////////////
 // RED: on when idle. ---------------------------------------------------------------------
