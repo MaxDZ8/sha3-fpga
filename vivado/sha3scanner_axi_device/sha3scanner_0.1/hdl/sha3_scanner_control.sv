@@ -18,12 +18,12 @@ module sha3_scanner_control #(
     input[31:0] blockTemplate[PROPER ? 20 : 24],
     
     // Results
-    output ofound,
+    output ocapture,
     output[63:0] ohash[25],
     output[31:0] ononce,
     
     // Status
-    output odispatching, oevaluating, oready,
+    output odispatching, oawaiting, oevaluating,
     
     input hasher_ready,
     output feedgood,
@@ -38,6 +38,8 @@ module sha3_scanner_control #(
 	  output[31:0] scan_count
 );
 
+longint unsigned buff_threshold;
+always_ff @(posedge clk) buff_threshold <= threshold;
 
 enum bit[2:0] {   
     s_waiting     = 3'b001,
@@ -45,16 +47,11 @@ enum bit[2:0] {
     s_flushing    = 3'b100
 } state = s_waiting;
 
-assign oready = state[0];
-assign odispatching = state[1] & hasher_ready; // the hasher will not really care but I like to see movement in waves
-assign oevaluating = hashgood; 
-
 assign feedgood = state[1];
 
-wire capture = start & oready;
 wire[31:0] scan_start;
 longint unsigned rowa[5]; // always completely captured in both formulations
-always_ff @(posedge clk) if(capture) begin
+always_ff @(posedge clk) if(start) begin
     rowa[0] <= { blockTemplate[ 1], blockTemplate[ 0] };
     rowa[1] <= { blockTemplate[ 3], blockTemplate[ 2] };
     rowa[2] <= { blockTemplate[ 5], blockTemplate[ 4] };
@@ -69,31 +66,46 @@ assign scan_count = (32'b1 <<< EXHAUST_BIT);
 int unsigned dispatch_iterator = 32'b0; // I allocate full 32 bit for easiness anyway
 wire exhausted = dispatch_iterator[EXHAUST_BIT];
 bit hash_observed = 1'b0;
+bit buff_dispatching = 1'b0, buff_awaiting = 1'b0;
+wire good_enough;
 always_ff @(posedge clk) case(state)
     s_waiting: if(start) begin
         dispatch_iterator <= 1'b0;
+		buff_dispatching <= 1'b1;
+		buff_awaiting <= 1'b1;
+		hash_observed <= 1'b0;
         state <= s_dispatching;
     end
     s_dispatching: begin
-        if(exhausted | ofound) state <= s_flushing;
+        if(exhausted | good_enough) begin
+		    buff_dispatching <= 1'b0;
+		    state <= s_flushing;
+		end
         else if (hasher_ready) begin
             dispatch_iterator <= dispatch_iterator + 1'b1;
         end
+		if(hashgood) hash_observed <= 1'b1;
     end
     s_flushing: begin
-        if (hash_observed & ~hashgood) state <= s_waiting;
+		if(hashgood) hash_observed <= 1'b1;
+        if (hash_observed & ~hashgood) begin
+		    buff_awaiting <= 1'b0;
+		    state <= s_waiting;
+		end
     end
 endcase
+assign odispatching = buff_dispatching;
+assign oawaiting = buff_awaiting;
 
 int unsigned nonce_base = 32'b0;
-always_ff @(posedge clk) if(capture) nonce_base <= scan_start;
+always_ff @(posedge clk) if(start) nonce_base <= scan_start;
 wire[31:0] testing_nonce = nonce_base + dispatch_iterator;
 
 if (PROPER) begin : proper
     assign scan_start = blockTemplate[19];
     longint unsigned buff_rowb[4]; // the last entry is magic
     int unsigned lorowblast = 32'b0;
-    always_ff @(posedge clk) if(capture) begin
+    always_ff @(posedge clk) if(start) begin
         buff_rowb[0] <= { blockTemplate[11], blockTemplate[10] };
         buff_rowb[1] <= { blockTemplate[13], blockTemplate[12] };
         buff_rowb[2] <= { blockTemplate[15], blockTemplate[14] };
@@ -107,7 +119,7 @@ end
 else begin : quirky
     assign scan_start = blockTemplate[21];
     longint unsigned buff_rowb[5], buff_rowc[2]; // only two entries in the third row are defined by block input, the others are magic or constants
-    always_ff @(posedge clk) if(capture) begin
+    always_ff @(posedge clk) if(start) begin
         buff_rowb[0] <= { blockTemplate[11], blockTemplate[10] };
         buff_rowb[1] <= { blockTemplate[13], blockTemplate[12] };
         buff_rowb[2] <= { blockTemplate[15], blockTemplate[14] };
@@ -123,21 +135,6 @@ end
 assign feedd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
 assign feede = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
 
-bit buff_found = 1'b0;
-int unsigned good_scan = 32'b0;
-longint unsigned good_hash[25];
-
-assign ofound = buff_found;
-assign ononce = good_scan; // lying big way. This is nonce from given start, not nonce absolutely
-for (genvar loop = 0; loop < 25; loop++) assign ohash[loop] = good_hash[loop];
-
-// The process of evaluating results is fully reactive.
-// No need to sync on the FSM or anything. We'll be wasting a few hundred clocks but what's the issue really?
-// For first, I help the FSM by monitoring hash output.
-always_ff @(posedge clk) begin
-    if (oready) hash_observed <= 1'b0;
-    else if(~hash_observed) hash_observed <= hashgood;
-end
 
 wire[63:0] hash_diff;
 if (PROPER) assign hash_diff = hasha[3];
@@ -145,34 +142,36 @@ else assign hash_diff = {
     hasha[0][ 7: 0], hasha[0][15: 8], hasha[0][23:16], hasha[0][31:24],
     hasha[0][39:32], hasha[0][47:40], hasha[0][55:48], hasha[0][63:56]
 };
-wire good_enough = hashgood & ($unsigned(hash_diff) <= $unsigned(threshold));
+assign good_enough = hashgood & ($unsigned(hash_diff) <= $unsigned(buff_threshold));
 
 int unsigned result_iter = 32'b0;
-
 always_ff @(posedge clk) begin
-    if(oready) begin
-        if(start) begin
-            buff_found <= 1'b0;
-            good_scan <= 32'b0;
-            good_hash <= '{ 25{ 64'b0 } };
-            result_iter <= 32'b0;
-        end
-    end
-    else if(hashgood) begin
-        result_iter <= result_iter + 1'b1;
-        if(~buff_found & good_enough) begin
-            buff_found <= 1'b1;
-            good_scan <= result_iter;
-            good_hash <= '{
-                hasha[0], hasha[1], hasha[2], hasha[3], hasha[4],
-                hashb[0], hashb[1], hashb[2], hashb[3], hashb[4],
-                hashc[0], hashc[1], hashc[2], hashc[3], hashc[4],
-                hashd[0], hashd[1], hashd[2], hashd[3], hashd[4],
-                hashe[0], hashe[1], hashe[2], hashe[3], hashe[4]
-            };
-        end
-    end
+	if(start) result_iter <= 32'b0;
+    else if(hashgood) result_iter <= result_iter + 1'b1;
 end
 
+bit buff_oevaluating = 1'b0;
+always_ff @(posedge clk) buff_oevaluating <= hashgood;
+assign oevaluating = buff_oevaluating;
+
+bit buff_ocapture = 1'b0;
+always_ff @(posedge clk) buff_ocapture <= good_enough;
+assign ocapture = buff_ocapture;
+
+int unsigned buff_ononce = 32'b0;
+always_ff @(posedge clk) if(good_enough) buff_ononce <= result_iter;
+assign ononce = buff_ononce; // lying big way. This is nonce from given start, not nonce absolutely
+
+longint unsigned buff_ohash[25];
+always_ff @(posedge clk) if(good_enough) begin
+	buff_ohash <= '{
+		hasha[0], hasha[1], hasha[2], hasha[3], hasha[4],
+		hashb[0], hashb[1], hashb[2], hashb[3], hashb[4],
+		hashc[0], hashc[1], hashc[2], hashc[3], hashc[4],
+		hashd[0], hashd[1], hashd[2], hashd[3], hashd[4],
+		hashe[0], hashe[1], hashe[2], hashe[3], hashe[4]
+	};
+end
+for (genvar loop = 0; loop < 25; loop++) assign ohash[loop] = buff_ohash[loop];
 
 endmodule

@@ -5,20 +5,20 @@
 module sha3_packed_pipeline_scanner #(
     FEEDBACK_MUX_STYLE = "fabric",
     PIPE_ROUNDS = 6,
-    PROPER = 1
+    PROPER = 1,
+	localparam INPUT_ELEMENTS = PROPER ? 20 : 24
 ) (
     input clk,
-    // Scan request
-    input start,
     input[63:0] threshold,
-    input[31:0] blockTemplate[PROPER ? 20 : 24],
-
-    output ofound,
-    output[63:0] ohash[25],
+    input start,
+    input[31:0] blobby[INPUT_ELEMENTS],
+	  
+    output odispatching, oawaiting, oevaluating,
+	
+    output ocapture,
     output[31:0] ononce,
-    // Status
-    output odispatching, oevaluating, oready,
-    
+    output[63:0] ohash[25],
+	  
     output[31:0] scan_count
 );
 
@@ -30,9 +30,9 @@ sha3_scanner_control #(
     .PIPE_PERF_LEVEL(PIPE_ROUNDS)
 ) fsm (
     .clk(clk),
-    .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
-    .ofound(ofound), .ohash(ohash), .ononce(ononce),
-    .odispatching(odispatching), .oevaluating(oevaluating), .oready(oready),
+    .start(start), .threshold(threshold), .blockTemplate(blobby),
+    .ocapture(ocapture), .ohash(ohash), .ononce(ononce),
+    .odispatching(odispatching), .oawaiting(oawaiting), .oevaluating(oevaluating),
     
     .hasher_ready(hasher_can_take),
     .feedgood(feedgood),

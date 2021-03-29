@@ -141,9 +141,13 @@ else if (STYLE == "iterate-four-times" | STYLE == "iterate-twice") begin : small
         .PROPER(PROPER)
     ) nice_deal (
         .clk(crunch_clock),
-        .start(start), .threshold(threshold), .blockTemplate(blobby),
-        .ofound(found), .ohash(hash), .ononce(nonce),
-        .oready(ready), .odispatching(dispatching), .oevaluating(evaluating),
+	  
+	    .threshold(buff_threshold),
+	    .start(was_start_strobe), .blobby(buff_blobby),
+	  
+	    .ocapture(capture_found), .ohash(good_hash), .ononce(good_nonce),
+
+	    .odispatching(dispatching), .oawaiting(awaiting), .oevaluating(evaluating),
       
         .scan_count(scan_count)
     );

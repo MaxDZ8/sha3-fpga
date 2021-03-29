@@ -25,7 +25,7 @@ sha3_scanner_dispatch_logic #(
 );
 
 
-wire ready, dispatching, evaluating;
+wire idle, dispatching, awaiting, evaluating;
 wire found;
 wire[63:0] hash[25];
 wire[31:0] nonce;
@@ -37,8 +37,8 @@ sha3_scanner_instantiator #(
 ) thing (
     .clk(clk), .fstclk(fstclk), .rst(1'b0),
     .start(start), .threshold(threshold), .blobby(blockTemplate),
-    .found(found), .nonce(nonce), .hash(hash),
-    .dispatching(dispatching), .evaluating(evaluating), .ready(ready),
+    .idle(idle), .found(found), .nonce(nonce), .hash(hash),
+    .dispatching(dispatching), .awaiting(awaiting), .evaluating(evaluating),
     
     .scan_count(scan_count)
 );
