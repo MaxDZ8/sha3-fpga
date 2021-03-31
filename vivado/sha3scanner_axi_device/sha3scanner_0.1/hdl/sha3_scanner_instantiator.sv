@@ -69,22 +69,22 @@ wire crunch_clock = ENABLE_FSTCLK ? fstclk : clk;
 wire start_strobe = idle & start;
 
 bit buff_idle = 1'b1;
-always_ff @(posedge crunch_clock) begin
+always_ff @(posedge clk) begin
     if(buff_idle) buff_idle <= ~awaiting;
     else buff_idle <= start_strobe;
 end
 assign idle = buff_idle;
 
 longint unsigned buff_threshold = 64'b0;
-always_ff @(posedge crunch_clock) buff_threshold <= threshold;
+always_ff @(posedge clk) buff_threshold <= threshold;
 
 int unsigned buff_blobby[INPUT_ELEMENTS];
 for (genvar el = 0; el < INPUT_ELEMENTS; el++) begin
-    always_ff @(posedge crunch_clock) buff_blobby[el] <= blobby[el];
+    always_ff @(posedge clk) buff_blobby[el] <= blobby[el];
 end
 
 bit was_start_strobe = 1'b0;
-always_ff @(posedge crunch_clock) was_start_strobe <= start_strobe;
+always_ff @(posedge clk) was_start_strobe <= start_strobe;
 
 // Similarly, buffer the outputs/results.
 // Note result validity is now managed here, scanners just need to tell me if I need to capture and are therefore simplified.
