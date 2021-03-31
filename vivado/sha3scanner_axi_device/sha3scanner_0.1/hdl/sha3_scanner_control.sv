@@ -67,7 +67,7 @@ int unsigned dispatch_iterator = 32'b0; // I allocate full 32 bit for easiness a
 wire exhausted = dispatch_iterator[EXHAUST_BIT];
 bit hash_observed = 1'b0;
 bit buff_dispatching = 1'b0, buff_awaiting = 1'b0;
-wire good_enough;
+wire good_enough; // now comes one clock late but even if we dispatch a bit more it's still ok
 always_ff @(posedge clk) case(state)
     s_waiting: if(start) begin
         dispatch_iterator <= 1'b0;
@@ -135,23 +135,30 @@ end
 assign feedd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
 assign feede = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
 
+wire was_hashgood;
+wire[63:0] was_hasha[5], was_hashb[5], was_hashc[5], was_hashd[5], was_hashe[5];
+sha3_state_capture capture_hash (
+    .clk(clk),
+    .isa(hasha), .isb(hashb), .isc(hashc), .isd(hashd), .ise(hashe), .sample(hashgood),
+    .ogood(was_hashgood), .osa(was_hasha), .osb(was_hashb), .osc(was_hashc), .osd(was_hashd), .ose(was_hashe)
+);
 
 wire[63:0] hash_diff;
-if (PROPER) assign hash_diff = hasha[3];
+if (PROPER) assign hash_diff = was_hasha[3];
 else assign hash_diff = {
-    hasha[0][ 7: 0], hasha[0][15: 8], hasha[0][23:16], hasha[0][31:24],
-    hasha[0][39:32], hasha[0][47:40], hasha[0][55:48], hasha[0][63:56]
+    was_hasha[0][ 7: 0], was_hasha[0][15: 8], was_hasha[0][23:16], was_hasha[0][31:24],
+    was_hasha[0][39:32], was_hasha[0][47:40], was_hasha[0][55:48], was_hasha[0][63:56]
 };
-assign good_enough = hashgood & ($unsigned(hash_diff) <= $unsigned(buff_threshold));
+assign good_enough = was_hashgood & ($unsigned(hash_diff) <= $unsigned(buff_threshold));
 
 int unsigned result_iter = 32'b0;
 always_ff @(posedge clk) begin
-	if(start) result_iter <= 32'b0;
-    else if(hashgood) result_iter <= result_iter + 1'b1;
+    if(start) result_iter <= 32'b0;
+    else if(was_hashgood) result_iter <= result_iter + 1'b1;
 end
 
 bit buff_oevaluating = 1'b0;
-always_ff @(posedge clk) buff_oevaluating <= hashgood;
+always_ff @(posedge clk) buff_oevaluating <= was_hashgood;
 assign oevaluating = buff_oevaluating;
 
 bit buff_ocapture = 1'b0;
@@ -165,11 +172,11 @@ assign ononce = buff_ononce; // lying big way. This is nonce from given start, n
 longint unsigned buff_ohash[25];
 always_ff @(posedge clk) if(good_enough) begin
 	buff_ohash <= '{
-		hasha[0], hasha[1], hasha[2], hasha[3], hasha[4],
-		hashb[0], hashb[1], hashb[2], hashb[3], hashb[4],
-		hashc[0], hashc[1], hashc[2], hashc[3], hashc[4],
-		hashd[0], hashd[1], hashd[2], hashd[3], hashd[4],
-		hashe[0], hashe[1], hashe[2], hashe[3], hashe[4]
+		was_hasha[0], was_hasha[1], was_hasha[2], was_hasha[3], was_hasha[4],
+		was_hashb[0], was_hashb[1], was_hashb[2], was_hashb[3], was_hashb[4],
+		was_hashc[0], was_hashc[1], was_hashc[2], was_hashc[3], was_hashc[4],
+		was_hashd[0], was_hashd[1], was_hashd[2], was_hashd[3], was_hashd[4],
+		was_hashe[0], was_hashe[1], was_hashe[2], was_hashe[3], was_hashe[4]
 	};
 end
 for (genvar loop = 0; loop < 25; loop++) assign ohash[loop] = buff_ohash[loop];
