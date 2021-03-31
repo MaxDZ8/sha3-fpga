@@ -71,7 +71,7 @@ wire start_strobe = idle & start;
 bit buff_idle = 1'b1;
 always_ff @(posedge crunch_clock) begin
     if(buff_idle) buff_idle <= ~awaiting;
-	else buff_idle <= start_strobe;
+    else buff_idle <= start_strobe;
 end
 assign idle = buff_idle;
 
@@ -80,7 +80,7 @@ always_ff @(posedge crunch_clock) buff_threshold <= threshold;
 
 int unsigned buff_blobby[INPUT_ELEMENTS];
 for (genvar el = 0; el < INPUT_ELEMENTS; el++) begin
-    always_ff @(posedge crunch_clock) if(start_strobe) buff_blobby[el] <= blobby[el];
+    always_ff @(posedge crunch_clock) buff_blobby[el] <= blobby[el];
 end
 
 bit was_start_strobe = 1'b0;
