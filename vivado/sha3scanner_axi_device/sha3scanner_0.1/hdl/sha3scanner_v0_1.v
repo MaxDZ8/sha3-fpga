@@ -23,6 +23,8 @@
 		
 		// True if we are actively scanning. 
     output wire dispatching,
+    // True if I have dispatched at least a test and waiting for result.
+    output wire awaiting,
     // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
     output wire evaluating,
     // While we produce results we might be multi-cycle and waiting for them to pour out.
