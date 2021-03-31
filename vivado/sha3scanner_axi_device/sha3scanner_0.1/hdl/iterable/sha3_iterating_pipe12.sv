@@ -111,11 +111,11 @@ sha3_iterating_semipack #(
 
 longint unsigned buffa[5], buffb[5], buffc[5], buffd[5], buffe[5]; // output and feedback buffers
 for (genvar comp = 0; comp < 5; comp++) begin
-    always_ff @(posedge clk) if(rndo_good) buffa[comp] <= rndoa[comp];
-    always_ff @(posedge clk) if(rndo_good) buffb[comp] <= rndob[comp];
-    always_ff @(posedge clk) if(rndo_good) buffc[comp] <= rndoc[comp];
-    always_ff @(posedge clk) if(rndo_good) buffd[comp] <= rndod[comp];
-    always_ff @(posedge clk) if(rndo_good) buffe[comp] <= rndoe[comp];
+    always_ff @(posedge clk) buffa[comp] <= rndoa[comp];
+    always_ff @(posedge clk) buffb[comp] <= rndob[comp];
+    always_ff @(posedge clk) buffc[comp] <= rndoc[comp];
+    always_ff @(posedge clk) buffd[comp] <= rndod[comp];
+    always_ff @(posedge clk) buffe[comp] <= rndoe[comp];
 end
 
 
