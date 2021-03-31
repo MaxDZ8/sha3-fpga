@@ -713,7 +713,10 @@ module sha3scanner_v0_1_S00_AXI #
 
 	// Add user logic here
 
-  wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
+  bit writing_control = 1'b0;
+  always_ff @(posedge S_AXI_ACLK) begin
+      writing_control <= slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
+  end
 	wire start = idle & writing_control;
 	wire[63:0] wide_hash[25];
 	
