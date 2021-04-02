@@ -170,7 +170,7 @@ always_ff @(posedge clk) if(good_enough) buff_ononce <= result_iter;
 assign ononce = buff_ononce; // lying big way. This is nonce from given start, not nonce absolutely
 
 longint unsigned buff_ohash[25];
-always_ff @(posedge clk) if(good_enough) begin
+always_ff @(posedge clk) begin
 	buff_ohash <= '{
 		was_hasha[0], was_hasha[1], was_hasha[2], was_hasha[3], was_hasha[4],
 		was_hashb[0], was_hashb[1], was_hashb[2], was_hashb[3], was_hashb[4],
