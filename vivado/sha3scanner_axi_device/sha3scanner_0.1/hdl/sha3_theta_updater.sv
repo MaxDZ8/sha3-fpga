@@ -15,7 +15,8 @@ module sha3_theta_updater #(
     //                 but I'd rather have the synth results be coherent.
     // "instantiated-dsp": instantiate DSP48E1 explicitly and be what I want!
     LOGIC_STYLE = "basic",
-    AB_COMPENSATE = 1
+    AB_COMPENSATE = 1,
+    CAPTURE_CONTINUOUSLY = 1
 )(
     input clk,
     input sample,
@@ -29,7 +30,7 @@ if (LOGIC_STYLE == "basic") begin
     longint unsigned buffa[5], buffb[5], buffc[5], buffd[5], buffe[5];
     genvar comp;
     for (comp = 0; comp < 5; comp++) begin
-        always_ff @(posedge clk) if (sample) begin
+        always_ff @(posedge clk) if (sample | CAPTURE_CONTINUOUSLY) begin
             buffa[comp] <= isa[comp] ^ elt[comp];
             buffb[comp] <= isb[comp] ^ elt[comp];
             buffc[comp] <= isc[comp] ^ elt[comp];

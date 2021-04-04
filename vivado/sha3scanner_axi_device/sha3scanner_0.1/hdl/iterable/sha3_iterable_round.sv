@@ -2,7 +2,9 @@
 
 // SHA3 round function which can be iterated.
 // Always performs THETA, RHO+PI, CHI, IOTA(i).
-module sha3_iterable_round (
+module sha3_iterable_round #(
+    CAPTURE_CONTINUOUSLY = 1
+) (
     input clk,
     input[4:0] round_index,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
@@ -16,7 +18,9 @@ module sha3_iterable_round (
 wire[63:0] tochia[5], tochib[5], tochic[5], tochid[5], tochie[5];
 wire fetch_chi;
 wire[4:0] rndaft_semi;
-sha3_iterable_semiround simply(
+sha3_iterable_semiround #(
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
+) simply(
     .clk(clk), .round_index(round_index), .sample(sample),
     .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     

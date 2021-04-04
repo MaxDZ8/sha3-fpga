@@ -749,7 +749,7 @@ module sha3scanner_v0_1_S00_AXI #
 	) thing (
       .clk(S_AXI_ACLK), .fstclk(fstclk), .rst(~S_AXI_ARESETN),
       .start(start), .threshold(threshold), .blobby(into_scanner),
-      .idle(idle), .found(found), .nonce(nonce), .hash(wide_hash),
+      .idle(idle), .found(found), .nonce(promising_nonce), .hash(wide_hash),
       .dispatching(dispatching), .awaiting(awaiting), .evaluating(evaluating),
       
       .scan_count(scan_count)

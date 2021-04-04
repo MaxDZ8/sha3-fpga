@@ -4,7 +4,8 @@
 // A- xor the various slices together and produce an elt each
 // B- update each slice xor'ing in the elt.
 module sha3_theta #(
-  UPDATE_LOGIC_STYLE = "basic"
+  UPDATE_LOGIC_STYLE = "basic",
+  CAPTURE_CONTINUOUSLY = 1
 )(
     input clk,
     input[63:0] isa[5],
@@ -32,7 +33,9 @@ end
 
 wire fetched;
 wire[63:0] buffa[5], buffb[5], buffc[5], buffd[5], buffe[5];
-sha3_state_capture bufferize(
+sha3_state_capture #(
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
+) bufferize(
     .clk(clk),
     .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
     .ogood(fetched),
@@ -43,9 +46,7 @@ sha3_state_capture bufferize(
 // This module itself does not buffer... kinda.
 wire[63:0] elt[5];
 sha3_theta_elts #(.OUTPUT_BUFFER(0)) eltificator (
-    .clk(clk),
-    .sample(fetched), .iterm(term),
-    .oelt(elt)
+    .clk(clk), .iterm(term), .oelt(elt)
 );
 
 // Now elts and state come at the same clock so this isn't necessary anymore.

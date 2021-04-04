@@ -2,7 +2,8 @@
 
 module sha3_rho_pi #(
     INPUT_BUFFER = 0,
-    OUTPUT_BUFFER = 1
+    OUTPUT_BUFFER = 1,
+    CAPTURE_CONTINUOUSLY = 1
 )(
     input clk,
     input[63:0] isa[5],
@@ -22,7 +23,8 @@ module sha3_rho_pi #(
 wire[63:0] valuein[5][5];
 wire captured;
 sha3_state_capture#(
-    .BUFFERIZE(INPUT_BUFFER)
+    .BUFFERIZE(INPUT_BUFFER),
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
 ) inbuff(
     .clk(clk),
     .sample(sample), .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
@@ -66,7 +68,8 @@ assign rotating[3] = '{ rotl_27(valuein[0][4]), rotl_36(valuein[1][0]), rotl_10(
 assign rotating[4] = '{ rotl_62(valuein[0][2]), rotl_55(valuein[1][3]), rotl_39(valuein[2][4]), rotl_41(valuein[3][0]), rotl__2(valuein[4][1]) }; // diag+4
 
 sha3_state_capture#(
-    .BUFFERIZE(OUTPUT_BUFFER)
+    .BUFFERIZE(OUTPUT_BUFFER),
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
 ) outbuff(
     .clk(clk),
     .sample(captured), .isa(rotating[0]), .isb(rotating[1]), .isc(rotating[2]), .isd(rotating[3]), .ise(rotating[4]),
