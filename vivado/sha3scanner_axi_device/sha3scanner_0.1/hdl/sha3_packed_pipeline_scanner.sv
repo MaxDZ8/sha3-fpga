@@ -6,7 +6,8 @@ module sha3_packed_pipeline_scanner #(
     FEEDBACK_MUX_STYLE = "fabric",
     PIPE_ROUNDS = 6,
     PROPER = 1,
-	localparam INPUT_ELEMENTS = PROPER ? 20 : 24
+    ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0000_0000,
+	  localparam INPUT_ELEMENTS = PROPER ? 20 : 24
 ) (
     input clk,
     input[63:0] threshold,
@@ -47,7 +48,8 @@ sha3_scanner_control #(
 if (PIPE_ROUNDS == 6) begin : tiny
     sha3_iterating_pipe6 #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
-        .LAST_ROUND_IS_PROPER(PROPER)
+        .LAST_ROUND_IS_PROPER(PROPER),
+        .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER[5:0])
     ) hasher (
         .clk(clk),
         .sample(feedgood),
@@ -60,7 +62,8 @@ end
 else if(PIPE_ROUNDS == 12) begin : nice
     sha3_iterating_pipe12 #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
-        .LAST_ROUND_IS_PROPER(PROPER)
+        .LAST_ROUND_IS_PROPER(PROPER),
+        .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER[11:0])
     ) hasher (
         .clk(clk),
         .sample(feedgood),

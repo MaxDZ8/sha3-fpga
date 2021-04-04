@@ -2,7 +2,9 @@
 
 // IOTA taking a round number 0..23 by port.
 // Internally selects its magic number to XOR into el[0].
-module sha3_iterable_iota(
+module sha3_iterable_iota #(
+    OUTPUT_BUFFER = 0
+)(
     input clk,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
     input[4:0] round_index,
@@ -21,20 +23,15 @@ localparam longint unsigned rc[24] = {
 };
 wire[63:0] magic = rc[round_index];
 
-assign ogood = sample;
+wire[63:0] mangled[5] = '{ isa[0] ^ magic, isa[1], isa[2], isa[3], isa[4] };
 
-assign osa[0] = isa[0] ^ magic;
-assign osa[1] = isa[1];
-assign osa[2] = isa[2];
-assign osa[3] = isa[3];
-assign osa[4] = isa[4];
-
-for (genvar comp = 0; comp < 5; comp++) begin
-    assign osb[comp] = isb[comp];
-    assign osc[comp] = isc[comp];
-    assign osd[comp] = isd[comp];
-    assign ose[comp] = ise[comp];
-end
-
+sha3_state_capture#(
+    .BUFFERIZE(OUTPUT_BUFFER)
+) outbuff(
+    .clk(clk),
+    .sample(sample), .isa(mangled), .isb(isb), .isc(isc), .isd(isd), .ise(ise),
+    .ogood(ogood),
+    .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
+);
 
 endmodule

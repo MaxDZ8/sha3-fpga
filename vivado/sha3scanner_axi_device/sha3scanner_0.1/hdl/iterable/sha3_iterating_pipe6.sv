@@ -7,7 +7,8 @@
 // D- Wait until good becomes high. Results will come in bursts.
 module sha3_iterating_pipe6 #(
     FEEDBACK_MUX_STYLE = "fabric",
-    LAST_ROUND_IS_PROPER = 1
+    LAST_ROUND_IS_PROPER = 1,
+    ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0010_0000
 ) (
     input clk, 
     input sample,
@@ -22,7 +23,7 @@ module sha3_iterating_pipe6 #(
 // Keep accepting new values until the feedback mux needs to take the back-routed values,
 // this keeps the pipeline busy for a while!
 localparam FEEDBACK_MUX_LATENCY = FEEDBACK_MUX_STYLE == "fabric" ? 1 : 2;
-localparam bit[3:0] burst_len_and_delay = 4'd12 + FEEDBACK_MUX_LATENCY;
+localparam bit[3:0] burst_len_and_delay = 4'd12 + $countones(ROUND_OUTPUT_BUFFER) + FEEDBACK_MUX_LATENCY;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
@@ -100,7 +101,8 @@ wire rndo_good;
 wire[63:0] rndoa[5], rndob[5], rndoc[5], rndod[5], rndoe[5];
 sha3_iterating_semipack #(
     .ROUND_COUNT(6),
-    .LAST_ROUND_IS_PROPER(LAST_ROUND_IS_PROPER)
+    .LAST_ROUND_IS_PROPER(LAST_ROUND_IS_PROPER),
+    .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER)
 ) crunchy (
     .clk(clk),
     .isa(muxoa), .isb(muxob), .isc(muxoc), .isd(muxod), .ise(muxoe),

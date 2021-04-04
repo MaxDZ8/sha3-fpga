@@ -33,7 +33,8 @@ sha3_scanner_instantiator #(
     .STYLE("iterate-four-times"),
     .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
     .PROPER(ALGO_IS_PROPER),
-    .ENABLE_FSTCLK(FASTER_CRUNCHING)
+    .ENABLE_FSTCLK(FASTER_CRUNCHING),
+    .ROUND_OUTPUT_BUFFER(24'b0000_0000_0000_0000_0010_0000)
 ) thing (
     .clk(clk), .fstclk(fstclk), .rst(1'b0),
     .start(start), .threshold(threshold), .blobby(blockTemplate),
