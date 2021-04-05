@@ -9,6 +9,7 @@
 		parameter FEEDBACK_MUX_STYLE = "fabric",
 		parameter PROPER_SHA3 = 1,
 		parameter ENABLE_FSTCLK = 0,
+    parameter ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0000_0000,
 
 		// User parameters ends
 		// Do not modify the parameters beyond this line
@@ -73,6 +74,7 @@
 	  .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
 	  .PROPER_SHA3(PROPER_SHA3),
 	  .ENABLE_FSTCLK(ENABLE_FSTCLK),
+	  .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER),
 	  
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)

@@ -7,6 +7,7 @@ module sha3scanner_v0_1_S00_AXI #
 	parameter FEEDBACK_MUX_STYLE = "fabric",
 	parameter PROPER_SHA3 = 1,
 	parameter ENABLE_FSTCLK = 0,
+  parameter ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0000_0000,
 	// User parameters ends
 	// Do not modify the parameters beyond this line
 
@@ -745,7 +746,8 @@ module sha3scanner_v0_1_S00_AXI #
 	    .STYLE(STYLE),
 	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
 	    .PROPER(PROPER_SHA3),
-	    .ENABLE_FSTCLK(ENABLE_FSTCLK)
+	    .ENABLE_FSTCLK(ENABLE_FSTCLK),
+	    .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER)
 	) thing (
       .clk(S_AXI_ACLK), .fstclk(fstclk), .rst(~S_AXI_ARESETN),
       .start(start), .threshold(threshold), .blobby(into_scanner),
