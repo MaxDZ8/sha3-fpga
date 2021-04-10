@@ -3,7 +3,7 @@
   <spirit:vendor>Maxdz8</spirit:vendor>
   <spirit:library>crypto</spirit:library>
   <spirit:name>sha3scanner</spirit:name>
-  <spirit:version>0.12</spirit:version>
+  <spirit:version>0.13</spirit:version>
   <spirit:busInterfaces>
     <spirit:busInterface>
       <spirit:name>S00_AXI</spirit:name>
@@ -278,7 +278,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>11fbd2da</spirit:value>
+            <spirit:value>405967a1</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -308,7 +308,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>05b0f5bb</spirit:value>
+            <spirit:value>a65d1d21</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -316,14 +316,14 @@
         <spirit:name>xilinx_testbench</spirit:name>
         <spirit:displayName>Test Bench</spirit:displayName>
         <spirit:envIdentifier>:vivado.xilinx.com:simulation.testbench</spirit:envIdentifier>
-        <spirit:modelName>uut_sha3_scanner</spirit:modelName>
+        <spirit:modelName>uut_sha3_packed6_scanner</spirit:modelName>
         <spirit:fileSetRef>
           <spirit:localName>xilinx_testbench_view_fileset</spirit:localName>
         </spirit:fileSetRef>
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>viewChecksum</spirit:name>
-            <spirit:value>6553bb93</spirit:value>
+            <spirit:value>7fcfc3aa</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -331,6 +331,18 @@
     <spirit:ports>
       <spirit:port>
         <spirit:name>dispatching</spirit:name>
+        <spirit:wire>
+          <spirit:direction>out</spirit:direction>
+          <spirit:wireTypeDefs>
+            <spirit:wireTypeDef>
+              <spirit:typeName>wire</spirit:typeName>
+              <spirit:viewNameRef>xilinx_verilogsynthesis</spirit:viewNameRef>
+            </spirit:wireTypeDef>
+          </spirit:wireTypeDefs>
+        </spirit:wire>
+      </spirit:port>
+      <spirit:port>
+        <spirit:name>awaiting</spirit:name>
         <spirit:wire>
           <spirit:direction>out</spirit:direction>
           <spirit:wireTypeDefs>
@@ -709,7 +721,12 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>ENABLE_FSTCLK</spirit:name>
         <spirit:displayName>Enable Fstclk</spirit:displayName>
-        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ENABLE_FSTCLK">true</spirit:value>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ENABLE_FSTCLK">false</spirit:value>
+      </spirit:modelParameter>
+      <spirit:modelParameter spirit:dataType="integer">
+        <spirit:name>ROUND_OUTPUT_BUFFER</spirit:name>
+        <spirit:displayName>Round Output Buffer</spirit:displayName>
+        <spirit:value spirit:format="bitString" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ROUND_OUTPUT_BUFFER" spirit:bitStringLength="24">0x820820</spirit:value>
       </spirit:modelParameter>
     </spirit:modelParameters>
   </spirit:model>
@@ -781,9 +798,9 @@
     <spirit:fileSet>
       <spirit:name>xilinx_xpgui_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>xgui/sha3scanner_v0_12.tcl</spirit:name>
+        <spirit:name>xgui/sha3scanner_v0_13.tcl</spirit:name>
         <spirit:fileType>tclSource</spirit:fileType>
-        <spirit:userFileType>CHECKSUM_11fbd2da</spirit:userFileType>
+        <spirit:userFileType>CHECKSUM_405967a1</spirit:userFileType>
         <spirit:userFileType>XGUI_VERSION_2</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
@@ -933,7 +950,7 @@
     <spirit:fileSet>
       <spirit:name>xilinx_testbench_view_fileset</spirit:name>
       <spirit:file>
-        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/uut_sha3_scanner/new/uut_sha3_scanner.sv</spirit:name>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.srcs/uut_sha3_packed6_scanner/new/uut_sha3_packed6_scanner.sv</spirit:name>
         <spirit:fileType>systemVerilogSource</spirit:fileType>
         <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
@@ -952,6 +969,11 @@
         <spirit:userFileType>USED_IN_implementation</spirit:userFileType>
         <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
         <spirit:userFileType>USED_IN_synthesis</spirit:userFileType>
+      </spirit:file>
+      <spirit:file>
+        <spirit:name>../sha3scanner_project/sha3scanner_project.sim/uut_sha3_packed6_scanner_behav.wcfg</spirit:name>
+        <spirit:fileType>unknown</spirit:fileType>
+        <spirit:userFileType>USED_IN_simulation</spirit:userFileType>
       </spirit:file>
     </spirit:fileSet>
   </spirit:fileSets>
@@ -1029,7 +1051,12 @@
     <spirit:parameter>
       <spirit:name>ENABLE_FSTCLK</spirit:name>
       <spirit:displayName>Fast clock to cruncher</spirit:displayName>
-      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_FSTCLK">true</spirit:value>
+      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_FSTCLK">false</spirit:value>
+    </spirit:parameter>
+    <spirit:parameter>
+      <spirit:name>ROUND_OUTPUT_BUFFER</spirit:name>
+      <spirit:displayName>Round Output Buffer</spirit:displayName>
+      <spirit:value spirit:format="bitString" spirit:resolve="user" spirit:id="PARAM_VALUE.ROUND_OUTPUT_BUFFER" spirit:bitStringLength="24">0x820820</spirit:value>
     </spirit:parameter>
   </spirit:parameters>
   <spirit:vendorExtensions>
@@ -1044,8 +1071,8 @@
       <xilinx:xpmLibraries>
         <xilinx:xpmLibrary>XPM_FIFO</xilinx:xpmLibrary>
       </xilinx:xpmLibraries>
-      <xilinx:coreRevision>17</xilinx:coreRevision>
-      <xilinx:coreCreationDateTime>2021-03-22T18:55:19Z</xilinx:coreCreationDateTime>
+      <xilinx:coreRevision>21</xilinx:coreRevision>
+      <xilinx:coreCreationDateTime>2021-04-06T11:54:47Z</xilinx:coreCreationDateTime>
       <xilinx:tags>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@68853ec7_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@c4c11c5_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
@@ -1305,16 +1332,50 @@
         <xilinx:tag xilinx:name="ui.data.coregen.dd@7bd99ee9_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@64be2a57_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
         <xilinx:tag xilinx:name="ui.data.coregen.dd@254a4d27_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@39177ca3_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3c507b56_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@f5950a0_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@474502c_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@49542658_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c48a108_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@37ada703_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5a016c6d_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4e6cb413_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@25509894_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@22ab3d08_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7c948bd5_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@605b2553_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7892d845_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4400bb94_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@5f7df464_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@31585309_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@528d50ce_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@570422d8_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@50cab1c3_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@171b488_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@458505ab_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@2db716e1_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4c933c97_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6c1e161c_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@64b14188_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@4b8cba47_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@208cd2f1_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@6f447a19_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@7862b7a_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@3679ddf9_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@722de9f2_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@280ba332_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
+        <xilinx:tag xilinx:name="ui.data.coregen.dd@452d24b8_ARCHIVE_LOCATION">c:/vivadoProjects/wownero-sha3/vivado/sha3scanner_axi_device/sha3scanner_0.1</xilinx:tag>
       </xilinx:tags>
     </xilinx:coreExtensions>
     <xilinx:packagingInfo>
       <xilinx:xilinxVersion>2020.2</xilinx:xilinxVersion>
       <xilinx:checksum xilinx:scope="busInterfaces" xilinx:value="dff63b1d"/>
       <xilinx:checksum xilinx:scope="memoryMaps" xilinx:value="ed1368d5"/>
-      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="1226c4a2"/>
-      <xilinx:checksum xilinx:scope="ports" xilinx:value="4ca6f7f4"/>
-      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="9985a416"/>
-      <xilinx:checksum xilinx:scope="parameters" xilinx:value="55036066"/>
+      <xilinx:checksum xilinx:scope="fileGroups" xilinx:value="c899a32f"/>
+      <xilinx:checksum xilinx:scope="ports" xilinx:value="4842ae4a"/>
+      <xilinx:checksum xilinx:scope="hdlParameters" xilinx:value="62945f94"/>
+      <xilinx:checksum xilinx:scope="parameters" xilinx:value="aa8a034d"/>
     </xilinx:packagingInfo>
   </spirit:vendorExtensions>
 </spirit:component>

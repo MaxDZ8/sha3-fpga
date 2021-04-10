@@ -67,7 +67,7 @@ int unsigned dispatch_iterator = 32'b0; // I allocate full 32 bit for easiness a
 wire exhausted = dispatch_iterator[EXHAUST_BIT];
 bit hash_observed = 1'b0;
 bit buff_dispatching = 1'b0, buff_awaiting = 1'b0;
-wire good_enough; // now comes one clock late but even if we dispatch a bit more it's still ok
+bit found_strobe; // now comes two clock late but even if we dispatch a bit more it's still ok, this is a critical path!
 always_ff @(posedge clk) case(state)
     s_waiting: if(start) begin
         dispatch_iterator <= 1'b0;
@@ -77,7 +77,7 @@ always_ff @(posedge clk) case(state)
         state <= s_dispatching;
     end
     s_dispatching: begin
-        if(exhausted | good_enough) begin
+        if(exhausted | found_strobe) begin
 		    buff_dispatching <= 1'b0;
 		    state <= s_flushing;
 		end
@@ -135,6 +135,20 @@ end
 assign feedd = '{ 64'h0,        64'h80000000_00000000, 64'h0,        64'h0,        64'h0 };
 assign feede = '{ 64'h0,        64'h0,                 64'h0,        64'h0,        64'h0 };
 
+// I have decided to evaluate this in two steps and route it by its own.
+// Higher 16 bits are compared near hash generation.
+wire[63:0] hash_diff;
+if (PROPER) assign hash_diff = hasha[3];
+else assign hash_diff = {
+    hasha[0][ 7: 0], hasha[0][15: 8], hasha[0][23:16], hasha[0][31:24],
+    hasha[0][39:32], hasha[0][47:40], hasha[0][55:48], hasha[0][63:56]
+};
+bit threshi_le;
+always_ff @(posedge clk) threshi_le <= $unsigned(hash_diff[63:32]) <= $unsigned(buff_threshold[63:32]);
+
+bit[31:0] threslo;
+always_ff @(posedge clk) threslo <= hash_diff[31:0]; 
+
 wire was_hashgood;
 wire[63:0] was_hasha[5], was_hashb[5], was_hashc[5], was_hashd[5], was_hashe[5];
 sha3_state_capture capture_hash (
@@ -143,13 +157,9 @@ sha3_state_capture capture_hash (
     .ogood(was_hashgood), .osa(was_hasha), .osb(was_hashb), .osc(was_hashc), .osd(was_hashd), .ose(was_hashe)
 );
 
-wire[63:0] hash_diff;
-if (PROPER) assign hash_diff = was_hasha[3];
-else assign hash_diff = {
-    was_hasha[0][ 7: 0], was_hasha[0][15: 8], was_hasha[0][23:16], was_hasha[0][31:24],
-    was_hasha[0][39:32], was_hasha[0][47:40], was_hasha[0][55:48], was_hasha[0][63:56]
-};
-assign good_enough = was_hashgood & ($unsigned(hash_diff) <= $unsigned(buff_threshold));
+// Note this is now a bit inaccurate as threshold might change between different clocks but that's rare enough I don't care.
+wire good_enough = was_hashgood & threshi_le & ($unsigned(threslo) <= $unsigned(buff_threshold[47:0]));
+always_ff @(posedge clk) found_strobe <= good_enough;
 
 int unsigned result_iter = 32'b0;
 always_ff @(posedge clk) begin
