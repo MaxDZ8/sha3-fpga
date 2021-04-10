@@ -71,9 +71,9 @@ bit found_strobe; // now comes two clock late but even if we dispatch a bit more
 always_ff @(posedge clk) case(state)
     s_waiting: if(start) begin
         dispatch_iterator <= 1'b0;
-		buff_dispatching <= 1'b1;
-		buff_awaiting <= 1'b1;
-		hash_observed <= 1'b0;
+        buff_dispatching <= 1'b1;
+        buff_awaiting <= 1'b1;
+        hash_observed <= 1'b0;
         state <= s_dispatching;
     end
     s_dispatching: begin

@@ -69,10 +69,18 @@ module sha3_scanner_instantiator #(
 wire crunch_clock = ENABLE_FSTCLK ? fstclk : clk;
 wire start_strobe = idle & start;
 
-bit buff_idle = 1'b1;
+bit buff_idle = 1'b1, dispatch_observed = 1'b0;
 always_ff @(posedge clk) begin
-    if(buff_idle) buff_idle <= ~awaiting;
-    else buff_idle <= start_strobe;
+    if(buff_idle) begin
+        if(start_strobe) begin
+            buff_idle <= 1'b0;
+            dispatch_observed <= 1'b0;
+        end
+    end
+    else begin
+        if (dispatching) dispatch_observed <= 1'b1;
+        buff_idle <= ~awaiting & dispatch_observed;
+    end
 end
 assign idle = buff_idle;
 
