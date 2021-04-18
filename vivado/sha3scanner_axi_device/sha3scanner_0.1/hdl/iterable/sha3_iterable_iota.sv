@@ -10,7 +10,8 @@ module sha3_iterable_iota #(
     input[4:0] round_index,
     input sample,
     output[63:0] osa[5], osb[5], osc[5], osd[5], ose[5],
-    output ogood
+    output ogood,
+    output[4:0] oround
 );
 
 localparam longint unsigned rc[24] = {
@@ -33,5 +34,12 @@ sha3_state_capture#(
     .ogood(ogood),
     .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose)
 );
+
+if (OUTPUT_BUFFER) begin
+    bit[4:0] was_round;
+    always_ff @(posedge clk) was_round <= round_index;
+    assign oround = was_round;
+end
+else assign oround = round_index;
 
 endmodule

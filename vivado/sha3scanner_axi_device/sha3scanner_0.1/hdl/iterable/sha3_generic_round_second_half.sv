@@ -31,9 +31,7 @@ sha3_iterable_iota #(
 ) iota (
    .clk(clk), .round_index(round_index),
    .isa(toiotaa), .isb(toiotab), .isc(toiotac), .isd(toiotad), .ise(toiotae), .sample(fetch_iota),
-   .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)
+   .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood), .oround(oround)
 );
-
-assign oround = round_index;
 
 endmodule

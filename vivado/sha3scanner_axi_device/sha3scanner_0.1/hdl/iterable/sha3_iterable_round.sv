@@ -28,7 +28,7 @@ sha3_iterable_semiround #(
     .osa(tochia), .osb(tochib), .osc(tochic), .osd(tochid), .ose(tochie),
     .oround(rndaft_semi), .ogood(fetch_chi)
 );
-assign oround = rndaft_semi; // everything below must have latency 0
+
 
 
 sha3_generic_round_second_half #(

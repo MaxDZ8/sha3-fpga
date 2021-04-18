@@ -8,7 +8,7 @@
 module sha3_iterating_pipe6 #(
     FEEDBACK_MUX_STYLE = "fabric",
     LAST_ROUND_IS_PROPER = 1,
-    ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0010_0000
+    bit[5:0] ROUND_OUTPUT_BUFFER = 6'b10_0000
 ) (
     input clk, 
     input sample,
@@ -23,12 +23,12 @@ module sha3_iterating_pipe6 #(
 // Keep accepting new values until the feedback mux needs to take the back-routed values,
 // this keeps the pipeline busy for a while!
 localparam FEEDBACK_MUX_LATENCY = FEEDBACK_MUX_STYLE == "fabric" ? 1 : 2;
-localparam bit[3:0] burst_len_and_delay = 4'd12 + $countones(ROUND_OUTPUT_BUFFER) + FEEDBACK_MUX_LATENCY;
+localparam bit[4:0] burst_len_and_delay = 4'd12 + $countones(ROUND_OUTPUT_BUFFER) + FEEDBACK_MUX_LATENCY;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
 bit[1:0] input_iteration = 2'b0;
-bit[3:0] input_divide = 4'b0;
+bit[4:0] input_divide = 5'b0;
 always_ff @(posedge clk)  begin
     if(waiting_input) begin // start the burst. I will fetch myself as much as I can, no matter what!
         if(sample) begin
@@ -122,11 +122,11 @@ end
 
 
 bit[1:0] result_iteration = 2'b0;
-bit[3:0] result_divide = 4'b0;
+bit[4:0] result_divide = 5'b0;
 always_ff @(posedge clk) if(rndo_good) begin
     if (result_divide != burst_len_and_delay) result_divide <= result_divide + 1'b1;
     else begin
-        result_divide <= 6'd0;
+        result_divide <= 5'd0;
         result_iteration <= result_iteration + 1'b1;
     end
 end
