@@ -11,7 +11,7 @@
 module sha3_iterating_pipe12 #(
     FEEDBACK_MUX_STYLE = "fabric",
     LAST_ROUND_IS_PROPER = 1,
-    ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_1000_0010_0000
+    bit[11:0] ROUND_OUTPUT_BUFFER = 12'b1000_0010_0000
 ) (
     input clk, 
     input sample,
@@ -26,12 +26,12 @@ module sha3_iterating_pipe12 #(
 // Keep accepting new values until the feedback mux needs to take the back-routed values,
 // this keeps the pipeline busy for a while!
 localparam FEEDBACK_MUX_LATENCY = FEEDBACK_MUX_STYLE == "fabric" ? 1 : 2;
-localparam bit[4:0] burst_len_and_delay = 5'd24 + $countones(ROUND_OUTPUT_BUFFER) + FEEDBACK_MUX_LATENCY;
+localparam bit[5:0] burst_len_and_delay = 5'd24 + $countones(ROUND_OUTPUT_BUFFER) + FEEDBACK_MUX_LATENCY;
 
 bit waiting_input = 1'b1;
 bit buff_gimme = 1'b1;
 bit consume_iterated = 1'b0;
-bit[4:0] input_divide = 5'b0;
+bit[5:0] input_divide = 6'b0;
 always_ff @(posedge clk)  begin
     if(waiting_input) begin // start the burst. I will fetch myself as much as I can, no matter what!
         if(sample) begin
@@ -42,7 +42,7 @@ always_ff @(posedge clk)  begin
     else if(buff_gimme) begin // bursting in the values! I am driving the feed to the 6-pack
         if (input_divide != burst_len_and_delay) input_divide <= input_divide + 1'b1;
         else begin
-            input_divide <= 5'b0;
+            input_divide <= 6'b0;
             buff_gimme <= 1'b0;
             consume_iterated <= 1'b1;
         end
@@ -50,7 +50,7 @@ always_ff @(posedge clk)  begin
     else begin // the system is backfeeding itself, just get along by the pulse
         if (input_divide != burst_len_and_delay) input_divide <= input_divide + 1'b1;
         else begin
-            input_divide <= 5'b0;
+            input_divide <= 6'b0;
             consume_iterated <= 1'b0;
             buff_gimme <= 1'b1;
             waiting_input <= 1'b1;
@@ -122,11 +122,11 @@ end
 
 
 bit result_iteration = 1'b0;
-bit[4:0] result_divide = 5'b0;
+bit[5:0] result_divide = 6'b0;
 always_ff @(posedge clk) if(rndo_good) begin
     if (result_divide != burst_len_and_delay) result_divide <= result_divide + 1'b1;
     else begin
-        result_divide <= 5'd0;
+        result_divide <= 6'd0;
         result_iteration <= ~result_iteration;
     end
 end
