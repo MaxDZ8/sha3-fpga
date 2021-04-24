@@ -140,9 +140,9 @@ input wire s00_axi_rready;
     .C_S00_AXI_DATA_WIDTH(32),  // Width of S_AXI data bus
     .C_S00_AXI_ADDR_WIDTH(9),  // Width of S_AXI address bus
     .STYLE("iterate-twice"),
-    .FEEDBACK_MUX_STYLE("DSP"),
+    .FEEDBACK_MUX_STYLE("fabric"),
     .PROPER_SHA3(1),
-    .ENABLE_FSTCLK(1'B0),
+    .ENABLE_FSTCLK(1'B1),
     .ROUND_OUTPUT_BUFFER(24'Hffffff)
   ) inst (
     .dispatching(dispatching),

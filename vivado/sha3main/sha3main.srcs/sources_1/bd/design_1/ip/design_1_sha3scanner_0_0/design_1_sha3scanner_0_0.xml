@@ -594,7 +594,7 @@
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:1b6f3dfc</spirit:value>
+            <spirit:value>9:13ef6bb6</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -605,7 +605,7 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:1b6f3dfc</spirit:value>
+            <spirit:value>9:13ef6bb6</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -621,11 +621,11 @@
         <spirit:parameters>
           <spirit:parameter>
             <spirit:name>GENtimestamp</spirit:name>
-            <spirit:value>Tue Apr 20 17:24:00 UTC 2021</spirit:value>
+            <spirit:value>Wed Apr 21 17:30:58 UTC 2021</spirit:value>
           </spirit:parameter>
           <spirit:parameter>
             <spirit:name>outputProductCRC</spirit:name>
-            <spirit:value>9:1b6f3dfc</spirit:value>
+            <spirit:value>9:13ef6bb6</spirit:value>
           </spirit:parameter>
         </spirit:parameters>
       </spirit:view>
@@ -1013,7 +1013,7 @@
       <spirit:modelParameter spirit:dataType="string">
         <spirit:name>FEEDBACK_MUX_STYLE</spirit:name>
         <spirit:displayName>Feedback Mux Style</spirit:displayName>
-        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.FEEDBACK_MUX_STYLE">DSP</spirit:value>
+        <spirit:value spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.FEEDBACK_MUX_STYLE">fabric</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>PROPER_SHA3</spirit:name>
@@ -1023,7 +1023,7 @@
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>ENABLE_FSTCLK</spirit:name>
         <spirit:displayName>Enable Fstclk</spirit:displayName>
-        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ENABLE_FSTCLK">false</spirit:value>
+        <spirit:value spirit:format="bool" spirit:resolve="generated" spirit:id="MODELPARAM_VALUE.ENABLE_FSTCLK">true</spirit:value>
       </spirit:modelParameter>
       <spirit:modelParameter spirit:dataType="integer">
         <spirit:name>ROUND_OUTPUT_BUFFER</spirit:name>
@@ -1273,7 +1273,7 @@
     <spirit:parameter>
       <spirit:name>FEEDBACK_MUX_STYLE</spirit:name>
       <spirit:displayName>Feedback Mux Style</spirit:displayName>
-      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.FEEDBACK_MUX_STYLE" spirit:choiceRef="choice_list_d7a88b39">DSP</spirit:value>
+      <spirit:value spirit:resolve="user" spirit:id="PARAM_VALUE.FEEDBACK_MUX_STYLE" spirit:choiceRef="choice_list_d7a88b39">fabric</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>PROPER_SHA3</spirit:name>
@@ -1283,7 +1283,7 @@
     <spirit:parameter>
       <spirit:name>ENABLE_FSTCLK</spirit:name>
       <spirit:displayName>Fast clock to cruncher</spirit:displayName>
-      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_FSTCLK">false</spirit:value>
+      <spirit:value spirit:format="bool" spirit:resolve="user" spirit:id="PARAM_VALUE.ENABLE_FSTCLK">true</spirit:value>
     </spirit:parameter>
     <spirit:parameter>
       <spirit:name>ROUND_OUTPUT_BUFFER</spirit:name>
@@ -1641,6 +1641,7 @@
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_CLK.FREQ_TOLERANCE_HZ" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_CLK.PHASE" xilinx:valuePermission="bd"/>
         <xilinx:configElementInfo xilinx:referenceId="BUSIFPARAM_VALUE.S00_AXI_RST.POLARITY" xilinx:valuePermission="bd"/>
+        <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.ENABLE_FSTCLK" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.FEEDBACK_MUX_STYLE" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.ROUND_OUTPUT_BUFFER" xilinx:valueSource="user"/>
         <xilinx:configElementInfo xilinx:referenceId="PARAM_VALUE.STYLE" xilinx:valueSource="user"/>
