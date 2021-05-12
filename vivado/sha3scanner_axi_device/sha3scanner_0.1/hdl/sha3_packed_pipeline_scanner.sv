@@ -5,44 +5,51 @@
 module sha3_packed_pipeline_scanner #(
     FEEDBACK_MUX_STYLE = "fabric",
     PIPE_ROUNDS = 6,
-    PROPER = 1
+    PROPER = 1,
+    ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0000_0000,
+	  localparam INPUT_ELEMENTS = PROPER ? 20 : 24
 ) (
     input clk,
-    // Scan request
-    input start,
     input[63:0] threshold,
-    input[31:0] blockTemplate[PROPER ? 20 : 24],
-
-    output ofound,
-    output[63:0] ohash[25],
+    input start,
+    input[31:0] blobby[INPUT_ELEMENTS],
+	  
+    output odispatching, oawaiting, oevaluating,
+	
+    output ocapture,
     output[31:0] ononce,
-    // Status
-    output odispatching, oevaluating, oready
+    output[63:0] ohash[25],
+	  
+    output[31:0] scan_count
 );
 
 wire feedgood, hasher_can_take, hashgood;
 wire[63:0] feeda[5], feedb[5], feedc[5], feedd[5], feede[5];
 wire[63:0] hasha[5], hashb[5], hashc[5], hashd[5], hashe[5];
 sha3_scanner_control #(
-    .PROPER(PROPER)
+    .PROPER(PROPER),
+    .PIPE_PERF_LEVEL(PIPE_ROUNDS)
 ) fsm (
     .clk(clk),
-    .start(start), .threshold(threshold), .blockTemplate(blockTemplate),
-    .ofound(ofound), .ohash(ohash), .ononce(ononce),
-    .odispatching(odispatching), .oevaluating(oevaluating), .oready(oready),
+    .start(start), .threshold(threshold), .blockTemplate(blobby),
+    .ocapture(ocapture), .ohash(ohash), .ononce(ononce),
+    .odispatching(odispatching), .oawaiting(oawaiting), .oevaluating(oevaluating),
     
     .hasher_ready(hasher_can_take),
     .feedgood(feedgood),
     .feeda(feeda), .feedb(feedb), .feedc(feedc), .feedd(feedd), .feede(feede),
     .hashgood(hashgood),
-    .hasha(hasha), .hashb(hashb), .hashc(hashc), .hashd(hashd), .hashe(hashe)
+    .hasha(hasha), .hashb(hashb), .hashc(hashc), .hashd(hashd), .hashe(hashe),
+    
+    .scan_count(scan_count)
 );
 
 
 if (PIPE_ROUNDS == 6) begin : tiny
     sha3_iterating_pipe6 #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
-        .LAST_ROUND_IS_PROPER(PROPER)
+        .LAST_ROUND_IS_PROPER(PROPER),
+        .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER[5:0])
     ) hasher (
         .clk(clk),
         .sample(feedgood),
@@ -55,7 +62,8 @@ end
 else if(PIPE_ROUNDS == 12) begin : nice
     sha3_iterating_pipe12 #(
         .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE), 
-        .LAST_ROUND_IS_PROPER(PROPER)
+        .LAST_ROUND_IS_PROPER(PROPER),
+        .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER[11:0])
     ) hasher (
         .clk(clk),
         .sample(feedgood),

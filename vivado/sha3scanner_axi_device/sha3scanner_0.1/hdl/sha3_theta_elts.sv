@@ -9,7 +9,6 @@ module sha3_theta_elts #(
 )(
     input clk,
     input[63:0] iterm[5],
-    input sample,
     output[63:0] oelt[5]
 );
 

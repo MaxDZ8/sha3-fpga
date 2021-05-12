@@ -2,7 +2,9 @@
 
 // Generic sha3 rounds have a second half where they appli chi+iota.
 // The last round instead has a finalizer.
-module sha3_generic_round_second_half(
+module sha3_generic_round_second_half#(
+    OUTPUT_BUFFER = 0
+)(
     input clk,
     input[4:0] round_index,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
@@ -24,12 +26,12 @@ sha3_chi #(
     .osa(toiotaa), .osb(toiotab), .osc(toiotac), .osd(toiotad), .ose(toiotae), .ogood(fetch_iota)
 );
 
-sha3_iterable_iota iota (
+sha3_iterable_iota #(
+    .OUTPUT_BUFFER(OUTPUT_BUFFER)
+) iota (
    .clk(clk), .round_index(round_index),
    .isa(toiotaa), .isb(toiotab), .isc(toiotac), .isd(toiotad), .ise(toiotae), .sample(fetch_iota),
-   .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood)
+   .osa(osa), .osb(osb), .osc(osc), .osd(osd), .ose(ose), .ogood(ogood), .oround(oround)
 );
-
-assign oround = round_index;
 
 endmodule

@@ -19,17 +19,23 @@ module sha3_scanner #(
     In both cases = ul the i-th ulong is { blobby[i*2 + 1], blobby[i * 2] }.
     Only a part of the inital state is to be provided, the other bits are built internally (and most are constant anyway)
     */
-	  input[31:0] blobby[ULONG_COUNT * 2],
+    input[31:0] blobby[ULONG_COUNT * 2],
 	  
-	  output dispatching, evaluating, found, ready,
-	  output[31:0] nonce,
-	  output[63:0] hash[25]
+    output odispatching, oawaiting, oevaluating,
+	
+    output ocapture,
+    output[31:0] ononce,
+    output[63:0] ohash[25],
+	  
+    output[31:0] scan_count
 );
 
-wire capture = start & ready;
+longint unsigned buff_threshold;
+always_ff @(posedge clk) buff_threshold <= threshold;
+
 wire[31:0] scan_start;
 longint unsigned rowa[5]; // always completely captured in both formulations
-always_ff @(posedge clk) if(capture) begin
+always_ff @(posedge clk) if(start) begin
     rowa[0] <= { blobby[ 1], blobby[ 0] };
     rowa[1] <= { blobby[ 3], blobby[ 2] };
     rowa[2] <= { blobby[ 5], blobby[ 4] };
@@ -37,6 +43,8 @@ always_ff @(posedge clk) if(capture) begin
     rowa[4] <= { blobby[ 9], blobby[ 8] };
 end
 
+assign scan_count = 32'h8000_0000; // exit on 31st bit high...
+wire good_enough;
 int unsigned dispatch_iterator = 32'b0;
 bit buff_dispatching = 1'b0;
 always_ff @(posedge clk) if(rst) begin
@@ -45,18 +53,18 @@ always_ff @(posedge clk) if(rst) begin
 end
 else begin
     if (buff_dispatching) begin
-        buff_dispatching <= ~dispatch_iterator[31] & ~found;
+        buff_dispatching <= ~dispatch_iterator[31] & ~good_enough;
         dispatch_iterator <= dispatch_iterator + 1'b1;
     end
     else begin
-        buff_dispatching <= capture;
+        buff_dispatching <= start;
         dispatch_iterator <= 32'b0;
     end
 end
-assign dispatching = buff_dispatching;
+assign odispatching = buff_dispatching;
 
 int unsigned nonce_base = 32'b0;
-always_ff @(posedge clk) if(capture) nonce_base <= scan_start;
+always_ff @(posedge clk) if(start) nonce_base <= scan_start;
 wire[31:0] testing_nonce = nonce_base + dispatch_iterator;
 
 wire[63:0] rowb[5], rowc[5], rowd[5], rowe[5];
@@ -65,7 +73,7 @@ if (PROPER) begin : proper
     assign scan_start = blobby[19];
     longint unsigned buff_rowb[4]; // the last entry is magic
     int unsigned lorowblast = 32'b0;
-    always_ff @(posedge clk) if(capture) begin
+    always_ff @(posedge clk) if(start) begin
         buff_rowb[0] <= { blobby[11], blobby[10] };
         buff_rowb[1] <= { blobby[13], blobby[12] };
         buff_rowb[2] <= { blobby[15], blobby[14] };
@@ -81,7 +89,7 @@ end
 else begin : quirky
     assign scan_start = blobby[21];
     longint unsigned buff_rowb[5], buff_rowc[2]; // only two entries in the third row are defined by block input, the others are magic or constants
-    always_ff @(posedge clk) if(capture) begin
+    always_ff @(posedge clk) if(start) begin
         buff_rowb[0] <= { blobby[11], blobby[10] };
         buff_rowb[1] <= { blobby[13], blobby[12] };
         buff_rowb[2] <= { blobby[15], blobby[14] };
@@ -111,8 +119,6 @@ sha3 #(
     .oa(resa), .ob(resb), .oc(resc), .od(resd), .oe(rese)
 );
 
-assign evaluating = resgood;
-
 
 wire[63:0] hash_diff;
 if (PROPER) assign hash_diff = resa[3];
@@ -120,25 +126,39 @@ else assign hash_diff = {
     resa[0][ 7: 0], resa[0][15: 8], resa[0][23:16], resa[0][31:24],
     resa[0][39:32], resa[0][47:40], resa[0][55:48], resa[0][63:56]
 };
-wire good_enough = evaluating & ($unsigned(hash_diff) <= $unsigned(threshold));
+assign good_enough = resgood & ($unsigned(hash_diff) <= $unsigned(buff_threshold));
+
+bit buff_good_enough;
+always_ff @(posedge clk) buff_good_enough <= good_enough;
+assign ocapture = buff_good_enough;
+
+bit buff_evaluating;
+always_ff @(posedge clk) buff_evaluating <= resgood;
+assign oevaluating = buff_evaluating;
 
 int unsigned result_iterator = 32'b0;
-bit buff_found = 1'b0;
+bit awaiting = 1'b0;
+bit resgood_observed = 1'b0;
 always_ff @(posedge clk) if(rst) begin
-    buff_found <= 1'b0;
+    awaiting <= 1'b0;
+	resgood_observed <= 1'b0;
     result_iterator <= 32'b0;
 end
 else begin
-    if (ready) begin
-        if (capture) begin
-            buff_found <= 1'b0;
-            result_iterator <= 32'b0;
-        end
-    end
-    else buff_found <= buff_found | good_enough;
-    if(evaluating) result_iterator <= result_iterator + 1'b1;
+	if (start) begin
+		awaiting <= 1'b1;
+		resgood_observed <= 1'b0;
+		result_iterator <= 32'b0;
+	end
+    else if(resgood) begin
+		result_iterator <= result_iterator + 1'b1;
+		resgood_observed <= 1'b1;
+	end
+	else begin
+		if(~buff_dispatching & resgood_observed) awaiting <= 1'b0;
+	end
 end
-assign found = buff_found;
+assign oawaiting = awaiting;
 
 int unsigned good_nonce = 32'b0;
 longint unsigned good_hash[25];
@@ -158,15 +178,8 @@ else begin
         };
     end
 end
-assign nonce = good_nonce;
-for (genvar loop = 0; loop < 25; loop++) begin
-    assign hash[loop] = good_hash[loop];
-end
+assign ononce = good_nonce;
+for (genvar loop = 0; loop < 25; loop++) assign ohash[loop] = good_hash[loop];
 
-
-bit was_evaluating = 1'b0;
-always_ff @(posedge clk) was_evaluating <= evaluating;
-wire empty_pipeline = was_evaluating & ~evaluating;
-assign ready = result_iterator == dispatch_iterator & ~dispatching;
 
 endmodule

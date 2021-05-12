@@ -2,7 +2,9 @@
 
 // Performs THETA, RHO+PI.
 // This is always executed into all round and is round-independant but will flow the round index according to its latency.
-module sha3_iterable_semiround (
+module sha3_iterable_semiround #(
+    CAPTURE_CONTINUOUSLY = 1
+) (
     input clk,
     input[4:0] round_index,
     input[63:0] isa[5], isb[5], isc[5], isd[5], ise[5],
@@ -17,7 +19,8 @@ wire[63:0] rina[0:4], rinb[0:4], rinc[0:4], rind[0:4], rine[0:4];
 wire rho_fetch;
 
 sha3_theta #(
-    .UPDATE_LOGIC_STYLE("basic")
+    .UPDATE_LOGIC_STYLE("basic"),
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
 ) theta (
     .clk(clk),
     .isa(isa), .isb(isb), .isc(isc), .isd(isd), .ise(ise), .sample(sample),
@@ -26,7 +29,8 @@ sha3_theta #(
 
 sha3_rho_pi #(
     .OUTPUT_BUFFER(0),
-    .INPUT_BUFFER(0)
+    .INPUT_BUFFER(0),
+    .CAPTURE_CONTINUOUSLY(CAPTURE_CONTINUOUSLY)
 ) rhopi(
     .clk(clk),
     .isa(rina), .isb(rinb), .isc(rinc), .isd(rind), .ise(rine), .sample(rho_fetch),

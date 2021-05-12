@@ -11,14 +11,15 @@
     },
     "design_tree": {
       "processing_system7_0": "",
-      "rst_ps7_0_100M": "",
-      "artyz7_hasher_led_dr_0": "",
+      "sha3scanner_0": "",
       "ps7_0_axi_periph": {
         "s00_couplers": {
           "auto_pc": ""
         }
       },
-      "sha3scanner_1": ""
+      "rst_ps7_0_100M": "",
+      "artyz7_hasher_led_dr_0": "",
+      "clk_wiz_0": ""
     },
     "interface_ports": {
       "DDR": {
@@ -552,9 +553,6 @@
           },
           "PCW_INCLUDE_ACP_TRANS_CHECK": {
             "value": "0"
-          },
-          "PCW_IRQ_F2P_MODE": {
-            "value": "DIRECT"
           },
           "PCW_MIO_0_IOTYPE": {
             "value": "LVCMOS 3.3V"
@@ -1187,7 +1185,7 @@
             "value": "200"
           },
           "PCW_PERIPHERAL_BOARD_PRESET": {
-            "value": "part0"
+            "value": "None"
           },
           "PCW_PLL_BYPASSMODE_ENABLE": {
             "value": "0"
@@ -1311,18 +1309,6 @@
           },
           "PCW_SPI_PERIPHERAL_VALID": {
             "value": "0"
-          },
-          "PCW_S_AXI_HP0_DATA_WIDTH": {
-            "value": "64"
-          },
-          "PCW_S_AXI_HP1_DATA_WIDTH": {
-            "value": "64"
-          },
-          "PCW_S_AXI_HP2_DATA_WIDTH": {
-            "value": "64"
-          },
-          "PCW_S_AXI_HP3_DATA_WIDTH": {
-            "value": "64"
           },
           "PCW_TPIU_PERIPHERAL_CLKSRC": {
             "value": "External"
@@ -1824,59 +1810,21 @@
           }
         }
       },
-      "rst_ps7_0_100M": {
-        "vlnv": "xilinx.com:ip:proc_sys_reset:5.0",
-        "xci_name": "design_1_rst_ps7_0_100M_0"
-      },
-      "artyz7_hasher_led_dr_0": {
-        "vlnv": "xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0",
-        "xci_name": "design_1_artyz7_hasher_led_dr_0_2",
-        "reference_info": {
-          "ref_type": "hdl",
-          "ref_name": "artyz7_hasher_led_driver_wrap",
-          "boundary_crc": "0x0"
-        },
-        "ports": {
-          "clk": {
-            "type": "clk",
-            "direction": "I",
-            "parameters": {
-              "FREQ_HZ": {
-                "value": "100000000",
-                "value_src": "user_prop"
-              },
-              "CLK_DOMAIN": {
-                "value": "design_1_processing_system7_0_0_FCLK_CLK0",
-                "value_src": "default_prop"
-              }
-            }
+      "sha3scanner_0": {
+        "vlnv": "Maxdz8:crypto:sha3scanner:0.14",
+        "xci_name": "design_1_sha3scanner_0_0",
+        "parameters": {
+          "ENABLE_FSTCLK": {
+            "value": "true"
           },
-          "dispatching": {
-            "direction": "I"
+          "FEEDBACK_MUX_STYLE": {
+            "value": "fabric"
           },
-          "evaluating": {
-            "direction": "I"
+          "ROUND_OUTPUT_BUFFER": {
+            "value": "0xffffff"
           },
-          "idle": {
-            "direction": "I"
-          },
-          "found": {
-            "direction": "I"
-          },
-          "omono": {
-            "direction": "O",
-            "left": "3",
-            "right": "0"
-          },
-          "orgb4": {
-            "direction": "O",
-            "left": "2",
-            "right": "0"
-          },
-          "orgb5": {
-            "direction": "O",
-            "left": "2",
-            "right": "0"
+          "STYLE": {
+            "value": "iterate-twice"
           }
         }
       },
@@ -2014,16 +1962,16 @@
               }
             },
             "interface_nets": {
-              "auto_pc_to_s00_couplers": {
-                "interface_ports": [
-                  "M_AXI",
-                  "auto_pc/M_AXI"
-                ]
-              },
               "s00_couplers_to_auto_pc": {
                 "interface_ports": [
                   "S_AXI",
                   "auto_pc/S_AXI"
+                ]
+              },
+              "auto_pc_to_s00_couplers": {
+                "interface_ports": [
+                  "M_AXI",
+                  "auto_pc/M_AXI"
                 ]
               }
             },
@@ -2084,24 +2032,131 @@
           }
         }
       },
-      "sha3scanner_1": {
-        "vlnv": "Maxdz8:crypto:sha3scanner:0.10",
-        "xci_name": "design_1_sha3scanner_1_0",
-        "parameters": {
-          "FEEDBACK_MUX_STYLE": {
-            "value": "fabric"
+      "rst_ps7_0_100M": {
+        "vlnv": "xilinx.com:ip:proc_sys_reset:5.0",
+        "xci_name": "design_1_rst_ps7_0_100M_0"
+      },
+      "artyz7_hasher_led_dr_0": {
+        "vlnv": "xilinx.com:module_ref:artyz7_hasher_led_driver_wrap:1.0",
+        "xci_name": "design_1_artyz7_hasher_led_dr_0_0",
+        "reference_info": {
+          "ref_type": "hdl",
+          "ref_name": "artyz7_hasher_led_driver_wrap",
+          "boundary_crc": "0x0"
+        },
+        "ports": {
+          "clk": {
+            "type": "clk",
+            "direction": "I",
+            "parameters": {
+              "FREQ_HZ": {
+                "value": "100000000",
+                "value_src": "user_prop"
+              },
+              "CLK_DOMAIN": {
+                "value": "design_1_processing_system7_0_0_FCLK_CLK0",
+                "value_src": "default_prop"
+              }
+            }
           },
-          "STYLE": {
-            "value": "iterate-four-times"
+          "dispatching": {
+            "direction": "I"
+          },
+          "evaluating": {
+            "direction": "I"
+          },
+          "idle": {
+            "direction": "I"
+          },
+          "found": {
+            "direction": "I"
+          },
+          "omono": {
+            "direction": "O",
+            "left": "3",
+            "right": "0"
+          },
+          "orgb4": {
+            "direction": "O",
+            "left": "2",
+            "right": "0"
+          },
+          "orgb5": {
+            "direction": "O",
+            "left": "2",
+            "right": "0"
+          }
+        }
+      },
+      "clk_wiz_0": {
+        "vlnv": "xilinx.com:ip:clk_wiz:6.0",
+        "xci_name": "design_1_clk_wiz_0_0",
+        "parameters": {
+          "CLKOUT1_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT1_JITTER": {
+            "value": "114.829"
+          },
+          "CLKOUT1_PHASE_ERROR": {
+            "value": "98.575"
+          },
+          "CLKOUT1_REQUESTED_OUT_FREQ": {
+            "value": "200"
+          },
+          "CLKOUT2_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT3_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT4_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT5_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT6_DRIVES": {
+            "value": "BUFG"
+          },
+          "CLKOUT7_DRIVES": {
+            "value": "BUFG"
+          },
+          "MMCM_BANDWIDTH": {
+            "value": "OPTIMIZED"
+          },
+          "MMCM_CLKFBOUT_MULT_F": {
+            "value": "10"
+          },
+          "MMCM_CLKOUT0_DIVIDE_F": {
+            "value": "5"
+          },
+          "MMCM_COMPENSATION": {
+            "value": "ZHOLD"
+          },
+          "PRIMITIVE": {
+            "value": "PLL"
+          },
+          "PRIM_SOURCE": {
+            "value": "No_buffer"
+          },
+          "RESET_PORT": {
+            "value": "resetn"
+          },
+          "RESET_TYPE": {
+            "value": "ACTIVE_LOW"
+          },
+          "USE_LOCKED": {
+            "value": "false"
           }
         }
       }
     },
     "interface_nets": {
-      "processing_system7_0_FIXED_IO": {
+      "ps7_0_axi_periph_M00_AXI": {
         "interface_ports": [
-          "FIXED_IO",
-          "processing_system7_0/FIXED_IO"
+          "ps7_0_axi_periph/M00_AXI",
+          "sha3scanner_0/S00_AXI"
         ]
       },
       "processing_system7_0_DDR": {
@@ -2116,10 +2171,10 @@
           "ps7_0_axi_periph/S00_AXI"
         ]
       },
-      "ps7_0_axi_periph_M00_AXI": {
+      "processing_system7_0_FIXED_IO": {
         "interface_ports": [
-          "ps7_0_axi_periph/M00_AXI",
-          "sha3scanner_1/S00_AXI"
+          "FIXED_IO",
+          "processing_system7_0/FIXED_IO"
         ]
       }
     },
@@ -2128,12 +2183,13 @@
         "ports": [
           "processing_system7_0/FCLK_CLK0",
           "processing_system7_0/M_AXI_GP0_ACLK",
-          "rst_ps7_0_100M/slowest_sync_clk",
-          "artyz7_hasher_led_dr_0/clk",
-          "ps7_0_axi_periph/ACLK",
           "ps7_0_axi_periph/S00_ACLK",
+          "rst_ps7_0_100M/slowest_sync_clk",
+          "sha3scanner_0/s00_axi_aclk",
           "ps7_0_axi_periph/M00_ACLK",
-          "sha3scanner_1/s00_axi_aclk"
+          "ps7_0_axi_periph/ACLK",
+          "artyz7_hasher_led_dr_0/clk",
+          "clk_wiz_0/clk_in1"
         ]
       },
       "processing_system7_0_FCLK_RESET0_N": {
@@ -2146,32 +2202,34 @@
         "ports": [
           "rst_ps7_0_100M/peripheral_aresetn",
           "ps7_0_axi_periph/S00_ARESETN",
+          "sha3scanner_0/s00_axi_aresetn",
           "ps7_0_axi_periph/M00_ARESETN",
-          "sha3scanner_1/s00_axi_aresetn"
+          "ps7_0_axi_periph/ARESETN",
+          "clk_wiz_0/resetn"
         ]
       },
-      "rst_ps7_0_100M_interconnect_aresetn": {
+      "sha3scanner_0_dispatching": {
         "ports": [
-          "rst_ps7_0_100M/interconnect_aresetn",
-          "ps7_0_axi_periph/ARESETN"
-        ]
-      },
-      "sha3scanner_1_dispatching": {
-        "ports": [
-          "sha3scanner_1/dispatching",
+          "sha3scanner_0/dispatching",
           "artyz7_hasher_led_dr_0/dispatching"
         ]
       },
-      "sha3scanner_1_evaluating": {
+      "sha3scanner_0_idle": {
         "ports": [
-          "sha3scanner_1/evaluating",
-          "artyz7_hasher_led_dr_0/evaluating"
+          "sha3scanner_0/idle",
+          "artyz7_hasher_led_dr_0/idle"
         ]
       },
-      "sha3scanner_1_found": {
+      "sha3scanner_0_found": {
         "ports": [
-          "sha3scanner_1/found",
+          "sha3scanner_0/found",
           "artyz7_hasher_led_dr_0/found"
+        ]
+      },
+      "sha3scanner_0_evaluating": {
+        "ports": [
+          "sha3scanner_0/evaluating",
+          "artyz7_hasher_led_dr_0/evaluating"
         ]
       },
       "artyz7_hasher_led_dr_0_omono": {
@@ -2186,10 +2244,10 @@
           "orgb4_0"
         ]
       },
-      "sha3scanner_1_idle": {
+      "clk_wiz_0_clk_out1": {
         "ports": [
-          "sha3scanner_1/idle",
-          "artyz7_hasher_led_dr_0/idle"
+          "clk_wiz_0/clk_out1",
+          "sha3scanner_0/fstclk"
         ]
       }
     },
@@ -2198,8 +2256,8 @@
         "address_spaces": {
           "Data": {
             "segments": {
-              "SEG_sha3scanner_1_S00_AXI_reg": {
-                "address_block": "/sha3scanner_1/S00_AXI/S00_AXI_reg",
+              "SEG_sha3scanner_0_S00_AXI_reg": {
+                "address_block": "/sha3scanner_0/S00_AXI/S00_AXI_reg",
                 "offset": "0x43C00000",
                 "range": "64K"
               }

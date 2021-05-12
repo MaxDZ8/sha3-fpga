@@ -51,11 +51,11 @@
 // IP Revision: 1
 
 (* X_CORE_INFO = "artyz7_hasher_led_driver_wrap,Vivado 2020.2" *)
-(* CHECK_LICENSE_TYPE = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{}" *)
-(* CORE_GENERATION_INFO = "design_1_artyz7_hasher_led_dr_0_2,artyz7_hasher_led_driver_wrap,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=artyz7_hasher_led_driver_wrap,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
+(* CHECK_LICENSE_TYPE = "design_1_artyz7_hasher_led_dr_0_0,artyz7_hasher_led_driver_wrap,{}" *)
+(* CORE_GENERATION_INFO = "design_1_artyz7_hasher_led_dr_0_0,artyz7_hasher_led_driver_wrap,{x_ipProduct=Vivado 2020.2,x_ipVendor=xilinx.com,x_ipLibrary=module_ref,x_ipName=artyz7_hasher_led_driver_wrap,x_ipVersion=1.0,x_ipCoreRevision=1,x_ipLanguage=VERILOG,x_ipSimLanguage=MIXED}" *)
 (* IP_DEFINITION_SOURCE = "module_ref" *)
 (* DowngradeIPIdentifiedWarnings = "yes" *)
-module design_1_artyz7_hasher_led_dr_0_2 (
+module design_1_artyz7_hasher_led_dr_0_0 (
   clk,
   dispatching,
   evaluating,
@@ -66,7 +66,7 @@ module design_1_artyz7_hasher_led_dr_0_2 (
   orgb5
 );
 
-(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 100000000, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
+(* X_INTERFACE_PARAMETER = "XIL_INTERFACENAME clk, FREQ_HZ 100000000, FREQ_TOLERANCE_HZ 0, PHASE 0.000, CLK_DOMAIN design_1_processing_system7_0_0_FCLK_CLK0, INSERT_VIP 0" *)
 (* X_INTERFACE_INFO = "xilinx.com:signal:clock:1.0 clk CLK" *)
 input wire clk;
 input wire dispatching;

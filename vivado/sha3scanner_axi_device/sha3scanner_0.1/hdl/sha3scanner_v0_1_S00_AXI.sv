@@ -1,98 +1,92 @@
 `timescale 1 ns / 1 ps
 
-	module sha3scanner_v0_1_S00_AXI #
-	(
-		// Users to add parameters here
-		parameter STYLE = "fully-unrolled-fully-parallel",
-		parameter FEEDBACK_MUX_STYLE = "fabric",
-		parameter PROPER_SHA3 = 1,
-		// User parameters ends
-		// Do not modify the parameters beyond this line
+module sha3scanner_v0_1_S00_AXI #
+(
+	// Users to add parameters here
+	parameter STYLE = "fully-unrolled-fully-parallel",
+	parameter FEEDBACK_MUX_STYLE = "fabric",
+	parameter PROPER_SHA3 = 1,
+	parameter ENABLE_FSTCLK = 0,
+  parameter ROUND_OUTPUT_BUFFER = 24'b0000_0000_0000_0000_0000_0000,
+	// User parameters ends
+	// Do not modify the parameters beyond this line
 
-		// Width of S_AXI data bus
-		parameter integer C_S_AXI_DATA_WIDTH	= 32,
-		// Width of S_AXI address bus
-		parameter integer C_S_AXI_ADDR_WIDTH	= 9
-	)
-	(
-		// Users to add ports here
-		
-    // While we produce results we might be multi-cycle and waiting for them to pour out.
-    // In that case, we would evaluate only once every few cycles.
-    // When we are not dispatching and not waiting for any result we are idle.
-    // Idle also means "ready to start a new scan".
-    output wire idle,
-		// True if we are actively scanning. 
-    output wire dispatching,
-    // Pulses high 1 clock when a result is being evaluated for difficulty = we got a result
-    output wire evaluating,
-    // True if at least one resulting hash is good enough.
+	// Width of S_AXI data bus
+	parameter integer C_S_AXI_DATA_WIDTH	= 32,
+	// Width of S_AXI address bus
+	parameter integer C_S_AXI_ADDR_WIDTH	= 9
+)
+(
+	// Users to add ports here
+	output wire idle, dispatching, awaiting, evaluating,
     output wire found,
+    
+    input wire fstclk,
+    
+	// User ports ends
+	// Do not modify the ports beyond this line
 
-		// User ports ends
-		// Do not modify the ports beyond this line
-
-		// Global Clock Signal
-		input wire  S_AXI_ACLK,
-		// Global Reset Signal. This Signal is Active LOW
-		input wire  S_AXI_ARESETN,
-		// Write address (issued by master, acceped by Slave)
-		input wire [C_S_AXI_ADDR_WIDTH-1 : 0] S_AXI_AWADDR,
-		// Write channel Protection type. This signal indicates the
-    		// privilege and security level of the transaction, and whether
-    		// the transaction is a data access or an instruction access.
-		input wire [2 : 0] S_AXI_AWPROT,
-		// Write address valid. This signal indicates that the master signaling
-    		// valid write address and control information.
-		input wire  S_AXI_AWVALID,
-		// Write address ready. This signal indicates that the slave is ready
-    		// to accept an address and associated control signals.
-		output wire  S_AXI_AWREADY,
-		// Write data (issued by master, acceped by Slave) 
-		input wire [C_S_AXI_DATA_WIDTH-1 : 0] S_AXI_WDATA,
-		// Write strobes. This signal indicates which byte lanes hold
-    		// valid data. There is one write strobe bit for each eight
-    		// bits of the write data bus.    
-		input wire [(C_S_AXI_DATA_WIDTH/8)-1 : 0] S_AXI_WSTRB,
-		// Write valid. This signal indicates that valid write
-    		// data and strobes are available.
-		input wire  S_AXI_WVALID,
-		// Write ready. This signal indicates that the slave
-    		// can accept the write data.
-		output wire  S_AXI_WREADY,
-		// Write response. This signal indicates the status
-    		// of the write transaction.
-		output wire [1 : 0] S_AXI_BRESP,
-		// Write response valid. This signal indicates that the channel
-    		// is signaling a valid write response.
-		output wire  S_AXI_BVALID,
-		// Response ready. This signal indicates that the master
-    		// can accept a write response.
-		input wire  S_AXI_BREADY,
-		// Read address (issued by master, acceped by Slave)
-		input wire [C_S_AXI_ADDR_WIDTH-1 : 0] S_AXI_ARADDR,
-		// Protection type. This signal indicates the privilege
-    		// and security level of the transaction, and whether the
-    		// transaction is a data access or an instruction access.
-		input wire [2 : 0] S_AXI_ARPROT,
-		// Read address valid. This signal indicates that the channel
-    		// is signaling valid read address and control information.
-		input wire  S_AXI_ARVALID,
-		// Read address ready. This signal indicates that the slave is
-    		// ready to accept an address and associated control signals.
-		output wire  S_AXI_ARREADY,
-		// Read data (issued by slave)
-		output wire [C_S_AXI_DATA_WIDTH-1 : 0] S_AXI_RDATA,
-		// Read response. This signal indicates the status of the
-    		// read transfer.
-		output wire [1 : 0] S_AXI_RRESP,
-		// Read valid. This signal indicates that the channel is
-    		// signaling the required read data.
-		output wire  S_AXI_RVALID,
-		// Read ready. This signal indicates that the master can
-    		// accept the read data and response information.
-		input wire  S_AXI_RREADY
-	);
+	// Global Clock Signal
+	input wire  S_AXI_ACLK,
+	// Global Reset Signal. This Signal is Active LOW
+	input wire  S_AXI_ARESETN,
+	// Write address (issued by master, acceped by Slave)
+	input wire [C_S_AXI_ADDR_WIDTH-1 : 0] S_AXI_AWADDR,
+	// Write channel Protection type. This signal indicates the
+	// privilege and security level of the transaction, and whether
+	// the transaction is a data access or an instruction access.
+	input wire [2 : 0] S_AXI_AWPROT,
+	// Write address valid. This signal indicates that the master signaling
+	// valid write address and control information.
+	input wire  S_AXI_AWVALID,
+	// Write address ready. This signal indicates that the slave is ready
+	// to accept an address and associated control signals.
+	output wire  S_AXI_AWREADY,
+	// Write data (issued by master, acceped by Slave) 
+	input wire [C_S_AXI_DATA_WIDTH-1 : 0] S_AXI_WDATA,
+	// Write strobes. This signal indicates which byte lanes hold
+	// valid data. There is one write strobe bit for each eight
+	// bits of the write data bus.    
+	input wire [(C_S_AXI_DATA_WIDTH/8)-1 : 0] S_AXI_WSTRB,
+	// Write valid. This signal indicates that valid write
+	// data and strobes are available.
+	input wire  S_AXI_WVALID,
+	// Write ready. This signal indicates that the slave
+	// can accept the write data.
+	output wire  S_AXI_WREADY,
+	// Write response. This signal indicates the status
+	// of the write transaction.
+	output wire [1 : 0] S_AXI_BRESP,
+	// Write response valid. This signal indicates that the channel
+	// is signaling a valid write response.
+	output wire  S_AXI_BVALID,
+	// Response ready. This signal indicates that the master
+	// can accept a write response.
+	input wire  S_AXI_BREADY,
+	// Read address (issued by master, acceped by Slave)
+	input wire [C_S_AXI_ADDR_WIDTH-1 : 0] S_AXI_ARADDR,
+	// Protection type. This signal indicates the privilege
+	// and security level of the transaction, and whether the
+	// transaction is a data access or an instruction access.
+	input wire [2 : 0] S_AXI_ARPROT,
+	// Read address valid. This signal indicates that the channel
+	// is signaling valid read address and control information.
+	input wire  S_AXI_ARVALID,
+	// Read address ready. This signal indicates that the slave is
+	// ready to accept an address and associated control signals.
+	output wire  S_AXI_ARREADY,
+	// Read data (issued by slave)
+	output wire [C_S_AXI_DATA_WIDTH-1 : 0] S_AXI_RDATA,
+	// Read response. This signal indicates the status of the
+	// read transfer.
+	output wire [1 : 0] S_AXI_RRESP,
+	// Read valid. This signal indicates that the channel is
+	// signaling the required read data.
+	output wire  S_AXI_RVALID,
+	// Read ready. This signal indicates that the master can
+	// accept the read data and response information.
+	input wire  S_AXI_RREADY
+);
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -150,6 +144,13 @@
 	// AXI logical addressing: 27..76
 	wire [31:0]	interesting_hash[50];
 	
+	// The hardware suggests you a scan count to keep it busy enough.
+	// OFC the hardware doesn't know how much you clock it for now so that's a wild guess;
+	// it is suggested you reserve this amount of nonces to orchestrator, for each scan operation,
+	// the hardware will test this amount of nonces.
+	// AXI logical addressing: 77
+	wire [31:0] scan_count; 
+	
 	//----------------------------------------------
 	//-- Special registers. Writing them might cause special things to happen.
 	//------------------------------------------------
@@ -158,7 +159,9 @@
 	// READING:
 	//   bit[0] tracks .dispatching output
 	//   bit[1] tracks .evaluating output
-	//   bit[2] tracks .found output
+	//   bit[2] tracks .idle output
+	//   bit[3] tracks .found output
+	//   bit[4] tracks .awaiting output
 	//   Other bits undefined.
 	// WRITING:
 	//   if at least one of .dispatching or .evaluating is high, writing is NOP
@@ -683,7 +686,9 @@
 	        7'h4B   : reg_data_out <= interesting_hash[48];
 	        7'h4C   : reg_data_out <= interesting_hash[49];
 	        
-	        7'h7F   : reg_data_out <= { (PROPER_SHA3 ? 1'b1 : 1'b0), 27'b0, found, idle, evaluating, dispatching };
+	        7'h4D   : reg_data_out <= scan_count;
+	        
+	        7'h7F   : reg_data_out <= { (PROPER_SHA3 ? 1'b1 : 1'b0), 26'b0, awaiting, found, idle, evaluating, dispatching };
 	        default : reg_data_out <= 0;
 	      endcase
 	end
@@ -709,7 +714,10 @@
 
 	// Add user logic here
 
-  wire writing_control = slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
+  bit writing_control = 1'b0;
+  always_ff @(posedge S_AXI_ACLK) begin
+      writing_control <= slv_reg_wren & axi_awaddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] == $unsigned(7'h7F);
+  end
 	wire start = idle & writing_control;
 	wire[63:0] wide_hash[25];
 	
@@ -737,15 +745,16 @@
 	sha3_scanner_instantiator #(
 	    .STYLE(STYLE),
 	    .FEEDBACK_MUX_STYLE(FEEDBACK_MUX_STYLE),
-	    .PROPER(PROPER_SHA3)
+	    .PROPER(PROPER_SHA3),
+	    .ENABLE_FSTCLK(ENABLE_FSTCLK),
+	    .ROUND_OUTPUT_BUFFER(ROUND_OUTPUT_BUFFER)
 	) thing (
-      .clk(S_AXI_ACLK), .rst(~S_AXI_ARESETN),
-      .ready(idle),
-      .start(start), .dispatching(dispatching), .evaluating(evaluating), .found(found),
-      .threshold(threshold),
+      .clk(S_AXI_ACLK), .fstclk(fstclk), .rst(~S_AXI_ARESETN),
+      .start(start), .threshold(threshold), .blobby(into_scanner),
+      .idle(idle), .found(found), .nonce(promising_nonce), .hash(wide_hash),
+      .dispatching(dispatching), .awaiting(awaiting), .evaluating(evaluating),
       
-      .blobby(into_scanner),  .nonce(promising_nonce),
-      .hash(wide_hash)
+      .scan_count(scan_count)
 	);
 	
 	for (genvar loop = 0; loop < 25; loop++) begin : cp
@@ -755,4 +764,4 @@
 	
 	// User logic ends
 
-	endmodule
+endmodule
